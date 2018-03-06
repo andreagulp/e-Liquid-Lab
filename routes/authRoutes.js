@@ -1,4 +1,5 @@
 const passport = require('passport')
+const requireLogin = require('../middlewares/requireLogin')
 
 module.exports = (app) => {
 
@@ -6,11 +7,17 @@ module.exports = (app) => {
     scope: ['profile', 'email']
   }))
 
-  app.get('/auth/google/callback', passport.authenticate('google'))
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/dashboard')
+    }
+  )
 
-  app.get('/api/logout', (req, res) => {
+  app.get('/api/logout', requireLogin, (req, res) => {
     req.logout();
-    res.send(req.user)
+    res.redirect('/')
   })
 
   app.get('/api/current_user', (req, res) => {
