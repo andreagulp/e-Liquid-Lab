@@ -1,34 +1,22 @@
 import React, { Component } from 'react';
+import AppBar from 'material-ui/AppBar';
 import {connect} from 'react-redux'
+
+import LogIn from './LogIn';
 
 class Header extends Component {
 
-  renderContent = () => {
-    switch(this.props.auth) {
-      case null:
-        return
-      case false:
-        return <a href="/auth/google">Sign in</a>
-      default:
-        return <a href="/api/logout">log out</a>
-    }
-  }
-
   render () {
-    console.log(this.props)
     return (
-        <div>
-          <nav>
-            <div>
-              <h1>Header Component Working</h1>
-              {this.renderContent()}
-            </div>
-          </nav>
-        </div>
+      <AppBar
+        title="eLiquid Lab"
+        onLeftIconButtonTouchTap={this.props.handleToggle}
+        iconElementRight={<LogIn user={this.props.user}/>}
+      />
     )
   }
 };
 
-const mapStateToProps = (state) => {console.log(state); return {auth: state.auth}}
+const mapStateToProps = (state) => { return {user: state.user}}
 
 export default connect(mapStateToProps, null)(Header);
