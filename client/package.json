@@ -10,10 +10,8 @@
       "target": "http://localhost:5000"
     }
   },
-  "devDependencies": {
-    "react-scripts": "^1.0.17"
-  },
   "dependencies": {
+    "react-scripts": "^1.0.17",
     "axios": "^0.17.1",
     "lodash": "^4.17.5",
     "material-ui": "^0.19.4",
