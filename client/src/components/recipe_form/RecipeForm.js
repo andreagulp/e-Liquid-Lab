@@ -36,18 +36,18 @@ class RecipeForm extends Component {
       this.props.fetchSingleRecipe(this.props.recipeid)
     }
     this.props.fetchRecipes()
-    this.setCurrentUser()
+    // this.setCurrentUser()
   }
 
-  setCurrentUser = () => {
-    const user = this.props.user
-    const currentUser = {
-      userId: user.googleId,
-      userName: user.name,
-      userPhoto: user.photo
-    }
-    this.props.updateRecipeField(currentUser, 'user')
-  }
+  // setCurrentUser = () => {
+  //   const user = this.props.user
+  //   const currentUser = {
+  //     userId: user.googleId,
+  //     userName: user.name,
+  //     userPhoto: user.photo
+  //   }
+  //   this.props.updateRecipeField(currentUser, 'user')
+  // }
 
   handleMlToProduceChange = (event, value) => { this.props.updateRecipeField(parseInt(value, 10), 'mlToProduce') }
 
@@ -107,11 +107,6 @@ class RecipeForm extends Component {
         recipeForkedId: newRecipeForkedId,
         recipeForkedName: newRecipeForkedName,
         production: [],
-        user: {
-          userId: user.googleId,
-          userName: user.name,
-          userPhoto: user.photo
-        }
       }
       this.props.addRecipe(newRecipe)
       if (this.props.mode === 'CREATE') {
@@ -125,7 +120,7 @@ class RecipeForm extends Component {
       const selectedRecipe = this.props.recipes.selectedRecipe
       let updatedAt = new Date()
       const updatedRecipe = {
-        ...selectedRecipe, updateDate: updatedAt.toISOString()
+        ...selectedRecipe, updateDate: updatedAt.toISOString(), _user: selectedRecipe._user._id
       }
 
       this.props.updateRecipe(selectedRecipe._id, updatedRecipe)
@@ -250,6 +245,8 @@ class RecipeForm extends Component {
                 handleFieldChange={this.handleFieldChange}
                 handleRatingChange={this.handleRatingChange}
                 handleIsPrivateChange={this.handleIsPrivateChange}
+                user={this.props.user}
+                mode={this.props.mode}
               />
             </Row>
 
@@ -295,6 +292,7 @@ class RecipeForm extends Component {
         >
           <RecipeProduction
             handleCloseProduction={this.handleCloseProduction}
+            user={this.props.user}
           />
         </Dialog>
       </form>

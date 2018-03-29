@@ -17,8 +17,6 @@ class RecipeInformation extends Component {
     }
   }
 
-
-
   renderSubtitle = () => {
     const { selectedRecipe } = this.props
     if (selectedRecipe.isForked === 'yes') {
@@ -40,19 +38,28 @@ class RecipeInformation extends Component {
     }
   }
 
+
+
   render() {
-    const { selectedRecipe, handleFieldChange, handleRatingChange, handleIsPrivateChange } = this.props
+    if (!this.props.selectedRecipe) {
+      return <div>...loading</div>
+    }
+    const { selectedRecipe, handleFieldChange, handleRatingChange, handleIsPrivateChange, user } = this.props
 
     return (
       <div>
 
         {/* <Card> */}
         <Card style={{ boxShadow: 'white' }} >
-          <CardHeader
-            title={selectedRecipe.user.userName}
-            subtitle={this.renderSubtitle()}
-            avatar={selectedRecipe.user.userPhoto}
-          />
+          {user ?
+            <CardHeader
+              title={user.name || selectedRecipe._user.name}
+              subtitle={this.renderSubtitle()}
+              avatar={user.photo || selectedRecipe._user.photo}
+            /> :
+            <div></div>
+          }
+
           <CardText>
             <Rating
               value={selectedRecipe.rating}

@@ -19,23 +19,45 @@ const recipesUrl =
   'https://ff899484-3588-49f7-a59c-c3da656b9f90-bluemix:06ea6140929d10f0ff080b60d3a8ab4d5f9c5898a68954b3f4340007fa5ccb92@ff899484-3588-49f7-a59c-c3da656b9f90-bluemix.cloudant.com/recipes_db/';
 
 export const fetchRecipes = () => {
-  const request = axios
-    .get(`${recipesUrl}_all_docs?include_docs=true`)
+  const request = axios.get(`/api/recipes`)
     .then(response => {
-      return response.data.rows.map(x => x.doc);
-    });
+      return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      return error
+    })
 
   return {
     type: FETCH_RECIPES,
     payload: request
   };
 };
+// export const fetchRecipes = () => {
+//   const request = axios
+//     .get(`${recipesUrl}_all_docs?include_docs=true`)
+//     .then(response => {
+//       return response.data.rows.map(x => x.doc);
+//     });
+
+//   return {
+//     type: FETCH_RECIPES,
+//     payload: request
+//   };
+// };
 
 export const fetchSingleRecipe = recipeId => {
+  console.log('action fetchSingleRecipe is started')
   return dispatch => {
-    const request = axios.get(`${recipesUrl}${recipeId}`).then(response => {
-      return response.data;
-    });
+    const request = axios.get(`/api/recipes/${recipeId}`)
+      .then(response => {
+        console.log('action fetchSingleRecipe response is back', response.data)
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error)
+        return error
+      })
 
     return dispatch({
       type: FETCH_SINGLE_RECIPE,
@@ -43,12 +65,27 @@ export const fetchSingleRecipe = recipeId => {
     }).then(() => dispatch(fetchFlavors()));
   };
 };
+// export const fetchSingleRecipe = recipeId => {
+//   return dispatch => {
+//     const request = axios.get(`${recipesUrl}${recipeId}`).then(response => {
+//       return response.data;
+//     });
+
+//     return dispatch({
+//       type: FETCH_SINGLE_RECIPE,
+//       payload: request
+//     }).then(() => dispatch(fetchFlavors()));
+//   };
+// };
 
 export const addRecipe = recipe => {
+  console.log('action addRecipe is triggered')
   return dispatch => {
-    const request = axios.post(recipesUrl, recipe).then(response => {
-      return response;
-    });
+    const request = axios.post('/api/newRecipe', recipe)
+      .then(response => {
+        console.log('response addRecipe arrives')
+        return response;
+      });
 
     return dispatch({
       type: ADD_RECIPE,
@@ -56,11 +93,23 @@ export const addRecipe = recipe => {
     }).then(() => dispatch(fetchRecipes()));
   };
 };
+// export const addRecipe = recipe => {
+//   return dispatch => {
+//     const request = axios.post(recipesUrl, recipe).then(response => {
+//       return response;
+//     });
+
+//     return dispatch({
+//       type: ADD_RECIPE,
+//       payload: request
+//     }).then(() => dispatch(fetchRecipes()));
+//   };
+// };
 
 export const updateRecipe = (recipeId, newRecipe) => {
   return dispatch => {
     const request = axios
-      .put(`${recipesUrl}${recipeId}`, newRecipe)
+      .patch(`/api/recipes/update/${recipeId}`, newRecipe)
       .then(response => {
         return response;
       });
@@ -71,11 +120,26 @@ export const updateRecipe = (recipeId, newRecipe) => {
     }).then(() => dispatch(fetchRecipes()));
   };
 };
+// export const updateRecipe = (recipeId, newRecipe) => {
+//   return dispatch => {
+//     const request = axios
+//       .put(`${recipesUrl}${recipeId}`, newRecipe)
+//       .then(response => {
+//         return response;
+//       });
 
-export const deleteRecipe = (recipeId, recipeRev) => {
+//     return dispatch({
+//       type: UPDATE_RECIPE,
+//       payload: request
+//     }).then(() => dispatch(fetchRecipes()));
+//   };
+// };
+
+
+export const deleteRecipe = (recipeId) => {
   return dispatch => {
     const request = axios
-      .delete(`${recipesUrl}${recipeId}?rev=${recipeRev}`)
+      .delete(`/api/recipes/delete/${recipeId}`)
       .then(response => {
         return response;
       });
@@ -86,6 +150,20 @@ export const deleteRecipe = (recipeId, recipeRev) => {
     }).then(() => dispatch(fetchRecipes()));
   };
 };
+// export const deleteRecipe = (recipeId, recipeRev) => {
+//   return dispatch => {
+//     const request = axios
+//       .delete(`${recipesUrl}${recipeId}?rev=${recipeRev}`)
+//       .then(response => {
+//         return response;
+//       });
+
+//     return dispatch({
+//       type: DELETE_RECIPE,
+//       payload: request
+//     }).then(() => dispatch(fetchRecipes()));
+//   };
+// };
 
 export const updateRecipeField = (value, fieldName) => {
   return {
@@ -109,10 +187,25 @@ export const addFlavorToRecipe = flavor => {
   };
 };
 
+// export const updateRecipeWithProduction = (recipeId, newRecipe) => {
+//   return dispatch => {
+//     const request = axios
+//       .put(`${recipesUrl}${recipeId}`, newRecipe)
+//       .then(response => {
+//         return response;
+//       });
+
+//     return dispatch({
+//       type: UPDATE_RECIPE_WITH_PRODUCTION,
+//       payload: request
+//     }).then(() => dispatch(fetchSingleRecipe(recipeId)));
+//   };
+// };
+
 export const updateRecipeWithProduction = (recipeId, newRecipe) => {
   return dispatch => {
     const request = axios
-      .put(`${recipesUrl}${recipeId}`, newRecipe)
+      .patch(`/api/recipes/update/${recipeId}`, newRecipe)
       .then(response => {
         return response;
       });
@@ -123,6 +216,21 @@ export const updateRecipeWithProduction = (recipeId, newRecipe) => {
     }).then(() => dispatch(fetchSingleRecipe(recipeId)));
   };
 };
+
+// export const updateRecipeWithProduction = (recipeId, newRecipe) => {
+//   return dispatch => {
+//     const request = axios
+//       .put(`${recipesUrl}${recipeId}`, newRecipe)
+//       .then(response => {
+//         return response;
+//       });
+
+//     return dispatch({
+//       type: UPDATE_RECIPE_WITH_PRODUCTION,
+//       payload: request
+//     }).then(() => dispatch(fetchSingleRecipe(recipeId)));
+//   };
+// };
 
 export const editFlavorToRecipe = (flavorId, perc) => {
   return {

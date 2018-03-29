@@ -8,7 +8,7 @@ const getRecipes = (state) => state.recipes.recipes
 export const getRecipesByFlavor = createSelector(
   [getFlavorId, getRecipes],
   (flavorId, recipes) =>
-    _.filter(recipes, { recipeFlavors: [{ _id: flavorId }] })
+    _.filter(recipes, { recipeFlavors: [{ flavorId: flavorId }] })
 )
 
 export const flavorUsageMetrics = createSelector(
@@ -16,12 +16,12 @@ export const flavorUsageMetrics = createSelector(
   (flavorId, recipesByFlavor) => {
     const countRecipesWithFlavor = recipesByFlavor.length
     const mlArray = recipesByFlavor.map(recipe => {
-      return recipe.recipeFlavors.filter(flavor => flavor._id === flavorId).reduce((a, b) => a + b.ml, 0)
+      return recipe.recipeFlavors.filter(flavor => flavor.flavorId === flavorId).reduce((a, b) => a + b.ml, 0)
     })
     const totMlUsed = mlArray.reduce((a, b) => a + b, 0)
 
     const percArray = recipesByFlavor.map(recipe => {
-      return recipe.recipeFlavors.filter(flavor => flavor._id === flavorId).reduce((a, b) => a + b.perc, 0)
+      return recipe.recipeFlavors.filter(flavor => flavor.flavorId === flavorId).reduce((a, b) => a + b.perc, 0)
     })
 
     const avgPerc = percArray.reduce((a, b) => a + b, 0) / percArray.length

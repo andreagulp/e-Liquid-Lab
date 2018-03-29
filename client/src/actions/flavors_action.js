@@ -14,14 +14,14 @@ const flavorsUrl = 'https://ff899484-3588-49f7-a59c-c3da656b9f90-bluemix:06ea614
 
 export const fetchFlavors = () => {
 
-  const request = axios.get(`${flavorsUrl}_all_docs?include_docs=true`)
-  .then(response => {
-    return response.data.rows.map(x => x.doc)
-  })
-  .catch(error => {
-    console.log(error)
-    return error
-  })
+  const request = axios.get(`/api/flavors`)
+    .then(response => {
+      return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      return error
+    })
 
   return {
     type: FETCH_FLAVORS,
@@ -30,14 +30,14 @@ export const fetchFlavors = () => {
 }
 
 export const fetchSingleFlavor = (flavorId) => {
-  const request = axios.get(`${flavorsUrl}${flavorId}`)
-  .then(response => {
-    return response.data
-  })
-  .catch(error => {
-    console.log(error)
-    return error
-  })
+  const request = axios.get(`/api/flavors/${flavorId}`)
+    .then(response => {
+      return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      return error
+    })
 
   return {
     type: FETCH_SINGLE_FLAVOR,
@@ -47,12 +47,12 @@ export const fetchSingleFlavor = (flavorId) => {
 
 export const addFlavor = (flavor) => {
   return dispatch => {
-    const request = axios.post(flavorsUrl, flavor)
-          .then(response => {
-            return response
-          })
+    const request = axios.post('/api/newflavor', flavor)
+      .then(response => {
+        return response
+      })
 
-    return dispatch ({
+    return dispatch({
       type: ADD_FLAVOR,
       payload: request
     }).then(() => dispatch(fetchFlavors()))
@@ -61,30 +61,32 @@ export const addFlavor = (flavor) => {
 }
 
 export const updateFlavor = (flavorId, newFlavor) => {
+  // console.log('action start')
   return dispatch => {
-    const request = axios.put(`${flavorsUrl}${flavorId}`, newFlavor)
-          .then(response => {
-            return response
-          })
+    const request = axios.patch(`/api/flavors/update/${flavorId}`, newFlavor)
+      .then(response => {
+        // console.log('action result', response)
+        return response
+      })
 
-      return dispatch ({
-        type: UPDATE_FLAVOR,
-        payload: request
-      }).then(() => dispatch(fetchFlavors()))
+    return dispatch({
+      type: UPDATE_FLAVOR,
+      payload: request
+    }).then(() => dispatch(fetchFlavors()))
   }
 }
 
-export const deleteFlavor = (flavorId, flavorRev) => {
+export const deleteFlavor = (flavorId) => {
   return dispatch => {
-    const request = axios.delete(`${flavorsUrl}${flavorId}?rev=${flavorRev}`)
-          .then(response => {
-            return response
-          })
+    const request = axios.delete(`/api/flavors/delete/${flavorId}`)
+      .then(response => {
+        return response
+      })
 
-      return dispatch ({
-        type: DELETE_FLAVOR,
-        payload: request
-      }).then(() => dispatch(fetchFlavors()))
+    return dispatch({
+      type: DELETE_FLAVOR,
+      payload: request
+    }).then(() => dispatch(fetchFlavors()))
   }
 }
 

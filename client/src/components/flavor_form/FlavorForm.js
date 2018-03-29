@@ -28,7 +28,7 @@ class FlavorForm extends Component {
     if (this.props.mode === 'EDIT' && this.props.flavorid) {
       this.props.fetchSingleFlavor(this.props.flavorid)
     }
-    this.setCurrentUser()
+    if (this.props.mode === 'CREATE') { this.setCurrentUser() }
   }
 
   setCurrentUser = () => {
@@ -91,17 +91,11 @@ class FlavorForm extends Component {
         expirationDateAlertActive: selectedFlavor.expirationDateAlertActive,
         minQtyAlertActive: selectedFlavor.minQtyAlertActive,
         alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false,
-        user: {
-          userId: user.googleId,
-          userName: user.name,
-          userPhoto: user.photo
-        },
-        creationDate: createdAt.toISOString(),
       }
       this.props.addFlavor(newFlavor)
       this.handleCancel()
     } else {                                                //EDIT MODE
-      this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false })
+      this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, _user: selectedFlavor._user._id, alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false })
       this.props.history.push("/flavors");
     }
   }

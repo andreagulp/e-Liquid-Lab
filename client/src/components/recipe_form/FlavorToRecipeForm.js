@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import AutoComplete from 'material-ui/AutoComplete';
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-import {fetchFlavors} from '../../actions/flavors_action';
-import {addFlavorToRecipe, updateRecipeField} from '../../actions/recipes_action';
-import {flavorsAutocomplete} from '../../reducers';
+import { fetchFlavors } from '../../actions/flavors_action';
+import { addFlavorToRecipe, updateRecipeField } from '../../actions/recipes_action';
+import { flavorsAutocomplete } from '../../reducers';
 
 class FlavorToRecipeForm extends Component {
   constructor(props) {
@@ -21,20 +21,31 @@ class FlavorToRecipeForm extends Component {
   }
 
   componentDidMount = () => {
-    this.props.fetchFlavors()
+    if (this.props.mode === 'CREATE') {
+      this.props.fetchFlavors()
+    }
   }
 
-  handleFlavorToRecipeChange = (value) => {this.setState({newFlavor: value})}
-  handleFlavorPercToRecipeChange = (e) => {this.setState({newFlavorsPerc: parseFloat(e.target.value)})}
+  handleFlavorToRecipeChange = (value) => { this.setState({ newFlavor: value }) }
+  handleFlavorPercToRecipeChange = (e) => { this.setState({ newFlavorsPerc: parseFloat(e.target.value) }) }
 
   addFlavorToRecipe = () => {
-    let flavor = {...this.state.newFlavor, perc: this.state.newFlavorsPerc, ml: (this.state.newFlavorsPerc / 100) * this.props.recipes.selectedRecipe.mlToProduce}
+    const { nameBrand, name, brand, iconUrl, pg, vg } = this.state.newFlavor
+    // console.log({ ...this.state.newFlavor })
+    let flavor = {
+      nameBrand, name, brand, iconUrl, pg, vg,
+      flavorId: this.state.newFlavor._id,
+      perc: this.state.newFlavorsPerc,
+      ml: (this.state.newFlavorsPerc / 100) * this.props.recipes.selectedRecipe.mlToProduce
+    }
+
     this.props.addFlavorToRecipe(flavor)
     this.props.handleCloseFlavorToRecipeForm()
   }
 
-  render () {
-    if(!this.props.flavorsAutocomplete) {
+  render() {
+    // console.log('state in flavor to reciepe form', this.state)
+    if (!this.props.flavorsAutocomplete) {
       return (
         <div>...loading</div>
       )
@@ -44,7 +55,7 @@ class FlavorToRecipeForm extends Component {
       value: '_id'
     }
 
-      const recipeFlavors = this.props.recipes.selectedRecipe.recipeFlavors
+    const recipeFlavors = this.props.recipes.selectedRecipe.recipeFlavors
 
     return (
       <form onSubmit={this.addFlavorToRecipe}>
@@ -94,11 +105,13 @@ class FlavorToRecipeForm extends Component {
   }
 };
 
-const mapStateToProps = (state) => {return {
-  flavors: state.flavors,
-  flavorsAutocomplete: flavorsAutocomplete(state),
-  recipes: state.recipes
-}}
-const mapDispatchToProps  = (dispatch) => bindActionCreators({fetchFlavors, addFlavorToRecipe, updateRecipeField}, dispatch)
+const mapStateToProps = (state) => {
+  return {
+    flavors: state.flavors,
+    flavorsAutocomplete: flavorsAutocomplete(state),
+    recipes: state.recipes
+  }
+}
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchFlavors, addFlavorToRecipe, updateRecipeField }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(FlavorToRecipeForm)

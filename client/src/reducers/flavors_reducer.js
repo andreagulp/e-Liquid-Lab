@@ -19,8 +19,6 @@ const initialState = {
     baseVg: 0,
     basePg: 100,
     comment: '',
-    _id: '',
-    _rev: '',
     storageLocation: '',
     expirationDate: null,
     minQtyAlert: 0,
@@ -31,23 +29,23 @@ const initialState = {
   }
 }
 
-export default function (state=initialState, action) {
+export default function (state = initialState, action) {
   // console.log('f;avpr_reducer', state, action)
   switch (action.type) {
     case FETCH_FLAVORS:
-      return {...state, inventoryFlavors: action.payload}
+      return { ...state, inventoryFlavors: action.payload }
     case FETCH_SINGLE_FLAVOR:
-      return {...state, selectedFlavor: action.payload}
+      return { ...state, selectedFlavor: action.payload }
     case ADD_FLAVOR:
       return state
     case DELETE_FLAVOR:
-      return {...state, selectedFlavor: initialState.selectedFlavor}
+      return { ...state, selectedFlavor: initialState.selectedFlavor }
     case UPDATE_FLAVOR:
-      return {...state, selectedFlavor: initialState.selectedFlavor}
+      return { ...state, selectedFlavor: initialState.selectedFlavor }
     case UPDATE_FLAVOR_FIELD:
-      return {...state, selectedFlavor: {...state.selectedFlavor, [action.fieldName]:  action.value}}
+      return { ...state, selectedFlavor: { ...state.selectedFlavor, [action.fieldName]: action.value } }
     case CLEAN_SELECTED_FLAVOR:
-      return {...state, selectedFlavor: initialState.selectedFlavor}
+      return { ...state, selectedFlavor: initialState.selectedFlavor }
     default:
       return state
   }
@@ -55,7 +53,7 @@ export default function (state=initialState, action) {
 
 export const flavorsAutocomplete = (state) => {
   let flavorsList = []
-  if(state.inventoryFlavors){
+  if (state.inventoryFlavors) {
     state.inventoryFlavors.map(flavor => {
       return flavorsList = [...flavorsList, {
         nameBrand: `${flavor.name} - ${flavor.brand}`,

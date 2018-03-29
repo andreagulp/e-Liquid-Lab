@@ -30,8 +30,11 @@ class FlavorFormCard extends Component {
   closeAddImageDialog = () => { this.setState({ addImgOpen: false }) }
 
   render() {
+    if (!this.props.user) {
+      return <div>...loading</div>
+    }
 
-    const { selectedFlavor } = this.props
+    const { selectedFlavor, user } = this.props
     const addImg = 'https://extension.ucsd.edu/UCSDExtension/media/UCSDExtensionsMedia/placeholder.png'
 
     return (
@@ -39,9 +42,9 @@ class FlavorFormCard extends Component {
         <Col xs={12} sm={12} md={12} lg={12}>
           <Card>
             <CardHeader
-              title={selectedFlavor.user.userName}
-              subtitle={`created on ${moment(selectedFlavor.creationDate).format('DD MMM YYYY')}`}
-              avatar={selectedFlavor.user.userPhoto}
+              title={user.name || selectedFlavor._user.userName}
+              subtitle={`created on ${moment(selectedFlavor.creationDate).format('DD MMM YYYY')}` || `Today`}
+              avatar={user.photo || selectedFlavor._user.userPhoto}
             />
 
             <CardMedia
@@ -109,7 +112,7 @@ class FlavorFormCard extends Component {
   }
 };
 
-const mapStateToProps = (state) => { return { flavors: state.flavors } }
+const mapStateToProps = (state) => { return { flavors: state.flavors, user: state.user } }
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchSingleFlavor, deleteFlavor, updateFlavor, updateFlavorField }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(FlavorFormCard)
