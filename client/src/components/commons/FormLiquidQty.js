@@ -16,15 +16,14 @@ class FormLiquidQty extends Component {
   }
 
   clickToEdit = () => {
-    if(this.state.editing) {
-      this.setState({editing: false})
-    } else
-    {this.setState({editing: true})}
+    if (this.state.editing) {
+      this.setState({ editing: false })
+    } else { this.setState({ editing: true }) }
   }
 
-  render () {
+  render() {
 
-    const {mlOfLiquid, handleMlOfLiquidChange, chartValue, chartLabel, title} = this.props
+    const { mlOfLiquid, handleMlOfLiquidChange, chartValue, chartLabel, title } = this.props
 
     const styles = {
       subheader: {
@@ -51,7 +50,7 @@ class FormLiquidQty extends Component {
       },
     };
 
-    if(!this.state.editing) {
+    if (!this.state.editing) {
       return (
         <div onClick={this.clickToEdit}>
           <h3>{title}</h3>
@@ -66,7 +65,7 @@ class FormLiquidQty extends Component {
 
     return (
       <div onMouseLeave={this.clickToEdit}>
-        <h3>Ammount</h3>
+        <h3>{title}</h3>
         <Row>
           <Col xs={12} sm={12} md={12} lg={12}>
             <Slider

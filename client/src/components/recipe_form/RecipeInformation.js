@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import { Rating } from 'material-ui-rating'
-import {Card, CardHeader} from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Checkbox from 'material-ui/Checkbox';
@@ -20,8 +20,8 @@ class RecipeInformation extends Component {
 
 
   renderSubtitle = () => {
-    const {selectedRecipe} = this.props
-    if(selectedRecipe.isForked === 'yes') {
+    const { selectedRecipe } = this.props
+    if (selectedRecipe.isForked === 'yes') {
       return (
         <div>
           {`created on ${moment(selectedRecipe.creationDate).format('DD MMM YYYY')}`}
@@ -40,57 +40,56 @@ class RecipeInformation extends Component {
     }
   }
 
-  render () {
-    const {selectedRecipe, handleFieldChange, handleRatingChange, handleIsPrivateChange} = this.props
+  render() {
+    const { selectedRecipe, handleFieldChange, handleRatingChange, handleIsPrivateChange } = this.props
+
     return (
-        <div>
-          <Rating
-            value={selectedRecipe.rating}
-            max={5}
-            onChange={handleRatingChange}
+      <div>
+
+        {/* <Card> */}
+        <Card style={{ boxShadow: 'white' }} >
+          <CardHeader
+            title={selectedRecipe.user.userName}
+            subtitle={this.renderSubtitle()}
+            avatar={selectedRecipe.user.userPhoto}
           />
-          <Card style={{boxShadow: "white"}}>
-            <CardHeader
-              title={selectedRecipe.user.userName}
-              subtitle={this.renderSubtitle()}
-              avatar={selectedRecipe.user.userPhoto}
+          <CardText>
+            <Rating
+              value={selectedRecipe.rating}
+              max={5}
+              onChange={handleRatingChange}
             />
-          </Card>
+            <TextField
+              name="name"
+              hintText="Enter Recipe Name"
+              floatingLabelText="Enter Recipe Name"
+              onChange={handleFieldChange}
+              value={selectedRecipe.name}
+              fullWidth={true}
+            />
+            <TextField
+              name="comment"
+              hintText="Enter Comment"
+              floatingLabelText="Enter Comment"
+              fullWidth={true}
+              multiLine={true}
+              rows={2}
+              rowsMax={4}
+              onChange={handleFieldChange}
+              value={selectedRecipe.comment}
+            />
 
-          <TextField
-            name="name"
-            hintText="Enter Recipe Name"
-            floatingLabelText="Enter Recipe Name"
-            onChange={handleFieldChange}
-            value={selectedRecipe.name}
-            fullWidth={true}
-          />
-          <TextField
-            name="comment"
-            hintText="Enter Comment"
-            floatingLabelText="Enter Comment"
-            fullWidth={true}
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            onChange={handleFieldChange}
-            value={selectedRecipe.comment}
-          />
-
-          <Checkbox
-            checkedIcon={<Visibility />}
-            uncheckedIcon={<VisibilityOff />}
-            onCheck={handleIsPrivateChange}
-            checked={selectedRecipe.isPubblic}
-            label={selectedRecipe.isPubblic ? 'Pubblic Recipe' : 'Private Recipe'}
-            style={{marginTop: "20px"}}
-          />
-
-
-
-
-
-        </div>
+            <Checkbox
+              checkedIcon={<Visibility />}
+              uncheckedIcon={<VisibilityOff />}
+              onCheck={handleIsPrivateChange}
+              checked={selectedRecipe.isPubblic}
+              label={selectedRecipe.isPubblic ? 'Pubblic Recipe' : 'Private Recipe'}
+              style={{ marginTop: "20px" }}
+            />
+          </CardText>
+        </Card>
+      </div>
     )
   }
 };

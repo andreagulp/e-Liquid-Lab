@@ -5,12 +5,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import CircularProgress from 'material-ui/CircularProgress';
 import Toys from 'material-ui/svg-icons/hardware/toys';
 
-import {addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes} from '../../actions/recipes_action';
+import { addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes } from '../../actions/recipes_action';
 
 import FormLiquidQty from '../commons/FormLiquidQty';
 import FormBaseVgPg from '../commons/FormBaseVgPg';
@@ -32,31 +32,50 @@ class RecipeForm extends Component {
   }
 
   componentDidMount = () => {
-    if(this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or EDIT then execute
+    if (this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or EDIT then execute
       this.props.fetchSingleRecipe(this.props.recipeid)
     }
     this.props.fetchRecipes()
+    this.setCurrentUser()
   }
 
-  handleMlToProduceChange = (event, value) => {this.props.updateRecipeField(parseInt(value, 10), 'mlToProduce')}
+  setCurrentUser = () => {
+    const user = this.props.user
+    const currentUser = {
+      userId: user.googleId,
+      userName: user.name,
+      userPhoto: user.photo
+    }
+    this.props.updateRecipeField(currentUser, 'user')
+  }
 
-  handleBaseVgChange = (event, value) => {Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'baseVg'))
-    .then(this.props.updateRecipeField(100 - value, 'basePg'))}
+  handleMlToProduceChange = (event, value) => { this.props.updateRecipeField(parseInt(value, 10), 'mlToProduce') }
 
-  handleBasePgChange = (event, value) => {Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'basePg'))
-    .then(this.props.updateRecipeField(parseInt((100 - value), 10), 'baseVg'))}
+  handleBaseVgChange = (event, value) => {
+    Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'baseVg'))
+      .then(this.props.updateRecipeField(100 - value, 'basePg'))
+  }
 
-  handleNicoVgChange = (event, value) => {Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'nicoVg'))
-    .then(this.props.updateRecipeField(100 - value, 'nicoPg'))}
-  handleNicoPgChange = (event, value) => {Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'nicoPg'))
-    .then(this.props.updateRecipeField(parseInt((100 - value), 10), 'nicoVg'))}
+  handleBasePgChange = (event, value) => {
+    Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'basePg'))
+      .then(this.props.updateRecipeField(parseInt((100 - value), 10), 'baseVg'))
+  }
 
-  handleNicoStrengthChange = (event, value) => {this.props.updateRecipeField(parseInt(value, 10), 'nicoStrength')}
-  handleDesiredNicoStrengthChange = (event, value) => {this.props.updateRecipeField(parseInt(value, 10), 'desiredNicoStrength')}
+  handleNicoVgChange = (event, value) => {
+    Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'nicoVg'))
+      .then(this.props.updateRecipeField(100 - value, 'nicoPg'))
+  }
+  handleNicoPgChange = (event, value) => {
+    Promise.resolve(this.props.updateRecipeField(parseInt(value, 10), 'nicoPg'))
+      .then(this.props.updateRecipeField(parseInt((100 - value), 10), 'nicoVg'))
+  }
 
-  handleRatingChange = (value) => {this.props.updateRecipeField(parseInt(value, 10), 'rating')}
+  handleNicoStrengthChange = (event, value) => { this.props.updateRecipeField(parseInt(value, 10), 'nicoStrength') }
+  handleDesiredNicoStrengthChange = (event, value) => { this.props.updateRecipeField(parseInt(value, 10), 'desiredNicoStrength') }
 
-  handleFieldChange = (e) => {this.props.updateRecipeField(e.target.value, e.target.name)}
+  handleRatingChange = (value) => { this.props.updateRecipeField(parseInt(value, 10), 'rating') }
+
+  handleFieldChange = (e) => { this.props.updateRecipeField(e.target.value, e.target.name) }
 
   handleIsPrivateChange = () => {
     const value = !this.props.recipes.selectedRecipe.isPubblic
@@ -64,7 +83,7 @@ class RecipeForm extends Component {
 
   }
   recipeFormAction = (id) => {
-    if(this.props.mode !== 'EDIT') {
+    if (this.props.mode !== 'EDIT') {
       const selectedRecipe = this.props.recipes.selectedRecipe
       const user = this.props.user
       let createdAt = new Date()
@@ -95,7 +114,7 @@ class RecipeForm extends Component {
         }
       }
       this.props.addRecipe(newRecipe)
-      if(this.props.mode === 'CREATE') {
+      if (this.props.mode === 'CREATE') {
         this.props.handleCloseRecipeForm()
         this.props.cleanSelectedRecipe()
       } else {
@@ -103,14 +122,14 @@ class RecipeForm extends Component {
         this.props.cleanSelectedRecipe()
       }
     } else {
-        const selectedRecipe = this.props.recipes.selectedRecipe
-        let updatedAt = new Date()
-        const updatedRecipe = {
-          ...selectedRecipe, updateDate: updatedAt.toISOString()
-        }
+      const selectedRecipe = this.props.recipes.selectedRecipe
+      let updatedAt = new Date()
+      const updatedRecipe = {
+        ...selectedRecipe, updateDate: updatedAt.toISOString()
+      }
 
-        this.props.updateRecipe(selectedRecipe._id, updatedRecipe)
-        this.props.history.push("/recipes");
+      this.props.updateRecipe(selectedRecipe._id, updatedRecipe)
+      this.props.history.push("/recipes");
     }
 
   }
@@ -122,7 +141,7 @@ class RecipeForm extends Component {
   }
 
   handleCancel = () => {
-    if(this.props.mode !== 'CREATE') {
+    if (this.props.mode !== 'CREATE') {
       this.props.history.push("/recipes");
       this.props.cleanSelectedRecipe()
     } else {
@@ -132,17 +151,17 @@ class RecipeForm extends Component {
   }
 
 
-  handleOpenFlavorToRecipeForm = () => {this.setState({openFlavorToRecipeForm: true})};
-  handleCloseFlavorToRecipeForm = () => {this.setState({openFlavorToRecipeForm: false})};
-  handleOpenProduction= () => {this.setState({openProduction: true})};
-  handleCloseProduction= () => {this.setState({openProduction: false})};
+  handleOpenFlavorToRecipeForm = () => { this.setState({ openFlavorToRecipeForm: true }) };
+  handleCloseFlavorToRecipeForm = () => { this.setState({ openFlavorToRecipeForm: false }) };
+  handleOpenProduction = () => { this.setState({ openProduction: true }) };
+  handleCloseProduction = () => { this.setState({ openProduction: false }) };
 
   componentWillUnmount = () => {
     this.props.cleanSelectedRecipe()
   }
 
-  render () {
-    if(this.props.mode !== 'CREATE' && !this.props.recipes.selectedRecipe.recipeFlavors) {
+  render() {
+    if (this.props.mode !== 'CREATE' && !this.props.recipes.selectedRecipe.recipeFlavors) {
       return (
         <CircularProgress size={60} thickness={7} />
       )
@@ -195,14 +214,14 @@ class RecipeForm extends Component {
                   labelPosition="before"
                   primary={true}
                   icon={<ContentAdd />}
-                  style={{marginTop: "15px"}}
+                  style={{ marginTop: "15px" }}
                   onClick={this.handleOpenFlavorToRecipeForm}
                 />
                 <Dialog
                   title="Add Flavor To Recipe"
                   modal={true}
                   open={this.state.openFlavorToRecipeForm}
-                  contentStyle={{  width: '70%', maxWidth: '100%',}}
+                  contentStyle={{ width: '70%', maxWidth: '100%', }}
                   autoScrollBodyContent={true}
                 >
                   <FlavorToRecipeForm
@@ -224,7 +243,8 @@ class RecipeForm extends Component {
               <RecipeFormTable />
             </Row>
 
-            <Row style={{marginLeft: "20px"}}>
+            {/* <Row center="xs" style={{ marginLeft: "10px", marginRight: "10px" }}> */}
+            <Row style={{ margin: "30px" }}>
               <RecipeInformation
                 selectedRecipe={selectedRecipe}
                 handleFieldChange={this.handleFieldChange}
@@ -235,7 +255,7 @@ class RecipeForm extends Component {
 
           </Col>
         </Row>
-        <Row end="xs" style={{margin:"10px 0 30px 0"}}>
+        <Row end="xs" style={{ margin: "10px 0 30px 0" }}>
           <FlatButton
             label="Cancel"
             primary={true}
@@ -263,14 +283,14 @@ class RecipeForm extends Component {
                 icon={<Toys />}
               />
             </div>
-          : <div></div>
+            : <div></div>
           }
         </Row>
         <Dialog
           title="Mix Recipe"
           modal={true}
           open={this.state.openProduction}
-          contentStyle={{  height: '98%', maxHeight: '98%', width: '90%', maxWidth: '98%'}}
+          contentStyle={{ height: '98%', maxHeight: '98%', width: '90%', maxWidth: '98%' }}
           autoScrollBodyContent={true}
         >
           <RecipeProduction
@@ -282,7 +302,7 @@ class RecipeForm extends Component {
   }
 };
 
-const mapStateToProps = (state) => {return {recipes: state.recipes, user: state.user}}
-const mapDispatchToProps  = (dispatch) => bindActionCreators({addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes}, dispatch)
+const mapStateToProps = (state) => { return { recipes: state.recipes, user: state.user } }
+const mapDispatchToProps = (dispatch) => bindActionCreators({ addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeForm)

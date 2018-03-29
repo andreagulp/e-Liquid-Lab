@@ -1,6 +1,6 @@
 module.exports = {
-  googleClientId: '154342261728-lk55ah8k4u5vr8n0b2scvrvvnlknn4lp.apps.googleusercontent.com',
-  googleSecretId: '4wyx9P30g3VUJpUX_2EqPfAv',
-  mongoUri: 'mongodb://andreagulp:andric09856390@ds151348.mlab.com:51348/emaily-dev-002',
+  googleClientId: '408906420140-pq0c7sjtd12f1233vlk3o4pkdc83rror.apps.googleusercontent.com',
+  googleSecretId: '0tj6RrUTJokQ8xGAguZ95rZM',
+  mongoUri: 'mongodb://andreagulp:andric09856390@ds227469.mlab.com:27469/e-liquid-dev',
   cookieKey: 'asdasdaswqewqewq32i42384798yrhdssbdf7q3yu'
 }

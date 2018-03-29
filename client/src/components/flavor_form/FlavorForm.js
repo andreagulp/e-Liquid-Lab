@@ -3,14 +3,14 @@ import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import { Row, Col } from 'react-flexbox-grid';
 import FlatButton from 'material-ui/FlatButton';
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import CircularProgress from 'material-ui/CircularProgress';
 import DatePicker from 'material-ui/DatePicker';
 import Toggle from 'material-ui/Toggle';
 
-import {addFlavor, fetchSingleFlavor, updateFlavor, deleteFlavor, updateFlavorField, cleanSelectedFlavor} from '../../actions/flavors_action';
-import {BRANDS} from '../../brands_db';
+import { addFlavor, fetchSingleFlavor, updateFlavor, deleteFlavor, updateFlavorField, cleanSelectedFlavor } from '../../actions/flavors_action';
+import { BRANDS } from '../../brands_db';
 import FormBaseVgPg from '../../components/commons/FormBaseVgPg';
 import FormLiquidQty from '../../components/commons/FormLiquidQty';
 import FlavorFormCard from './FlavorFormCard';
@@ -25,12 +25,23 @@ class FlavorForm extends Component {
   }
 
   componentDidMount = () => {
-    if(this.props.mode === 'EDIT' && this.props.flavorid) {
+    if (this.props.mode === 'EDIT' && this.props.flavorid) {
       this.props.fetchSingleFlavor(this.props.flavorid)
     }
+    this.setCurrentUser()
   }
 
-  handleFieldChange = (e) => {this.props.updateFlavorField(e.target.value, e.target.name)}
+  setCurrentUser = () => {
+    const user = this.props.user
+    const currentUser = {
+      userId: user.googleId,
+      userName: user.name,
+      userPhoto: user.photo
+    }
+    this.props.updateFlavorField(currentUser, 'user')
+  }
+
+  handleFieldChange = (e) => { this.props.updateFlavorField(e.target.value, e.target.name) }
 
   handleExpirationAlertChange = (e) => {
     const selectedFlavor = this.props.flavors.selectedFlavor
@@ -42,49 +53,55 @@ class FlavorForm extends Component {
     this.props.updateFlavorField(!selectedFlavor.minQtyAlertActive, 'minQtyAlertActive')
   }
 
-  handleBrandChange = (value) => {this.props.updateFlavorField(value, 'brand')}
+  handleBrandChange = (value) => { this.props.updateFlavorField(value, 'brand') }
 
-  handleQtyChange = (event, value) => {this.props.updateFlavorField(parseInt(value, 10), 'qty')}
-  handleMinQtyChange = (event, value) => {this.props.updateFlavorField(parseInt(value, 10), 'minQtyAlert')}
+  handleQtyChange = (event, value) => { this.props.updateFlavorField(parseInt(value, 10), 'qty') }
+  handleMinQtyChange = (event, value) => { this.props.updateFlavorField(parseInt(value, 10), 'minQtyAlert') }
 
-  handleExpirationDateChange = (event, date) => {this.props.updateFlavorField(date, 'expirationDate')}
+  handleExpirationDateChange = (event, date) => { this.props.updateFlavorField(date, 'expirationDate') }
 
-  handleBaseVgChange = (event, value) => {Promise.resolve(this.props.updateFlavorField(parseInt(value, 10), 'baseVg'))
-    .then(this.props.updateFlavorField(100 - value, 'basePg'))}
+  handleBaseVgChange = (event, value) => {
+    Promise.resolve(this.props.updateFlavorField(parseInt(value, 10), 'baseVg'))
+      .then(this.props.updateFlavorField(100 - value, 'basePg'))
+  }
 
-  handleBasePgChange = (event, value) => {Promise.resolve(this.props.updateFlavorField(parseInt(value, 10), 'basePg'))
-    .then(this.props.updateFlavorField(parseInt((100 - value), 10), 'baseVg'))}
+  handleBasePgChange = (event, value) => {
+    Promise.resolve(this.props.updateFlavorField(parseInt(value, 10), 'basePg'))
+      .then(this.props.updateFlavorField(parseInt((100 - value), 10), 'baseVg'))
+  }
 
   flavorFormAction = (id) => {
     const selectedFlavor = this.props.flavors.selectedFlavor
     const user = this.props.user
-    let expirationDate = selectedFlavor.expirationDate === null ? Date.now() :  selectedFlavor.expirationDate
-    if(this.props.mode === 'CREATE') {                      //CREATE MODE
+    let expirationDate = selectedFlavor.expirationDate === null ? Date.now() : selectedFlavor.expirationDate
+    let createdAt = new Date()
+    if (this.props.mode === 'CREATE') {                      //CREATE MODE
       let newFlavor = {
-          brand: selectedFlavor.brand,
-          name: selectedFlavor.name,
-          iconUrl: selectedFlavor.iconUrl,
-          qty: selectedFlavor.qty,
-          rating: selectedFlavor.rating,
-          baseVg: selectedFlavor.baseVg,
-          basePg: selectedFlavor.basePg,
-          comment: selectedFlavor.comment,
-          storageLocation: selectedFlavor.storageLocation ,
-          expirationDate: expirationDate,
-          minQtyAlert: selectedFlavor.minQtyAlert,
-          expirationDateAlertActive: selectedFlavor.expirationDateAlertActive,
-          minQtyAlertActive: selectedFlavor.minQtyAlertActive,
-          alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false,
-          user: {
-            userId: user.googleId,
-            userName: user.name,
-            userPhoto: user.photo
-          }
+        brand: selectedFlavor.brand,
+        name: selectedFlavor.name,
+        iconUrl: selectedFlavor.iconUrl,
+        qty: selectedFlavor.qty,
+        rating: selectedFlavor.rating,
+        baseVg: selectedFlavor.baseVg,
+        basePg: selectedFlavor.basePg,
+        comment: selectedFlavor.comment,
+        storageLocation: selectedFlavor.storageLocation,
+        expirationDate: expirationDate,
+        minQtyAlert: selectedFlavor.minQtyAlert,
+        expirationDateAlertActive: selectedFlavor.expirationDateAlertActive,
+        minQtyAlertActive: selectedFlavor.minQtyAlertActive,
+        alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false,
+        user: {
+          userId: user.googleId,
+          userName: user.name,
+          userPhoto: user.photo
+        },
+        creationDate: createdAt.toISOString(),
       }
       this.props.addFlavor(newFlavor)
       this.handleCancel()
     } else {                                                //EDIT MODE
-      this.props.updateFlavor(selectedFlavor._id, {...selectedFlavor, alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false})
+      this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false })
       this.props.history.push("/flavors");
     }
   }
@@ -96,7 +113,7 @@ class FlavorForm extends Component {
   }
 
   handleCancel = () => {
-    if(this.props.mode === 'EDIT') {
+    if (this.props.mode === 'EDIT') {
       this.props.history.push("/flavors");
       this.props.cleanSelectedFlavor()
     } else {
@@ -105,8 +122,8 @@ class FlavorForm extends Component {
     }
   }
 
-  render () {
-    if(this.props.mode === 'EDIT' && !this.props.flavors.selectedFlavor.name) {
+  render() {
+    if (this.props.mode === 'EDIT' && !this.props.flavors.selectedFlavor.name) {
       return (
         <CircularProgress size={60} thickness={7} />
       )
@@ -146,7 +163,7 @@ class FlavorForm extends Component {
                 />
               </Col>
             </Row>
-            <Row style={{marginTop: "20px"}}>
+            <Row style={{ marginTop: "20px" }}>
               <Col xs={12} sm={12} md={6} lg={6}>
                 <FormLiquidQty
                   mlOfLiquid={selectedFlavor.qty}
@@ -167,7 +184,7 @@ class FlavorForm extends Component {
                 />
               </Col>
             </Row>
-            <Row style={{marginTop: "20px"}}>
+            <Row style={{ marginTop: "20px" }}>
               <Col xs={12} sm={12} md={12} lg={12}>
                 <TextField
                   name="storageLocation"
@@ -179,7 +196,7 @@ class FlavorForm extends Component {
                 />
               </Col>
             </Row>
-            <Row style={{marginTop: "20px"}}>
+            <Row style={{ marginTop: "20px" }}>
               <Col xs={6} sm={6} md={6} lg={6}>
                 <DatePicker
                   hintText="Set Expiration Date"
@@ -198,7 +215,7 @@ class FlavorForm extends Component {
                 />
               </Col>
             </Row>
-            <Row style={{marginTop: "20px"}}>
+            <Row style={{ marginTop: "20px" }}>
               <Col xs={6} sm={6} md={6} lg={6}>
                 <TextField
                   name="minQtyAlert"
@@ -218,7 +235,7 @@ class FlavorForm extends Component {
                 />
               </Col>
             </Row>
-            <Row end="xs" style={{marginTop: "80px", marginBottom: "40px"}}>
+            <Row end="xs" style={{ marginTop: "80px", marginBottom: "40px" }}>
               <FlatButton
                 label="Cancel"
                 primary={false}
@@ -246,8 +263,8 @@ class FlavorForm extends Component {
   }
 };
 
-const mapStateToProps = (state) => {return {flavors: state.flavors, user: state.user}}
-const mapDispatchToProps  = (dispatch) => bindActionCreators({
+const mapStateToProps = (state) => { return { flavors: state.flavors, user: state.user } }
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   addFlavor,
   fetchSingleFlavor,
   deleteFlavor,
