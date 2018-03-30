@@ -5,9 +5,9 @@ const passport = require('passport')
 const bodyParser = require('body-parser')
 const keys = require('./config/keys')
 require('./models/User')
+require('./services/passport')
 require('./models/Flavor')
 require('./models/Recipe')
-require('./services/passport')
 
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoUri)
