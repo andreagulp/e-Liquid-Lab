@@ -35,7 +35,7 @@ class RecipeForm extends Component {
     if (this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or EDIT then execute
       this.props.fetchSingleRecipe(this.props.recipeid)
     }
-    this.props.fetchRecipes()
+    // this.props.fetchRecipes()
     // this.setCurrentUser()
   }
 

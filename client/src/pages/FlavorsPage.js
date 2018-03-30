@@ -22,7 +22,7 @@ class FlavorsPage extends Component {
 
   componentDidMount = () => {
     this.props.fetchFlavors();
-    this.props.fetchUser()
+    // this.props.fetchUser()
   }
 
   handleOpen = () => {

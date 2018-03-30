@@ -22,7 +22,7 @@ class RecipesPage extends Component {
 
   componentDidMount = () => {
     this.props.fetchRecipes();
-    this.props.fetchUser();
+    // this.props.fetchUser();
   }
 
   handleOpenRecipeForm = () => { this.setState({ openRecipeForm: true }) };
