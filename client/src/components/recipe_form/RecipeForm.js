@@ -85,7 +85,6 @@ class RecipeForm extends Component {
   recipeFormAction = (id) => {
     if (this.props.mode !== 'EDIT') {
       const selectedRecipe = this.props.recipes.selectedRecipe
-      const user = this.props.user
       let createdAt = new Date()
       let isForkedRecipe = this.props.mode === 'FORK' ? 'yes' : 'no'
       let newRecipeForkedId = this.props.mode === 'FORK' ? selectedRecipe._id : ''

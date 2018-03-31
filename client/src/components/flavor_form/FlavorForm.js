@@ -72,9 +72,7 @@ class FlavorForm extends Component {
 
   flavorFormAction = (id) => {
     const selectedFlavor = this.props.flavors.selectedFlavor
-    const user = this.props.user
     let expirationDate = selectedFlavor.expirationDate === null ? Date.now() : selectedFlavor.expirationDate
-    let createdAt = new Date()
     if (this.props.mode === 'CREATE') {                      //CREATE MODE
       let newFlavor = {
         brand: selectedFlavor.brand,

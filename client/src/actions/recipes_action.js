@@ -15,9 +15,6 @@ import {
 
 import { fetchFlavors } from './flavors_action';
 
-const recipesUrl =
-  'https://ff899484-3588-49f7-a59c-c3da656b9f90-bluemix:06ea6140929d10f0ff080b60d3a8ab4d5f9c5898a68954b3f4340007fa5ccb92@ff899484-3588-49f7-a59c-c3da656b9f90-bluemix.cloudant.com/recipes_db/';
-
 export const fetchRecipes = () => {
   const request = axios.get(`/api/recipes`)
     .then(response => {

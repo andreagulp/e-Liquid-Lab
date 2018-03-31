@@ -9,9 +9,6 @@ import {
   CLEAN_SELECTED_FLAVOR,
 } from './types';
 
-const flavorsUrl = 'https://ff899484-3588-49f7-a59c-c3da656b9f90-bluemix:06ea6140929d10f0ff080b60d3a8ab4d5f9c5898a68954b3f4340007fa5ccb92@ff899484-3588-49f7-a59c-c3da656b9f90-bluemix.cloudant.com/flavors_db/'
-
-
 export const fetchFlavors = () => {
 
   const request = axios.get(`/api/flavors`)
