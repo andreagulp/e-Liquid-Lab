@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise'
@@ -22,4 +21,3 @@ ReactDOM.render(
     </MuiThemeProvider>
   </Provider>
   , document.getElementById('root'));
-registerServiceWorker();
