@@ -13,6 +13,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoUri)
 
 const app = express()
+app.enable("trust proxy");
 
 app.use(bodyParser.json())
 
