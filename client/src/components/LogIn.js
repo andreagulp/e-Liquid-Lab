@@ -28,6 +28,8 @@ class LogIn extends Component {
     return (
       <div>
         {this.renderLogin()}
+        <br />
+        <a href="https://www.youtube.com/watch?v=G2_5rPbUDNA">click here</a>
       </div>
     )
   }
