@@ -17,10 +17,10 @@ passport.deserializeUser((id, done) => {
 })
 
 passport.use(new GoogleStrategy({
-  proxy: true,
   clientID: keys.googleClientID,
   clientSecret: keys.googleClientSecret,
   callbackURL: '/auth/google/callback',
+  proxy: true
 },
   async (accessToken, refreshToken, profile, done) => {
     // console.log('full profile', profile)
