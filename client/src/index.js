@@ -10,12 +10,12 @@ import reducers from './reducers';
 import './index.css';
 import App from './App';
 
-// const createStoreWithMiddleware = applyMiddleware (promiseMiddleware, thunk) (createStore)
-const store = createStore(reducers, {}, applyMiddleware(promiseMiddleware, reduxThunk));
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(createStore)
+// const store = createStore(reducers, {}, applyMiddleware(promiseMiddleware, reduxThunk));
 
 ReactDOM.render(
-  <Provider store={store}>
-    {/* <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}> */}
+  // <Provider store={store}>
+  <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
     <MuiThemeProvider>
       <App />
     </MuiThemeProvider>
