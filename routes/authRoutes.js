@@ -3,17 +3,17 @@ const passport = require('passport')
 module.exports = (app) => {
 
   app.get(
-    '/auth/google', 
+    '/auth/google',
     passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    prompt: "select_account" // Added here
-  })
-)
+      scope: ['profile', 'email'],
+      prompt: "select_account" // Added here
+    })
+  )
 
   app.get('/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      res.redirect('/')
+      res.redirect('/recipes')
     })
 
   app.get('/api/logout', (req, res) => {

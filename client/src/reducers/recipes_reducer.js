@@ -1,5 +1,6 @@
 import {
   FETCH_RECIPES,
+  FETCH_PUBLIC_RECIPES,
   FETCH_SINGLE_RECIPE,
   ADD_RECIPE,
   DELETE_RECIPE,
@@ -16,6 +17,7 @@ import _ from 'lodash';
 
 const initialState = {
   recipes: [],
+  publicRecipes: [],
   selectedRecipe: {
     mlToProduce: 10,
     baseVg: 70,
@@ -30,14 +32,16 @@ const initialState = {
     recipeFlavors: [],
     production: [],
     user: {},
-    isPubblic: false
+    isPublic: false
   }
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_RECIPES:
       return { ...state, recipes: action.payload };
+    case FETCH_PUBLIC_RECIPES:
+      return { ...state, publicRecipes: action.payload };
     case FETCH_SINGLE_RECIPE:
       return { ...state, selectedRecipe: action.payload };
     case ADD_RECIPE:

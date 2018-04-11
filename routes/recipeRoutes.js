@@ -15,10 +15,26 @@ module.exports = app => {
         res.send('post req done')
     });
 
+    // fetch all pubblic recipes
+    app.get('/api/public-recipes', (req, res, next) => {
+        Recipe.find({ isPublic: true })
+            .populate('_user')
+            .exec()
+            .then(docs => {
+                res.status(200).json(docs);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error: err
+                });
+            });
+    });
+
     // fetch all recipes that the logged user can see
     app.get('/api/recipes', (req, res, next) => {
         if (req.user) {
-            Recipe.find({ $or: [{ isPubblic: true }, { _user: req.user.id }] })
+            Recipe.find({ _user: req.user.id })
                 .populate('_user')
                 .exec()
                 .then(docs => {
@@ -31,18 +47,7 @@ module.exports = app => {
                     });
                 });
         } else {
-            Recipe.find({ isPubblic: true })
-                .populate('_user')
-                .exec()
-                .then(docs => {
-                    res.status(200).json(docs);
-                })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        error: err
-                    });
-                });
+            res.send("please login")
         }
     });
 
@@ -105,3 +110,35 @@ module.exports = app => {
     });
 
 }
+
+
+    // retrive all records that are piublic or visible to the user loggedin
+    // app.get('/api/recipes', (req, res, next) => {
+    //     if (req.user) {
+    //         Recipe.find({ $or: [{ isPublic: true }, { _user: req.user.id }] })
+    //             .populate('_user')
+    //             .exec()
+    //             .then(docs => {
+    //                 res.status(200).json(docs);
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //                 res.status(500).json({
+    //                     error: err
+    //                 });
+    //             });
+    //     } else {
+    //         Recipe.find({ isPublic: true })
+    //             .populate('_user')
+    //             .exec()
+    //             .then(docs => {
+    //                 res.status(200).json(docs);
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //                 res.status(500).json({
+    //                     error: err
+    //                 });
+    //             });
+    //     }
+    // });

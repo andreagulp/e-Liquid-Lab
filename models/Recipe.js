@@ -16,7 +16,7 @@ const recipeSchema = new Schema({
     comment: String,
     recipeFlavors: [recipeFlavorSchema],
     production: [productionSchema],
-    isPubblic: Boolean,
+    isPublic: Boolean,
     _user: { type: Schema.Types.ObjectId, ref: 'users' },
     creationDate: Date,
     isForked: String,

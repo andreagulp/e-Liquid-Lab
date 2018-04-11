@@ -90,8 +90,8 @@ class RecipeInformation extends Component {
               checkedIcon={<Visibility />}
               uncheckedIcon={<VisibilityOff />}
               onCheck={handleIsPrivateChange}
-              checked={selectedRecipe.isPubblic}
-              label={selectedRecipe.isPubblic ? 'Pubblic Recipe' : 'Private Recipe'}
+              checked={selectedRecipe.isPublic}
+              label={selectedRecipe.isPublic ? 'Public Recipe' : 'Private Recipe'}
               style={{ marginTop: "20px" }}
             />
           </CardText>

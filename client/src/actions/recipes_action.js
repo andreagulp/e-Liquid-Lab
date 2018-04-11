@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   FETCH_RECIPES,
+  FETCH_PUBLIC_RECIPES,
   FETCH_SINGLE_RECIPE,
   ADD_RECIPE,
   DELETE_RECIPE,
@@ -14,6 +15,22 @@ import {
 } from './types';
 
 import { fetchFlavors } from './flavors_action';
+
+export const fetchPublicRecipes = () => {
+  const request = axios.get(`/api/public-recipes`)
+    .then(response => {
+      return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      return error
+    })
+
+  return {
+    type: FETCH_PUBLIC_RECIPES,
+    payload: request
+  };
+};
 
 export const fetchRecipes = () => {
   const request = axios.get(`/api/recipes`)

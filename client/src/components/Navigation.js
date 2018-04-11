@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
 
-import LogIn from './LogIn';
+import LogIn from './commons/LogIn';
 
 
 class Navigation extends Component {
@@ -25,12 +25,15 @@ class Navigation extends Component {
           open={this.props.open}
           onRequestChange={this.props.handleToggle}
         >
-          <Link to="/recipes" style={{ textDecoration: 'none' }}>
-            <MenuItem primaryText="Recipes" leftIcon={<Book />} onClick={this.props.handleClose} />
+          <Link to="/public-recipes" style={{ textDecoration: 'none' }}>
+            <MenuItem primaryText="Shared Recipes" leftIcon={<Book />} onClick={this.props.handleClose} />
           </Link>
           {
             user ?
               <div>
+                <Link to="/recipes" style={{ textDecoration: 'none' }}>
+                  <MenuItem primaryText="My Recipes" leftIcon={<Book />} onClick={this.props.handleClose} />
+                </Link>
                 <Link to="/flavors" style={{ textDecoration: 'none' }}>
                   <MenuItem primaryText="My Flavors" leftIcon={<CardTravel />} onClick={this.props.handleClose} />
                 </Link>

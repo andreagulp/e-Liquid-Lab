@@ -78,8 +78,8 @@ class RecipeForm extends Component {
   handleFieldChange = (e) => { this.props.updateRecipeField(e.target.value, e.target.name) }
 
   handleIsPrivateChange = () => {
-    const value = !this.props.recipes.selectedRecipe.isPubblic
-    this.props.updateRecipeField(value, 'isPubblic')
+    const value = !this.props.recipes.selectedRecipe.isPublic
+    this.props.updateRecipeField(value, 'isPublic')
 
   }
   recipeFormAction = (id) => {
@@ -134,7 +134,8 @@ class RecipeForm extends Component {
     this.props.history.push("/recipes");
   }
 
-  handleCancel = () => {
+  handleCancel = (e) => {
+    e.preventDefault();
     if (this.props.mode !== 'CREATE') {
       this.props.history.push("/recipes");
       this.props.cleanSelectedRecipe()
