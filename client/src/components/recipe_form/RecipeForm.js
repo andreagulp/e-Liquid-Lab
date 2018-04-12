@@ -78,9 +78,6 @@ class RecipeForm extends Component {
       let newRecipeForkedId = this.props.mode === 'FORK' ? selectedRecipe._id : ''
       // let newRecipeForkedName = this.props.mode === 'FORK' ? this.props.recipes.recipes.find(x => x._id === selectedRecipe._id).name : ''
       let newRecipeForkedName = () => {
-        let privateName = ''
-        let publicName = ''
-
         if (selectedRecipe.isPublic && this.props.mode === 'FORK') {
           return this.props.recipes.publicRecipes.find(x => x._id === selectedRecipe._id).name
         }
