@@ -39,7 +39,7 @@ class PublicRecipeCard extends Component {
                     showExpandableButton={false}
                 />
                 <CardActions style={{ textAlign: "right" }}>
-                    <Link to={`/recipes/${recipe._id}`} style={{ textDecoration: "none" }}>
+                    <Link to={`/recipes/fork/${recipe._id}`} style={{ textDecoration: "none" }}>
                         <FlatButton
                             label="OPEN"
                             primary={true}

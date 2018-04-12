@@ -39,26 +39,21 @@ class RecipeInformation extends Component {
   }
 
 
-
   render() {
-    if (!this.props.selectedRecipe) {
+    if (!this.props.selectedRecipe._user && !this.props.user.name) {
       return <div>...loading</div>
     }
-    const { selectedRecipe, handleFieldChange, handleRatingChange, handleIsPrivateChange, user } = this.props
+    const { selectedRecipe, handleFieldChange, handleRatingChange, handleIsPrivateChange, user, mode } = this.props
+    // console.log('selectedRecipe', selectedRecipe)
 
     return (
       <div>
-
-        {/* <Card> */}
         <Card style={{ boxShadow: 'white' }} >
-          {user ?
-            <CardHeader
-              title={user.name || selectedRecipe._user.name}
-              subtitle={this.renderSubtitle()}
-              avatar={user.photo || selectedRecipe._user.photo}
-            /> :
-            <div></div>
-          }
+          <CardHeader
+            title={mode === 'CREATE' ? user.name : selectedRecipe._user.name}
+            subtitle={this.renderSubtitle()}
+            avatar={mode === 'CREATE' ? user.photo : selectedRecipe._user.photo}
+          />
 
           <CardText>
             <Rating

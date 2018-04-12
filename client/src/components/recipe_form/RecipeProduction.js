@@ -79,7 +79,12 @@ class RecipeProduction extends Component {
       selectedRecipe.recipeFlavors.forEach(recipeFlavor => {
         if (flavor._id === recipeFlavor.flavorId) {
           let flavorQtyNedeed = (recipeFlavor.perc / 100) * selectedRecipe.mlToProduce
-          newFlavor = { ...flavor, qty: flavor.qty - flavorQtyNedeed, alertList: (flavor.qty - flavorQtyNedeed) < flavor.minQtyAlert ? true : false }
+          newFlavor = {
+            ...flavor,
+            qty: flavor.qty - flavorQtyNedeed,
+            alertList: (flavor.qty - flavorQtyNedeed) < flavor.minQtyAlert ? true : false,
+            lastUsedDate: Date.now()
+          }
           this.props.updateFlavor(flavor._id, newFlavor)
         }
       })

@@ -31,7 +31,11 @@ const initialState = {
     comment: '',
     recipeFlavors: [],
     production: [],
-    user: {},
+    _user: {
+      googleId: '',
+      name: '',
+      photo: ''
+    },
     isPublic: false
   }
 };
@@ -77,7 +81,7 @@ export default function (state = initialState, action) {
           ...state.selectedRecipe,
           recipeFlavors: [
             ...state.selectedRecipe.recipeFlavors.map(flavor => {
-              return flavor._id === action.flavorId
+              return flavor.flavorId === action.flavorId
                 ? { ...flavor, perc: action.perc }
                 : flavor;
             })

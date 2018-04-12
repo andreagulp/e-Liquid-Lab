@@ -35,19 +35,7 @@ class RecipeForm extends Component {
     if (this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or EDIT then execute
       this.props.fetchSingleRecipe(this.props.recipeid)
     }
-    // this.props.fetchRecipes()
-    // this.setCurrentUser()
   }
-
-  // setCurrentUser = () => {
-  //   const user = this.props.user
-  //   const currentUser = {
-  //     userId: user.googleId,
-  //     userName: user.name,
-  //     userPhoto: user.photo
-  //   }
-  //   this.props.updateRecipeField(currentUser, 'user')
-  // }
 
   handleMlToProduceChange = (event, value) => { this.props.updateRecipeField(parseInt(value, 10), 'mlToProduce') }
 
@@ -88,7 +76,21 @@ class RecipeForm extends Component {
       let createdAt = new Date()
       let isForkedRecipe = this.props.mode === 'FORK' ? 'yes' : 'no'
       let newRecipeForkedId = this.props.mode === 'FORK' ? selectedRecipe._id : ''
-      let newRecipeForkedName = this.props.mode === 'FORK' ? this.props.recipes.recipes.find(x => x._id === selectedRecipe._id).name : ''
+      // let newRecipeForkedName = this.props.mode === 'FORK' ? this.props.recipes.recipes.find(x => x._id === selectedRecipe._id).name : ''
+      let newRecipeForkedName = () => {
+        let privateName = ''
+        let publicName = ''
+
+        if (selectedRecipe.isPublic && this.props.mode === 'FORK') {
+          return this.props.recipes.publicRecipes.find(x => x._id === selectedRecipe._id).name
+        }
+        if (!selectedRecipe.isPublic && this.props.mode === 'FORK') {
+          return this.props.recipes.recipes.find(x => x._id === selectedRecipe._id).name
+        }
+      }
+
+      console.log('newRecipeForkedName', newRecipeForkedName())
+
       let newRecipe = {
         name: selectedRecipe.name,
         mlToProduce: selectedRecipe.mlToProduce,
@@ -104,7 +106,8 @@ class RecipeForm extends Component {
         rating: selectedRecipe.rating,
         isForked: isForkedRecipe,
         recipeForkedId: newRecipeForkedId,
-        recipeForkedName: newRecipeForkedName,
+        recipeForkedName: newRecipeForkedName(),
+        isPublic: selectedRecipe.isPublic,
         production: [],
       }
       this.props.addRecipe(newRecipe)
@@ -137,7 +140,8 @@ class RecipeForm extends Component {
   handleCancel = (e) => {
     e.preventDefault();
     if (this.props.mode !== 'CREATE') {
-      this.props.history.push("/recipes");
+      this.props.history.goBack()
+      // this.props.history.push("/recipes");
       this.props.cleanSelectedRecipe()
     } else {
       this.props.handleCloseRecipeForm()
@@ -163,6 +167,7 @@ class RecipeForm extends Component {
     }
 
     const selectedRecipe = this.props.recipes.selectedRecipe
+    const { user } = this.props
 
     return (
       <form>
@@ -258,12 +263,15 @@ class RecipeForm extends Component {
             primary={true}
             onClick={this.handleCancel}
           />
-          <FlatButton
-            label={this.props.mode}
-            primary={true}
-            disabled={false}
-            onClick={this.recipeFormAction}
-          />
+          {user ?
+            <FlatButton
+              label={this.props.mode}
+              primary={true}
+              disabled={false}
+              onClick={this.recipeFormAction}
+            /> :
+            <div></div>
+          }
           {this.props.mode === 'EDIT' ?
             <div>
               <FlatButton

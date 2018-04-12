@@ -24,7 +24,7 @@ class Header extends Component {
   }
 
   render() {
-    console.log('Header', window.location.pathname)
+    // console.log('Header', window.location.pathname)
     return (
       <AppBar
         title={this.renderTitle()}

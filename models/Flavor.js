@@ -17,7 +17,8 @@ const flavorSchema = new Schema({
     minQtyAlertActive: Boolean,
     alertList: Boolean,
     _user: { type: Schema.Types.ObjectId, ref: 'users' },
-    creationDate: Date
+    creationDate: Date,
+    lastUsedDate: Date
 })
 
 mongoose.model('flavors', flavorSchema)

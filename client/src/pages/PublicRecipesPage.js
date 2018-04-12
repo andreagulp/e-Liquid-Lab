@@ -49,7 +49,7 @@ class PublicRecipesPage extends Component {
                     >
                         <RecipeForm
                             recipeid={this.props.match.params.recipeid}
-                            mode="CREATE"
+                            mode="FORK"
                             handleCloseRecipeForm={this.handleCloseRecipeForm}
                         />
                     </Dialog>

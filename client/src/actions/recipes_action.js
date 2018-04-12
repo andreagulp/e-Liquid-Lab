@@ -61,11 +61,11 @@ export const fetchRecipes = () => {
 // };
 
 export const fetchSingleRecipe = recipeId => {
-  console.log('action fetchSingleRecipe is started')
+  // console.log('action fetchSingleRecipe is started')
   return dispatch => {
     const request = axios.get(`/api/recipes/${recipeId}`)
       .then(response => {
-        console.log('action fetchSingleRecipe response is back', response.data)
+        // console.log('action fetchSingleRecipe response is back', response.data)
         return response.data;
       })
       .catch(error => {
@@ -93,11 +93,11 @@ export const fetchSingleRecipe = recipeId => {
 // };
 
 export const addRecipe = recipe => {
-  console.log('action addRecipe is triggered')
+  // console.log('action addRecipe is triggered')
   return dispatch => {
     const request = axios.post('/api/newRecipe', recipe)
       .then(response => {
-        console.log('response addRecipe arrives')
+        // console.log('response addRecipe arrives')
         return response;
       });
 
