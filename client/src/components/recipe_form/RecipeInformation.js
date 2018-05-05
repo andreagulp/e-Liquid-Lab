@@ -68,6 +68,7 @@ class RecipeInformation extends Component {
               onChange={handleFieldChange}
               value={selectedRecipe.name}
               fullWidth={true}
+              errorText={!selectedRecipe.name.length > 0 ? 'This field is required' : ''}
             />
             <TextField
               name="comment"

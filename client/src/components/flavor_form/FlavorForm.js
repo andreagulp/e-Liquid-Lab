@@ -114,6 +114,14 @@ class FlavorForm extends Component {
     }
   }
 
+  enableSubmit = () => {
+    const selectedFlavor = this.props.flavors.selectedFlavor
+    if (!selectedFlavor.name.length > 0 || !selectedFlavor.brand.length > 0) {
+      return true
+    }
+    return false
+  }
+
   render() {
     if (this.props.mode === 'EDIT' && !this.props.flavors.selectedFlavor.name) {
       return (
@@ -143,6 +151,7 @@ class FlavorForm extends Component {
                   dataSource={this.state.brands}
                   onUpdateInput={this.handleBrandChange}
                   searchText={selectedFlavor.brand}
+                  errorText={!selectedFlavor.brand.length > 0 ? 'This field is required' : ''}
                 />
               </Col>
               <Col xs={12} sm={6} md={6} lg={6}>
@@ -152,6 +161,7 @@ class FlavorForm extends Component {
                   floatingLabelText="Enter flavor"
                   onChange={this.handleFieldChange}
                   value={selectedFlavor.name}
+                  errorText={!selectedFlavor.name.length > 0 ? 'This field is required' : ''}
                 />
               </Col>
             </Row>
@@ -236,8 +246,8 @@ class FlavorForm extends Component {
               <FlatButton
                 label={this.props.mode}
                 primary={true}
-                disabled={false}
                 onClick={this.flavorFormAction}
+                disabled={this.enableSubmit()}
               />
               {this.props.mode === 'EDIT' ?
                 <FlatButton

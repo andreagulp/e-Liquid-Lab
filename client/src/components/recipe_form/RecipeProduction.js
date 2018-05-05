@@ -102,6 +102,32 @@ class RecipeProduction extends Component {
     const flavors = this.props.flavors.inventoryFlavors
     const selectedRecipe = this.props.recipes.selectedRecipe
 
+    if (this.props.errorMsg.length > 0) {
+      return (
+        <Row>
+          <p>
+            The flavors listed below are not available in your stock.
+            You are not able to use the "MIX" function.
+            You can replace the flavors with your own or create new
+            flavors first and then replace them.
+            You will need to delete the missing flavor and add new ones
+          </p>
+          <ul>
+            {this.props.errorMsg.map(text => <li>{text}</li>)}
+          </ul>
+          <Col xs={12} sm={12} md={12} lg={12}>
+            <Row end="xs" style={{ margin: "50px 0 30px 0" }}>
+              <FlatButton
+                label="close"
+                primary={false}
+                onClick={this.props.handleCloseProduction}
+              />
+            </Row>
+          </Col>
+        </Row>
+      )
+    }
+
     return (
       <Row>
         <Col xs={12} sm={12} md={12} lg={12}>

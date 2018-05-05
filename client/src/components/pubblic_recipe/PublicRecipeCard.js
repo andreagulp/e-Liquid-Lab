@@ -45,14 +45,6 @@ class PublicRecipeCard extends Component {
                             primary={true}
                         />
                     </Link>
-                    {/* <Link to={`/recipes/fork/${recipe._id}`} style={{ textDecoration: "none" }}>
-                        <FlatButton
-                            label="FORK"
-                            labelPosition="before"
-                            labelStyle={{ color: 'green' }}
-                            icon={<i className="fa fa-code-fork" aria-hidden="true" style={{ color: "green" }} />}
-                        />
-                    </Link> */}
                 </CardActions>
                 <Divider />
             </Card>

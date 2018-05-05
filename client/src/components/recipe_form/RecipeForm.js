@@ -11,6 +11,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Toys from 'material-ui/svg-icons/hardware/toys';
 
 import { addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes } from '../../actions/recipes_action';
+import { fetchFlavors } from '../../actions/flavors_action';
 
 import FormLiquidQty from '../commons/FormLiquidQty';
 import FormBaseVgPg from '../commons/FormBaseVgPg';
@@ -27,13 +28,15 @@ class RecipeForm extends Component {
 
     this.state = {
       openFlavorToRecipeForm: false,
-      openProduction: false
+      openProduction: false,
+      errorMsg: []
     }
   }
 
   componentDidMount = () => {
     if (this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or EDIT then execute
       this.props.fetchSingleRecipe(this.props.recipeid)
+      this.props.fetchFlavors()
     }
   }
 
@@ -85,8 +88,6 @@ class RecipeForm extends Component {
           return this.props.recipes.recipes.find(x => x._id === selectedRecipe._id).name
         }
       }
-
-      console.log('newRecipeForkedName', newRecipeForkedName())
 
       let newRecipe = {
         name: selectedRecipe.name,
@@ -146,22 +147,54 @@ class RecipeForm extends Component {
     }
   }
 
+  enableSubmit = () => {
+    const selectedRecipe = this.props.recipes.selectedRecipe
+    if (!selectedRecipe.name.length > 0) {
+      return true
+    }
+    return false
+  }
+
 
   handleOpenFlavorToRecipeForm = () => { this.setState({ openFlavorToRecipeForm: true }) };
   handleCloseFlavorToRecipeForm = () => { this.setState({ openFlavorToRecipeForm: false }) };
-  handleOpenProduction = () => { this.setState({ openProduction: true }) };
+  handleOpenProduction = () => {
+    this.checkFlavorExist()
+    if (this.state.errorMsg.length > 0) {
+
+    }
+    this.setState({ openProduction: true })
+  };
   handleCloseProduction = () => { this.setState({ openProduction: false }) };
+
+
+  checkFlavorExist = () => {
+    const selectedRecipe = this.props.recipes.selectedRecipe
+    const flavors = this.props.flavors.inventoryFlavors
+    let missingFlavors = []
+
+    selectedRecipe.recipeFlavors.map(recipeFlavor => {
+      let idx = flavors.findIndex(flavor => flavor._id === recipeFlavor.flavorId)
+      if (idx < 0) {
+        missingFlavors = [...missingFlavors, `${recipeFlavor.nameBrand} || ${recipeFlavor.flavorId} not found`]
+      }
+      return missingFlavors
+    })
+    return this.setState({ errorMsg: missingFlavors })
+  }
 
   componentWillUnmount = () => {
     this.props.cleanSelectedRecipe()
   }
 
   render() {
+
     if (this.props.mode !== 'CREATE' && !this.props.recipes.selectedRecipe.recipeFlavors) {
       return (
         <CircularProgress size={60} thickness={7} />
       )
     }
+
 
     const selectedRecipe = this.props.recipes.selectedRecipe
     const { user } = this.props
@@ -264,8 +297,8 @@ class RecipeForm extends Component {
             <FlatButton
               label={this.props.mode}
               primary={true}
-              disabled={false}
               onClick={this.recipeFormAction}
+              disabled={this.enableSubmit()}
             /> :
             <div></div>
           }
@@ -298,6 +331,7 @@ class RecipeForm extends Component {
           <RecipeProduction
             handleCloseProduction={this.handleCloseProduction}
             user={this.props.user}
+            errorMsg={this.state.errorMsg}
           />
         </Dialog>
       </form>
@@ -305,7 +339,7 @@ class RecipeForm extends Component {
   }
 };
 
-const mapStateToProps = (state) => { return { recipes: state.recipes, user: state.user } }
-const mapDispatchToProps = (dispatch) => bindActionCreators({ addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes }, dispatch)
+const mapStateToProps = (state) => { return { recipes: state.recipes, user: state.user, flavors: state.flavors } }
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchFlavors, addRecipe, fetchSingleRecipe, updateRecipe, deleteRecipe, updateRecipeField, cleanSelectedRecipe, fetchRecipes }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeForm)

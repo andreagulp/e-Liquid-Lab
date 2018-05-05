@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import Dialog from 'material-ui/Dialog';
 import CircularProgress from 'material-ui/CircularProgress';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import PublicRecipesList from '../components/pubblic_recipe/PublicRecipesList';
-import RecipeForm from '../components/recipe_form/RecipeForm';
 import { fetchRecipes, fetchPublicRecipes } from '../actions/recipes_action';
 import { fetchUser } from '../actions/user_action';
 
@@ -40,19 +38,6 @@ class PublicRecipesPage extends Component {
                     <Col xs={12} sm={12} md={12} lg={12}>
                         <PublicRecipesList recipes={recipes} />
                     </Col>
-                    <Dialog
-                        title="Add Recipe to Book"
-                        modal={true}
-                        open={this.state.openRecipeForm}
-                        contentStyle={{ width: '98%', maxWidth: '98%', }}
-                        autoScrollBodyContent={true}
-                    >
-                        <RecipeForm
-                            recipeid={this.props.match.params.recipeid}
-                            mode="FORK"
-                            handleCloseRecipeForm={this.handleCloseRecipeForm}
-                        />
-                    </Dialog>
                 </Row>
             </div>
         )
