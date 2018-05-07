@@ -8,6 +8,7 @@ import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 class Landing extends Component {
 
     render() {
+        console.log('env:', process.env.REACT_APP_GOOGLE_AUTH_LINK)
         return (
             <Row>
                 <Col xs={12} sm={12} md={12} lg={12}>
