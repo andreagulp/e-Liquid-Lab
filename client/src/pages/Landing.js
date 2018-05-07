@@ -22,7 +22,7 @@ class Landing extends Component {
                             Login to use the full features
                         </p>
 
-                        <a href={process.env.REACT_APP_GOOGLE_AUTH_LINK} style={{ textDecoration: 'none' }}>
+                        <a href={process.env.REACT_APP_GOOGLE_AUTH_LOGIN} style={{ textDecoration: 'none' }}>
                             <RaisedButton
                                 label="Login to access full features"
                                 labelPosition="after"
