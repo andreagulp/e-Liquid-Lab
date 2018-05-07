@@ -4,6 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Book from 'material-ui/svg-icons/action/book';
 import CardTravel from 'material-ui/svg-icons/action/card-travel';
 import BatteryAlert from 'material-ui/svg-icons/device/battery-alert';
+import ActionHome from 'material-ui/svg-icons/action/home';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
@@ -25,6 +26,9 @@ class Navigation extends Component {
           open={this.props.open}
           onRequestChange={this.props.handleToggle}
         >
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <MenuItem primaryText="Home" leftIcon={<ActionHome />} onClick={this.props.handleClose} />
+          </Link>
           <Link to="/public-recipes" style={{ textDecoration: 'none' }}>
             <MenuItem primaryText="Shared Recipes" leftIcon={<Book />} onClick={this.props.handleClose} />
           </Link>

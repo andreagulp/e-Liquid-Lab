@@ -9,7 +9,7 @@ class Header extends Component {
   renderTitle = () => {
     switch (window.location.pathname) {
       case '/':
-        return 'Shared Recipes'
+        return 'Home'
       case '/public-recipes':
         return 'Shared Recipes'
       case '/recipes':

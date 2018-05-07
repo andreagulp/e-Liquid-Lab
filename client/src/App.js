@@ -16,6 +16,7 @@ import FlavorForm from './components/flavor_form/FlavorForm';
 import RecipeForkPage from './pages/RecipeForkPage';
 import FlavorsAlertPage from './pages/FlavorsAlertPage';
 import PublicRecipesPage from './pages/PublicRecipesPage'
+import Landing from './pages/Landing'
 
 
 class App extends Component {
@@ -64,7 +65,7 @@ class App extends Component {
               <Route path="/flavors" component={FlavorsPage} />
               <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
               <Route path="/createflavor" component={FlavorForm} />
-              <Route path="/" component={PublicRecipesPage} />
+              <Route path="/" component={Landing} />
             </Switch>
           </div>
         </BrowserRouter>
