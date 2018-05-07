@@ -11,14 +11,14 @@ class LogIn extends Component {
         return
       case false:
         return (
-          <a href="/auth/google" style={{ textDecoration: 'none' }}>
+          <a href={process.env.REACT_APP_GOOGLE_AUTH_LINK} style={{ textDecoration: 'none' }}>
             {/* <a href="http://e-liquid-lab.herokuapp.com/auth/google" style={{ textDecoration: 'none' }}> */}
             <MenuItem primaryText="Login" leftIcon={<AccountCircle />} />
           </a>
         )
       default:
         return (
-          <a href="/api/logout" style={{ textDecoration: 'none' }}>
+          <a href={process.env.REACT_APP_GOOGLE_AUTH_LINK} style={{ textDecoration: 'none' }}>
             {/* <a href="http://e-liquid-lab.herokuapp.com/api/logout" style={{ textDecoration: 'none' }}> */}
             <MenuItem primaryText='Logout' leftIcon={<Avatar src={this.props.user.photo} />} />
           </a>
