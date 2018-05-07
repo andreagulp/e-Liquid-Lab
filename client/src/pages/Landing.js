@@ -21,7 +21,7 @@ class Landing extends Component {
                             Login to use the full features
                         </p>
 
-                        <a href="/auth/google" style={{ textDecoration: 'none' }}>
+                        <a href={process.env.REACT_APP_GOOGLE_AUTH_LOGIN} style={{ textDecoration: 'none' }}>
                             <RaisedButton
                                 label="Login to access full features"
                                 labelPosition="after"
@@ -29,14 +29,6 @@ class Landing extends Component {
                                 style={{ textAlign: 'center' }}
                             />
                         </a>
-                        {/* <a href="http://e-liquid-lab.herokuapp.com/auth/google" style={{ textDecoration: 'none' }}>
-                            <RaisedButton
-                                label="Login to access full features"
-                                labelPosition="after"
-                                icon={<AccountCircle />}
-                                style={{ textAlign: 'center' }}
-                            />
-                        </a> */}
                     </div>
                 </div>
             </Row>
