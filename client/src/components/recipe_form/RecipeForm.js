@@ -34,7 +34,7 @@ class RecipeForm extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or EDIT then execute
+    if (this.props.recipeid && this.props.mode !== 'CREATE') { //if mode is FORK or UPDATE then execute
       this.props.fetchSingleRecipe(this.props.recipeid)
       this.props.fetchFlavors()
     }
@@ -74,7 +74,7 @@ class RecipeForm extends Component {
 
   }
   recipeFormAction = (id) => {
-    if (this.props.mode !== 'EDIT') {
+    if (this.props.mode !== 'UPDATE') {
       const selectedRecipe = this.props.recipes.selectedRecipe
       let createdAt = new Date()
       let isForkedRecipe = this.props.mode === 'FORK' ? 'yes' : 'no'
@@ -302,7 +302,7 @@ class RecipeForm extends Component {
             /> :
             <div></div>
           }
-          {this.props.mode === 'EDIT' ?
+          {this.props.mode === 'UPDATE' ?
             <div>
               <FlatButton
                 label="Delete"

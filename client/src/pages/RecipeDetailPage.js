@@ -21,7 +21,7 @@ class RecipeDetailPage extends Component {
             >
               <Col xs={12} sm={12} md={12} lg={12}>
                 <RecipeForm
-                  mode="EDIT"
+                  mode="UPDATE"
                   history={this.props.history}
                   recipeid={this.props.match.params.recipeid}
                 />

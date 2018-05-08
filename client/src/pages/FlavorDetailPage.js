@@ -21,7 +21,7 @@ class FlavorDetailPage extends Component {
             >
               <Col xs={12} sm={12} md={12} lg={12}>
                 <FlavorForm
-                  mode="EDIT"
+                  mode="UPDATE"
                   history={this.props.history}
                   flavorid={this.props.match.params.flavorid}
                 />

@@ -25,7 +25,7 @@ class FlavorForm extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.mode === 'EDIT' && this.props.flavorid) {
+    if (this.props.mode === 'UPDATE' && this.props.flavorid) {
       this.props.fetchSingleFlavor(this.props.flavorid)
     }
     // if (this.props.mode === 'CREATE') { this.setCurrentUser() }
@@ -92,7 +92,7 @@ class FlavorForm extends Component {
       }
       this.props.addFlavor(newFlavor)
       this.handleCancel()
-    } else {                                                //EDIT MODE
+    } else {                                                //UPDATE MODE
       this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, _user: selectedFlavor._user._id, alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false })
       this.props.history.push("/flavors");
     }
@@ -105,7 +105,7 @@ class FlavorForm extends Component {
   }
 
   handleCancel = () => {
-    if (this.props.mode === 'EDIT') {
+    if (this.props.mode === 'UPDATE') {
       this.props.history.push("/flavors");
       this.props.cleanSelectedFlavor()
     } else {
@@ -123,7 +123,7 @@ class FlavorForm extends Component {
   }
 
   render() {
-    if (this.props.mode === 'EDIT' && !this.props.flavors.selectedFlavor.name) {
+    if (this.props.mode === 'UPDATE' && !this.props.flavors.selectedFlavor.name) {
       return (
         <CircularProgress size={60} thickness={7} />
       )
@@ -249,7 +249,7 @@ class FlavorForm extends Component {
                 onClick={this.flavorFormAction}
                 disabled={this.enableSubmit()}
               />
-              {this.props.mode === 'EDIT' ?
+              {this.props.mode === 'UPDATE' ?
                 <FlatButton
                   label="Delete"
                   secondary={true}
