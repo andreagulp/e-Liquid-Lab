@@ -47,18 +47,6 @@ export const fetchRecipes = () => {
     payload: request
   };
 };
-// export const fetchRecipes = () => {
-//   const request = axios
-//     .get(`${recipesUrl}_all_docs?include_docs=true`)
-//     .then(response => {
-//       return response.data.rows.map(x => x.doc);
-//     });
-
-//   return {
-//     type: FETCH_RECIPES,
-//     payload: request
-//   };
-// };
 
 export const fetchSingleRecipe = recipeId => {
   // console.log('action fetchSingleRecipe is started')
@@ -79,18 +67,6 @@ export const fetchSingleRecipe = recipeId => {
     }).then(() => dispatch(fetchFlavors()));
   };
 };
-// export const fetchSingleRecipe = recipeId => {
-//   return dispatch => {
-//     const request = axios.get(`${recipesUrl}${recipeId}`).then(response => {
-//       return response.data;
-//     });
-
-//     return dispatch({
-//       type: FETCH_SINGLE_RECIPE,
-//       payload: request
-//     }).then(() => dispatch(fetchFlavors()));
-//   };
-// };
 
 export const addRecipe = recipe => {
   // console.log('action addRecipe is triggered')
@@ -107,18 +83,6 @@ export const addRecipe = recipe => {
     }).then(() => dispatch(fetchRecipes()));
   };
 };
-// export const addRecipe = recipe => {
-//   return dispatch => {
-//     const request = axios.post(recipesUrl, recipe).then(response => {
-//       return response;
-//     });
-
-//     return dispatch({
-//       type: ADD_RECIPE,
-//       payload: request
-//     }).then(() => dispatch(fetchRecipes()));
-//   };
-// };
 
 export const updateRecipe = (recipeId, newRecipe) => {
   return dispatch => {
@@ -134,21 +98,6 @@ export const updateRecipe = (recipeId, newRecipe) => {
     }).then(() => dispatch(fetchRecipes()));
   };
 };
-// export const updateRecipe = (recipeId, newRecipe) => {
-//   return dispatch => {
-//     const request = axios
-//       .put(`${recipesUrl}${recipeId}`, newRecipe)
-//       .then(response => {
-//         return response;
-//       });
-
-//     return dispatch({
-//       type: UPDATE_RECIPE,
-//       payload: request
-//     }).then(() => dispatch(fetchRecipes()));
-//   };
-// };
-
 
 export const deleteRecipe = (recipeId) => {
   return dispatch => {
@@ -164,20 +113,6 @@ export const deleteRecipe = (recipeId) => {
     }).then(() => dispatch(fetchRecipes()));
   };
 };
-// export const deleteRecipe = (recipeId, recipeRev) => {
-//   return dispatch => {
-//     const request = axios
-//       .delete(`${recipesUrl}${recipeId}?rev=${recipeRev}`)
-//       .then(response => {
-//         return response;
-//       });
-
-//     return dispatch({
-//       type: DELETE_RECIPE,
-//       payload: request
-//     }).then(() => dispatch(fetchRecipes()));
-//   };
-// };
 
 export const updateRecipeField = (value, fieldName) => {
   return {
@@ -201,20 +136,6 @@ export const addFlavorToRecipe = flavor => {
   };
 };
 
-// export const updateRecipeWithProduction = (recipeId, newRecipe) => {
-//   return dispatch => {
-//     const request = axios
-//       .put(`${recipesUrl}${recipeId}`, newRecipe)
-//       .then(response => {
-//         return response;
-//       });
-
-//     return dispatch({
-//       type: UPDATE_RECIPE_WITH_PRODUCTION,
-//       payload: request
-//     }).then(() => dispatch(fetchSingleRecipe(recipeId)));
-//   };
-// };
 
 export const updateRecipeWithProduction = (recipeId, newRecipe) => {
   return dispatch => {
@@ -230,21 +151,6 @@ export const updateRecipeWithProduction = (recipeId, newRecipe) => {
     }).then(() => dispatch(fetchSingleRecipe(recipeId)));
   };
 };
-
-// export const updateRecipeWithProduction = (recipeId, newRecipe) => {
-//   return dispatch => {
-//     const request = axios
-//       .put(`${recipesUrl}${recipeId}`, newRecipe)
-//       .then(response => {
-//         return response;
-//       });
-
-//     return dispatch({
-//       type: UPDATE_RECIPE_WITH_PRODUCTION,
-//       payload: request
-//     }).then(() => dispatch(fetchSingleRecipe(recipeId)));
-//   };
-// };
 
 export const editFlavorToRecipe = (flavorId, perc) => {
   return {

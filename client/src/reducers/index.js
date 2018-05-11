@@ -1,12 +1,14 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import recipes, * as fromRecipes from './recipes_reducer';
 import flavors, * as fromFlavors from './flavors_reducer';
 import user from './user_reducer';
+import reviews from './reviews_reducer';
 
 const rootReducers = combineReducers({
   recipes,
   flavors,
-  user
+  user,
+  reviews
 })
 
 export default rootReducers

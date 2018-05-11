@@ -5,6 +5,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import RecipeForm from '../components/recipe_form/RecipeForm';
+import PublicRecipeReview from '../components/pubblic_recipe/PublicRecipeReview'
 import { fetchSingleRecipe } from '../actions/recipes_action';
 
 class RecipeForkPage extends Component {
@@ -38,6 +39,9 @@ class RecipeForkPage extends Component {
               label="COMMENTS"
               style={{ backgroundColor: "#673AB7" }}
             >
+              <PublicRecipeReview
+                recipeId={this.props.match.params.recipeid}
+              />
             </Tab>
           </Tabs>
         </Col>

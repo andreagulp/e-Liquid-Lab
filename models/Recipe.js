@@ -22,7 +22,7 @@ const recipeSchema = new Schema({
     isForked: String,
     recipeForkedId: String,
     recipeForkedName: String,
-    updateDate: Date
+    updateDate: Date,
 })
 
 mongoose.model('recipes', recipeSchema)

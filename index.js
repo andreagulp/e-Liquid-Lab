@@ -8,6 +8,7 @@ require('./models/User')
 require('./services/passport')
 require('./models/Flavor')
 require('./models/Recipe')
+require('./models/Review')
 
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoUri)
@@ -30,6 +31,7 @@ app.use(passport.session())
 require('./routes/recipeRoutes')(app)
 require('./routes/authRoutes')(app)
 require('./routes/flavorRoutes')(app)
+require('./routes/reviewRoutes')(app)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))

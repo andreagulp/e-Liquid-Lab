@@ -113,7 +113,7 @@ class RecipeProduction extends Component {
             You will need to delete the missing flavor and add new ones
           </p>
           <ul>
-            {this.props.errorMsg.map(text => <li>{text}</li>)}
+            {this.props.errorMsg.map(text => <li key={text}>{text}</li>)}
           </ul>
           <Col xs={12} sm={12} md={12} lg={12}>
             <Row end="xs" style={{ margin: "50px 0 30px 0" }}>
@@ -148,8 +148,8 @@ class RecipeProduction extends Component {
             >
               <TableRow>
                 <TableHeaderColumn style={{ whiteSpace: 'normal', minWidth: "40px" }}>Flavor</TableHeaderColumn>
-                <TableHeaderColumn style={{ width: "35px" }}>Qty Needed</TableHeaderColumn>
-                <TableHeaderColumn style={{ width: "55px" }}>Qty Left</TableHeaderColumn>
+                <TableHeaderColumn style={{ width: "35px" }}>ml Needed</TableHeaderColumn>
+                <TableHeaderColumn style={{ width: "55px" }}>ml Left</TableHeaderColumn>
               </TableRow>
             </TableHeader>
 

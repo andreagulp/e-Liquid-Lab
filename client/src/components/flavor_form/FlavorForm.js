@@ -28,18 +28,7 @@ class FlavorForm extends Component {
     if (this.props.mode === 'UPDATE' && this.props.flavorid) {
       this.props.fetchSingleFlavor(this.props.flavorid)
     }
-    // if (this.props.mode === 'CREATE') { this.setCurrentUser() }
   }
-
-  // setCurrentUser = () => {
-  //   const user = this.props.user
-  //   const currentUser = {
-  //     userId: user.googleId,
-  //     userName: user.name,
-  //     userPhoto: user.photo
-  //   }
-  //   this.props.updateFlavorField(currentUser, 'user')
-  // }
 
   handleFieldChange = (e) => { this.props.updateFlavorField(e.target.value, e.target.name) }
 
