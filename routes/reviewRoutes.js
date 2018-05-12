@@ -5,7 +5,7 @@ const Review = mongoose.model('reviews')
 module.exports = app => {
 
     app.post('/api/newReview', (req, res) => {
-        console.log('server side req.body content', req.body);
+        // console.log('server side req.body content', req.body);
         const review = new Review({
             ...req.body,
             _user: req.user.id,
@@ -22,6 +22,7 @@ module.exports = app => {
         // console.log(id)
         Review.find({ recipeId: id })
             .populate('_user')
+            .sort('-creationDate')
             .exec()
             .then(doc => {
                 // console.log("From database", doc);
