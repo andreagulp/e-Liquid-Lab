@@ -47,7 +47,7 @@ class FormLiquidQty extends Component {
                 top: '10px',
                 right: '0px',
                 fontSize: '10px',
-            },
+            }
         };
 
         if (!this.state.editing) {

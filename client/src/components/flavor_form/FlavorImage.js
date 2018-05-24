@@ -28,7 +28,7 @@ class FlavorImage extends Component {
           </Row>
           <Row end="xs" style={{marginTop: "80px", marginBottom: "40px"}}>
             <FlatButton
-              label="Cancel"
+              label="Back"
               primary={false}
               onClick={closeAddImageDialog}
             />

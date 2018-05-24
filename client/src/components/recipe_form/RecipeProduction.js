@@ -190,7 +190,7 @@ class RecipeProduction extends Component {
         <Col xs={12} sm={12} md={12} lg={12}>
           <Row end="xs" style={{ margin: "50px 0 30px 0" }}>
             <FlatButton
-              label="Cancel"
+              label="Back"
               primary={false}
               onClick={this.props.handleCloseProduction}
             />

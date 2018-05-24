@@ -89,7 +89,7 @@ class FlavorToRecipeForm extends Component {
         </Row>
         <Row end="xs">
           <FlatButton
-            label="Cancel"
+            label="Back"
             primary={true}
             onClick={this.props.handleCloseFlavorToRecipeForm}
           />

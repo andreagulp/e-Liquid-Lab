@@ -289,7 +289,7 @@ class RecipeForm extends Component {
         </Row>
         <Row end="xs" style={{ margin: "10px 0 30px 0" }}>
           <FlatButton
-            label="Cancel"
+            label="Back"
             primary={true}
             onClick={this.handleCancel}
           />
