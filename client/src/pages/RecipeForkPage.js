@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Row, Col } from 'react-flexbox-grid';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import Build from 'material-ui/svg-icons/action/build';
+import Comment from 'material-ui/svg-icons/communication/chat-bubble';
 
 import RecipeForm from '../components/recipe_form/RecipeForm';
 import PublicRecipeReview from '../components/pubblic_recipe/PublicRecipeReview'
@@ -27,6 +29,7 @@ class RecipeForkPage extends Component {
             <Tab
               label="DESIGN"
               style={{ backgroundColor: "#673AB7" }}
+              icon={<Build />}
             >
               <RecipeForm
                 mode="FORK"
@@ -38,6 +41,7 @@ class RecipeForkPage extends Component {
             <Tab
               label="COMMENTS"
               style={{ backgroundColor: "#673AB7" }}
+              icon={<Comment />}
             >
               <PublicRecipeReview
                 recipeId={this.props.match.params.recipeid}

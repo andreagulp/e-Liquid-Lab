@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import Build from 'material-ui/svg-icons/action/build';
 
 import RecipeForm from '../components/recipe_form/RecipeForm';
 import ProductionList from '../components/recipe_detail_page/ProductionList';
@@ -9,15 +10,16 @@ import ProductionListSummary from '../components/recipe_detail_page/ProductionLi
 class RecipeDetailPage extends Component {
 
 
-  render () {
+  render() {
 
     return (
       <Row>
         <Col xs={12} sm={12} md={12} lg={12}>
-          <Tabs style={{marginTop: "10px"}}>
+          <Tabs style={{ marginTop: "10px" }}>
             <Tab
               label="DESIGN"
-              style={{backgroundColor: "#673AB7"}}
+              style={{ backgroundColor: "#673AB7" }}
+              icon={<Build />}
             >
               <Col xs={12} sm={12} md={12} lg={12}>
                 <RecipeForm
@@ -29,19 +31,22 @@ class RecipeDetailPage extends Component {
             </Tab>
             <Tab
               label="PRODUCE"
-              style={{backgroundColor: "#673AB7"}}
+              style={{ backgroundColor: "#673AB7" }}
+              icon={<i className="fa fa-industry" aria-hidden="true" />}
             >
               <ProductionListSummary />
               <ProductionList />
             </Tab>
             <Tab
               label="STEEP"
-                style={{backgroundColor: "#673AB7"}}
-              >
-              </Tab>
-            </Tabs>
-          </Col>
-        </Row>
+              style={{ backgroundColor: "#673AB7" }}
+              icon={<i className="fa fa-flask" aria-hidden="true" />}
+            >
+              Coming soon...
+            </Tab>
+          </Tabs>
+        </Col>
+      </Row>
     )
   }
 };
