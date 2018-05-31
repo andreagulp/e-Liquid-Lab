@@ -17,7 +17,7 @@ class Landing extends Component {
                     <div className="message">
 
                         <h1>eLiquid Lab</h1>
-                        <p>Full Featured application to create and manage your eLiquid Recipe.
+                        <p>Design, Produce and Manage your recipes and flavors.
                             Login to use the full features
                         </p>
 

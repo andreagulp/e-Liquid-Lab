@@ -19,7 +19,7 @@ class Header extends Component {
       case '/flavors-alert-page':
         return 'Flavors Alert'
       default:
-        return this.props.recipes.selectedRecipe.name
+        return this.props.recipes.selectedRecipe.name || `${this.props.flavors.selectedFlavor.name} - ${this.props.flavors.selectedFlavor.brand}`
     }
   }
 
@@ -35,6 +35,6 @@ class Header extends Component {
   }
 };
 
-const mapStateToProps = (state) => { return { user: state.user, recipes: state.recipes } }
+const mapStateToProps = (state) => { return { flavors: state.flavors, user: state.user, recipes: state.recipes } }
 
 export default connect(mapStateToProps, null)(Header);
