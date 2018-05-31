@@ -19,22 +19,22 @@ class Header extends Component {
       case '/flavors-alert-page':
         return 'Flavors Alert'
       default:
-        return window.location.pathname;
+        return this.props.recipes.selectedRecipe.name
     }
   }
 
   render() {
-    // console.log('Header', window.location.pathname)
+    const { user, handleToggle } = this.props
     return (
       <AppBar
         title={this.renderTitle()}
-        onLeftIconButtonTouchTap={this.props.handleToggle}
-        iconElementRight={<LogIn user={this.props.user} />}
+        onLeftIconButtonTouchTap={handleToggle}
+        iconElementRight={<LogIn user={user} />}
       />
     )
   }
 };
 
-const mapStateToProps = (state) => { return { user: state.user } }
+const mapStateToProps = (state) => { return { user: state.user, recipes: state.recipes } }
 
 export default connect(mapStateToProps, null)(Header);
