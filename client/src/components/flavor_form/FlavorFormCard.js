@@ -99,7 +99,7 @@ class FlavorFormCard extends Component {
           title="Add Image to Flavor"
           modal={true}
           open={this.state.addImgOpen}
-          contentStyle={{ height: '48%', maxHeight: '98%', width: '60%', maxWidth: '98%' }}
+          contentStyle={{ height: '98%', maxHeight: '98%', width: '80%', maxWidth: '98%' }}
           autoScrollBodyContent={true}
         >
           <FlavorImage

@@ -52,7 +52,8 @@ class FlavorsPage extends Component {
           title="Add Flavor to Inventory"
           modal={true}
           open={this.state.open}
-          contentStyle={{ height: '98%', maxHeight: '98%', width: '80%', maxWidth: '98%' }}
+          contentStyle={{ width: '98%', maxWidth: '98%', }}
+          // contentStyle={{ height: '98%', maxHeight: '98%', width: '80%', maxWidth: '98%' }}
           autoScrollBodyContent={true}
         >
           <FlavorForm

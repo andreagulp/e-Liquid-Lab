@@ -61,7 +61,11 @@ class FlavorForm extends Component {
 
   flavorFormAction = (id) => {
     const selectedFlavor = this.props.flavors.selectedFlavor
-    let expirationDate = selectedFlavor.expirationDate === null ? Date.now() : selectedFlavor.expirationDate
+    let expirationDate = selectedFlavor.expirationDate
+
+    const alertListQty = selectedFlavor.qty < selectedFlavor.minQtyAlert && selectedFlavor.minQtyAlertActive ? true : false
+    const alertListExpiration = selectedFlavor.expirationDate < Date.now() && selectedFlavor.expirationDateAlertActive ? true : false
+
     if (this.props.mode === 'CREATE') {                      //CREATE MODE
       let newFlavor = {
         brand: selectedFlavor.brand,
@@ -77,12 +81,12 @@ class FlavorForm extends Component {
         minQtyAlert: selectedFlavor.minQtyAlert,
         expirationDateAlertActive: selectedFlavor.expirationDateAlertActive,
         minQtyAlertActive: selectedFlavor.minQtyAlertActive,
-        alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false,
+        alertList: alertListQty || alertListExpiration ? true : false,
       }
       this.props.addFlavor(newFlavor)
       this.handleCancel()
     } else {                                                //UPDATE MODE
-      this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, _user: selectedFlavor._user._id, alertList: selectedFlavor.qty < selectedFlavor.minQtyAlert ? true : false })
+      this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, _user: selectedFlavor._user._id, alertList: alertListQty || alertListExpiration ? true : false })
       this.props.history.push("/flavors");
     }
   }
@@ -120,6 +124,9 @@ class FlavorForm extends Component {
 
     const selectedFlavor = this.props.flavors.selectedFlavor
 
+    // const expirationDateCalculated = selectedFlavor.expirationDate;
+    const expirationDateCalculated = selectedFlavor.expirationDate !== null ? selectedFlavor.expirationDate : new Date(Date.now() + (365 * 24 * 60 * 60 * 1000))
+    console.log('expirationDateCalculated', expirationDateCalculated)
     return (
       <form>
         <Row>
@@ -191,9 +198,10 @@ class FlavorForm extends Component {
               <Col xs={6} sm={6} md={6} lg={6}>
                 <DatePicker
                   hintText="Set Expiration Date"
+                  floatingLabelText="Set Expiration Date"
                   // mode="landscape"
                   onChange={this.handleExpirationDateChange}
-                  value={new Date(selectedFlavor.expirationDate)}
+                  value={new Date(expirationDateCalculated)}
                   fullWidth={true}
                 />
               </Col>
@@ -212,6 +220,7 @@ class FlavorForm extends Component {
                   name="minQtyAlert"
                   type="number"
                   hintText="Enter the minimum quantity to trigger the alert"
+                  floatingLabelText="Enter the minimum quantity to trigger the alert"
                   onChange={this.handleMinQtyChange}
                   value={selectedFlavor.minQtyAlert}
                   fullWidth={true}

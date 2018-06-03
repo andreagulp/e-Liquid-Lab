@@ -47,12 +47,15 @@ class FormLiquidQty extends Component {
                 top: '10px',
                 right: '0px',
                 fontSize: '10px',
+            },
+            controllerBox: {
+                height: '320px'
             }
         };
 
         if (!this.state.editing) {
             return (
-                <div onClick={this.clickToEdit}>
+                <div onClick={this.clickToEdit} style={styles.controllerBox}>
                     <h3>{title}</h3>
                     <RecipeFormChart
                         vg={chartValue}
@@ -64,7 +67,7 @@ class FormLiquidQty extends Component {
         }
 
         return (
-            <div onMouseLeave={this.clickToEdit}>
+            <div onMouseLeave={this.clickToEdit} style={styles.controllerBox}>
                 <h3>{title}</h3>
                 <Row>
                     <Col xs={12} sm={12} md={12} lg={12}>

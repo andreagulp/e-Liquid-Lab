@@ -21,9 +21,9 @@ const initialState = {
     comment: '',
     storageLocation: '',
     expirationDate: null,
-    minQtyAlert: 0,
-    expirationDateAlertActive: false,
-    minQtyAlertActive: false,
+    minQtyAlert: 3,
+    expirationDateAlertActive: true,
+    minQtyAlertActive: true,
     alertList: false,
     user: {}
   }

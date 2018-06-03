@@ -17,14 +17,13 @@ class FormBaseVgPg extends Component {
   }
 
   clickToEdit = () => {
-    if(this.state.editing) {
-      this.setState({editing: false})
-    } else
-    {this.setState({editing: true})}
+    if (this.state.editing) {
+      this.setState({ editing: false })
+    } else { this.setState({ editing: true }) }
   }
 
-  render () {
-    if(!this.props) {
+  render() {
+    if (!this.props) {
       return (
         <CircularProgress size={60} thickness={7} />
       )
@@ -53,12 +52,16 @@ class FormBaseVgPg extends Component {
         right: '0px',
         fontSize: '10px',
       },
+      controllerBox: {
+        height: '320px',
+        alignText: 'center',
+      }
     };
 
-    if(!this.state.editing) {
+    if (!this.state.editing) {
       return (
-        <div onClick={this.clickToEdit}  style={{alignText: 'center'}}>
-          <h4>VG/PG</h4>
+        <div onClick={this.clickToEdit} style={styles.controllerBox} >
+          <h3>VG/PG</h3>
           <RecipeFormChart
             vg={this.props.baseVg}
             pg={this.props.basePg}
@@ -70,8 +73,8 @@ class FormBaseVgPg extends Component {
     }
 
     return (
-      <div onMouseLeave={this.clickToEdit}>
-        <h4>VG/PG</h4>
+      <div onMouseLeave={this.clickToEdit} style={styles.controllerBox}>
+        <h3>VG/PG</h3>
         <Col xs={12} sm={12} md={12} lg={12}>
           <Slider
             min={0}
