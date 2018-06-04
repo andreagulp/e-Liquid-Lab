@@ -49,7 +49,14 @@ class FormLiquidQty extends Component {
                 fontSize: '10px',
             },
             controllerBox: {
-                height: '320px'
+                minHeight: '400px',
+                // height: '400px',
+                // clear: 'both',
+                // top: '-30px',
+                // position: 'static'
+                // overflow: 'hidden',
+                // display: 'block',
+                // margin: 'auto',
             }
         };
 
@@ -81,7 +88,7 @@ class FormLiquidQty extends Component {
                                 <div style={styles.labelStyleOuter}>
                                     <div style={styles.labelStyleInner}>
                                         {mlOfLiquid}ml
-                  </div>
+                                    </div>
                                 </div>
                             }
                         />

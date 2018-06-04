@@ -53,8 +53,18 @@ class FormBaseVgPg extends Component {
         fontSize: '10px',
       },
       controllerBox: {
-        height: '320px',
-        alignText: 'center',
+        minHeight: '400px',
+        // height: '400px',
+        // clear: 'both',
+        // alignText: 'center',
+        // top: '-30px',
+        // position: 'static',
+        // overflow: 'hidden',
+        // display: 'block',
+        // margin: 'auto',
+        // display: 'block',
+        // width: '90%',
+        // margin: 'auto',
       }
     };
 
@@ -75,43 +85,46 @@ class FormBaseVgPg extends Component {
     return (
       <div onMouseLeave={this.clickToEdit} style={styles.controllerBox}>
         <h3>VG/PG</h3>
-        <Col xs={12} sm={12} md={12} lg={12}>
-          <Slider
-            min={0}
-            max={100}
-            step={1}
-            value={this.props.baseVg}
-            onChange={this.props.onBaseVgChange}
-            label={
-              <div style={styles.labelStyleOuter}>
-                <div style={styles.labelStyleInner}>
-                  {this.props.baseVg}VG
-                </div>
-              </div>
-            }
-          />
-        </Col>
         <Row>
-          <Col xs={6} sm={6} md={6} lg={6}>
-            <TextField
-              name="baseVg"
-              type="number"
-              hintText="baseVg"
-              onChange={this.props.onBaseVgChange}
+          <Col xs={12} sm={12} md={12} lg={12}>
+            <Slider
+              min={0}
+              max={100}
+              step={1}
               value={this.props.baseVg}
-              fullWidth={true}
+              onChange={this.props.onBaseVgChange}
+              label={
+                <div style={styles.labelStyleOuter}>
+                  <div style={styles.labelStyleInner}>
+                    {this.props.baseVg}VG
+                </div>
+                </div>
+              }
             />
           </Col>
-          <Col xs={6} sm={6} md={6} lg={6}>
-            <TextField
-              name="basePg"
-              type="number"
-              hintText="basePg"
-              onChange={this.props.onBasePgChange}
-              value={this.props.basePg}
-              fullWidth={true}
-            />
-          </Col>
+          <Row>
+            <Col xs={6} sm={6} md={6} lg={6}>
+              <TextField
+                name="baseVg"
+                type="number"
+                hintText="baseVg"
+                onChange={this.props.onBaseVgChange}
+                value={this.props.baseVg}
+                fullWidth={true}
+              />
+            </Col>
+            <Col xs={6} sm={6} md={6} lg={6}>
+              <TextField
+                name="basePg"
+                type="number"
+                hintText="basePg"
+                onChange={this.props.onBasePgChange}
+                value={this.props.basePg}
+                fullWidth={true}
+              />
+            </Col>
+          </Row>
+
         </Row>
       </div>
     )

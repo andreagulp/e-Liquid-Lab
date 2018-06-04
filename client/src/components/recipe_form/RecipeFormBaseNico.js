@@ -80,8 +80,7 @@ class RecipeFormBaseNico extends Component {
         title="Add Nicotine to Recipe"
         modal={false}
         open={this.state.open}
-        contentStyle={{ height: '98%', maxHeight: '98%', width: '80%', maxWidth: '98%' }}
-        onRequestClose={this.handleClose}
+        contentStyle={{ width: '98%', maxWidth: '98%', }} onRequestClose={this.handleClose}
         autoScrollBodyContent={true}
       >
         <Row>

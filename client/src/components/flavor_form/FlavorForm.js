@@ -127,16 +127,27 @@ class FlavorForm extends Component {
     // const expirationDateCalculated = selectedFlavor.expirationDate;
     const expirationDateCalculated = selectedFlavor.expirationDate !== null ? selectedFlavor.expirationDate : new Date(Date.now() + (365 * 24 * 60 * 60 * 1000))
     console.log('expirationDateCalculated', expirationDateCalculated)
+
+
+    // const styles = {
+    //   wrapperBox: {
+    //     // display: 'block',
+    //     // width: '90%',
+    //     // margin: 'auto',
+    //   }
+    // }
+
+
     return (
       <form>
         <Row>
-          <Col xs={12} sm={12} md={4} lg={4}>
+          <Col xs={12} sm={12} md={12} lg={4}>
             <FlavorFormCard
               flavorid={this.props.flavorid}
               selectedFlavor={selectedFlavor}
             />
           </Col>
-          <Col xs={12} sm={12} md={8} lg={8}>
+          <Col xs={12} sm={12} md={12} lg={8}>
             <Row>
               <Col xs={12} sm={6} md={6} lg={6}>
                 <AutoComplete
