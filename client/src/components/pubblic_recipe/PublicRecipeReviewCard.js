@@ -9,7 +9,6 @@ class PublicRecipeReviewCard extends Component {
         const { review } = this.props
         return (
             <div>
-
                 <Card style={{ boxShadow: 'white' }} >
                     <CardHeader
                         title={review._user.name}

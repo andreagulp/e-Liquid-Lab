@@ -53,18 +53,7 @@ class FormBaseVgPg extends Component {
         fontSize: '10px',
       },
       controllerBox: {
-        minHeight: '400px',
-        // height: '400px',
-        // clear: 'both',
-        // alignText: 'center',
-        // top: '-30px',
-        // position: 'static',
-        // overflow: 'hidden',
-        // display: 'block',
-        // margin: 'auto',
-        // display: 'block',
-        // width: '90%',
-        // margin: 'auto',
+        minHeight: '300px',
       }
     };
 

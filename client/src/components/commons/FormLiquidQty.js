@@ -49,14 +49,7 @@ class FormLiquidQty extends Component {
                 fontSize: '10px',
             },
             controllerBox: {
-                minHeight: '400px',
-                // height: '400px',
-                // clear: 'both',
-                // top: '-30px',
-                // position: 'static'
-                // overflow: 'hidden',
-                // display: 'block',
-                // margin: 'auto',
+                minHeight: '300px',
             }
         };
 

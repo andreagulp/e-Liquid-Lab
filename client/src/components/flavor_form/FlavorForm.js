@@ -123,20 +123,7 @@ class FlavorForm extends Component {
     }
 
     const selectedFlavor = this.props.flavors.selectedFlavor
-
-    // const expirationDateCalculated = selectedFlavor.expirationDate;
     const expirationDateCalculated = selectedFlavor.expirationDate !== null ? selectedFlavor.expirationDate : new Date(Date.now() + (365 * 24 * 60 * 60 * 1000))
-    console.log('expirationDateCalculated', expirationDateCalculated)
-
-
-    // const styles = {
-    //   wrapperBox: {
-    //     // display: 'block',
-    //     // width: '90%',
-    //     // margin: 'auto',
-    //   }
-    // }
-
 
     return (
       <form>
@@ -216,7 +203,7 @@ class FlavorForm extends Component {
                   fullWidth={true}
                 />
               </Col>
-              <Col xs={6} sm={6} md={6} lg={6}>
+              <Col xs={6} sm={6} md={6} lg={6} style={{ marginTop: "20px" }}>
                 <Toggle
                   label="OFF/ON"
                   labelPosition="right"
@@ -230,14 +217,14 @@ class FlavorForm extends Component {
                 <TextField
                   name="minQtyAlert"
                   type="number"
-                  hintText="Enter the minimum quantity to trigger the alert"
-                  floatingLabelText="Enter the minimum quantity to trigger the alert"
+                  hintText="Minimum Quantity (ml) Before Alert"
+                  floatingLabelText="Minimum Quantity (ml) Before Alert"
                   onChange={this.handleMinQtyChange}
                   value={selectedFlavor.minQtyAlert}
                   fullWidth={true}
                 />
               </Col>
-              <Col xs={6} sm={6} md={6} lg={6}>
+              <Col xs={6} sm={6} md={6} lg={6} style={{ marginTop: "20px" }}>
                 <Toggle
                   label="OFF/ON"
                   labelPosition="right"
