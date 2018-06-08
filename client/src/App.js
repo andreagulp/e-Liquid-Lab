@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import CircularProgress from 'material-ui/CircularProgress';
+// import { Grid } from 'react-flexbox-grid';
 
 import { fetchUser } from './actions/user_action'
 import Header from './components/Header';
@@ -42,34 +43,33 @@ class App extends Component {
     }
     // console.log('USER', this.props.user)
     return (
-      <div>
-        <BrowserRouter>
-          <div>
+      <BrowserRouter>
+        <div>
+          {/* <Grid fluid> */}
 
-            <Header
-              handleToggle={this.handleToggle}
-              handleClose={this.handleClose}
-              open={this.state.open}
-            />
-            <Navigation
-              handleToggle={this.handleToggle}
-              handleClose={this.handleClose}
-              open={this.state.open}
-            />
-            <Switch>
-              <Route path="/recipes/fork/:recipeid" component={RecipeForkPage} />
-              <Route path="/flavors/:flavorid" component={FlavorDetailPage} />
-              <Route path="/recipes/:recipeid" component={RecipeDetailPage} />
-              <Route path="/public-recipes" component={PublicRecipesPage} />
-              <Route path="/recipes" component={RecipesPage} />
-              <Route path="/flavors" component={FlavorsPage} />
-              <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
-              <Route path="/createflavor" component={FlavorForm} />
-              <Route path="/" component={Landing} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
+          <Header
+            handleToggle={this.handleToggle}
+            handleClose={this.handleClose}
+            open={this.state.open}
+          />
+          <Navigation
+            handleToggle={this.handleToggle}
+            handleClose={this.handleClose}
+            open={this.state.open}
+          />
+          <Switch>
+            <Route path="/recipes/fork/:recipeid" component={RecipeForkPage} />
+            <Route path="/flavors/:flavorid" component={FlavorDetailPage} />
+            <Route path="/recipes/:recipeid" component={RecipeDetailPage} />
+            <Route path="/public-recipes" component={PublicRecipesPage} />
+            <Route path="/recipes" component={RecipesPage} />
+            <Route path="/flavors" component={FlavorsPage} />
+            <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
+            <Route path="/" component={Landing} />
+          </Switch>
+          {/* </Grid> */}
+        </div>
+      </BrowserRouter>
     )
   }
 };

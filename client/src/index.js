@@ -11,10 +11,8 @@ import './index.css';
 import App from './App';
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, reduxThunk)(createStore)
-// const store = createStore(reducers, {}, applyMiddleware(promiseMiddleware, reduxThunk));
 
 ReactDOM.render(
-  // <Provider store={store}>
   <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
     <MuiThemeProvider>
       <App />
