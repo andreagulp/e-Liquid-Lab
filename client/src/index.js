@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise'
 import reduxThunk from 'redux-thunk';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import reducers from './reducers';
 import './index.css';
@@ -14,8 +13,6 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, reduxThunk)
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
-    <MuiThemeProvider>
-      <App />
-    </MuiThemeProvider>
+    <App />
   </Provider>
   , document.getElementById('root'));

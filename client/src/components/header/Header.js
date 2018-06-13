@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import { connect } from 'react-redux';
 
-import LogIn from './commons/LogIn';
+import LogIn from './LogIn';
 
 class Header extends Component {
 

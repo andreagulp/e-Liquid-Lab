@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
 
-import LogIn from './commons/LogIn';
+import LogIn from './LogIn';
 
 
 class Navigation extends Component {
