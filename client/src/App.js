@@ -1,58 +1,66 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { withRouter } from 'react-router'
-import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import CircularProgress from 'material-ui/CircularProgress';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import { pink500 } from 'material-ui/styles/colors';
+import { connect } from "react-redux";
+import { bindActionCreators, compose } from "redux";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import CircularProgress from "material-ui/CircularProgress";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
+import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
+// import { grey800 } from "material-ui/styles/colors";
+import Paper from "material-ui/Paper";
 
-import { fetchUser } from './actions/user_action'
-import Header from './components/header/Header';
-import Navigation from './components/header/Navigation';
-import RecipesPage from './pages/RecipesPage';
-import FlavorsPage from './pages/FlavorsPage';
-import FlavorDetailPage from './pages/FlavorDetailPage';
-import RecipeDetailPage from './pages/RecipeDetailPage';
-import RecipeForkPage from './pages/RecipeForkPage';
-import FlavorsAlertPage from './pages/FlavorsAlertPage';
-import PublicRecipesPage from './pages/PublicRecipesPage'
-import Landing from './pages/Landing'
+import { fetchUser } from "./actions/user_action";
+import Header from "./components/header/Header";
+import Navigation from "./components/header/Navigation";
+import RecipesPage from "./pages/RecipesPage";
+import FlavorsPage from "./pages/FlavorsPage";
+import FlavorDetailPage from "./pages/FlavorDetailPage";
+import RecipeDetailPage from "./pages/RecipeDetailPage";
+import RecipeForkPage from "./pages/RecipeForkPage";
+import FlavorsAlertPage from "./pages/FlavorsAlertPage";
+import PublicRecipesPage from "./pages/PublicRecipesPage";
+import Landing from "./pages/Landing";
 
-// const muiTheme = getMuiTheme(darkBaseTheme, {
-//   palette: {
-//     // textColor: pink500,
-//   },
-// });
+// const muiTheme = getMuiTheme(
+//   this.props.theme ? darkBaseTheme : lightBaseTheme,
+//   {
+//     palette: {
+//       // textColor: pink500,
+//     }
+//   }
+// );
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       open: false
-    }
+    };
   }
 
   componentDidMount = () => {
-    this.props.fetchUser()
-  }
+    this.props.fetchUser();
+  };
 
   handleToggle = () => this.setState({ open: !this.state.open });
   handleClose = () => this.setState({ open: false });
 
   render() {
     if (!this.props) {
-      return (
-        <CircularProgress size={60} thickness={7} />
-      )
+      return <CircularProgress size={60} thickness={7} />;
     }
+    // style={{ backgroundColor: grey800 }}
+
+    let themeColor = this.props.theme ? darkBaseTheme : lightBaseTheme;
+
     return (
       <BrowserRouter>
-        <MuiThemeProvider>
-          {/* <MuiThemeProvider muiTheme={muiTheme}> */}
-          <div>
+        {/* <MuiThemeProvider> */}
+        <MuiThemeProvider muiTheme={getMuiTheme(themeColor)}>
+          <Paper zDepth={1}>
+            {/* <div> */}
             <Header
               handleToggle={this.handleToggle}
               handleClose={this.handleClose}
@@ -64,7 +72,10 @@ class App extends Component {
               open={this.state.open}
             />
             <Switch>
-              <Route path="/recipes/fork/:recipeid" component={RecipeForkPage} />
+              <Route
+                path="/recipes/fork/:recipeid"
+                component={RecipeForkPage}
+              />
               <Route path="/flavors/:flavorid" component={FlavorDetailPage} />
               <Route path="/recipes/:recipeid" component={RecipeDetailPage} />
               <Route path="/public-recipes" component={PublicRecipesPage} />
@@ -73,17 +84,24 @@ class App extends Component {
               <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
               <Route path="/" component={Landing} />
             </Switch>
-          </div>
+            {/* </div> */}
+          </Paper>
         </MuiThemeProvider>
       </BrowserRouter>
-    )
+    );
   }
-};
+}
 
-const mapStateToProps = (state) => { return { user: state.user } }
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchUser }, dispatch)
+const mapStateToProps = state => {
+  return { user: state.user, theme: state.theme };
+};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchUser }, dispatch);
 
 export default compose(
   // withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(App)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(App);

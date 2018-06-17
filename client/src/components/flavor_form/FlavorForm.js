@@ -1,129 +1,45 @@
-import React, { Component } from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
-import TextField from 'material-ui/TextField';
-import { Row, Col } from 'react-flexbox-grid';
-import FlatButton from 'material-ui/FlatButton';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import CircularProgress from 'material-ui/CircularProgress';
-import DatePicker from 'material-ui/DatePicker';
-import Toggle from 'material-ui/Toggle';
+import React, { Component } from "react";
+import AutoComplete from "material-ui/AutoComplete";
+import TextField from "material-ui/TextField";
+import { Row, Col } from "react-flexbox-grid";
+import CircularProgress from "material-ui/CircularProgress";
+import DatePicker from "material-ui/DatePicker";
+import Toggle from "material-ui/Toggle";
 
-import { addFlavor, fetchSingleFlavor, updateFlavor, deleteFlavor, updateFlavorField, cleanSelectedFlavor } from '../../actions/flavors_action';
-import { BRANDS } from '../../brands_db';
-import FormBaseVgPg from '../../components/commons/FormBaseVgPg';
-import FormLiquidQty from '../../components/commons/FormLiquidQty';
-import FlavorFormCard from './FlavorFormCard';
+import withFlavorFormLogic from "./withFlavorFormLogic";
+import FormBaseVgPg from "../../components/commons/FormBaseVgPg";
+import FormLiquidQty from "../../components/commons/FormLiquidQty";
+import FlavorFormCard from "./FlavorFormCard";
+import FormButtons from "../commons/FormButtons";
 
 class FlavorForm extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      brands: BRANDS,
-    }
-  }
-
-  componentDidMount = () => {
-    if (this.props.mode === 'UPDATE' && this.props.flavorid) {
-      this.props.fetchSingleFlavor(this.props.flavorid)
-    }
-  }
-
-  handleFieldChange = (e) => { this.props.updateFlavorField(e.target.value, e.target.name) }
-
-  handleExpirationAlertChange = (e) => {
-    const selectedFlavor = this.props.flavors.selectedFlavor
-    this.props.updateFlavorField(!selectedFlavor.expirationDateAlertActive, 'expirationDateAlertActive')
-  }
-
-  handleMinQtyAlertChange = (e) => {
-    const selectedFlavor = this.props.flavors.selectedFlavor
-    this.props.updateFlavorField(!selectedFlavor.minQtyAlertActive, 'minQtyAlertActive')
-  }
-
-  handleBrandChange = (value) => { this.props.updateFlavorField(value, 'brand') }
-
-  handleQtyChange = (event, value) => { this.props.updateFlavorField(parseInt(value, 10), 'qty') }
-  handleMinQtyChange = (event, value) => { this.props.updateFlavorField(parseInt(value, 10), 'minQtyAlert') }
-
-  handleExpirationDateChange = (event, date) => { this.props.updateFlavorField(date, 'expirationDate') }
-
-  handleBaseVgChange = (event, value) => {
-    Promise.resolve(this.props.updateFlavorField(parseInt(value, 10), 'baseVg'))
-      .then(this.props.updateFlavorField(100 - value, 'basePg'))
-  }
-
-  handleBasePgChange = (event, value) => {
-    Promise.resolve(this.props.updateFlavorField(parseInt(value, 10), 'basePg'))
-      .then(this.props.updateFlavorField(parseInt((100 - value), 10), 'baseVg'))
-  }
-
-  flavorFormAction = (id) => {
-    const selectedFlavor = this.props.flavors.selectedFlavor
-    let expirationDate = selectedFlavor.expirationDate
-
-    const alertListQty = selectedFlavor.qty < selectedFlavor.minQtyAlert && selectedFlavor.minQtyAlertActive ? true : false
-    const alertListExpiration = selectedFlavor.expirationDate < Date.now() && selectedFlavor.expirationDateAlertActive ? true : false
-
-    if (this.props.mode === 'CREATE') {                      //CREATE MODE
-      let newFlavor = {
-        brand: selectedFlavor.brand,
-        name: selectedFlavor.name,
-        iconUrl: selectedFlavor.iconUrl,
-        qty: selectedFlavor.qty,
-        rating: selectedFlavor.rating,
-        baseVg: selectedFlavor.baseVg,
-        basePg: selectedFlavor.basePg,
-        comment: selectedFlavor.comment,
-        storageLocation: selectedFlavor.storageLocation,
-        expirationDate: expirationDate,
-        minQtyAlert: selectedFlavor.minQtyAlert,
-        expirationDateAlertActive: selectedFlavor.expirationDateAlertActive,
-        minQtyAlertActive: selectedFlavor.minQtyAlertActive,
-        alertList: alertListQty || alertListExpiration ? true : false,
-      }
-      this.props.addFlavor(newFlavor)
-      this.handleCancel()
-    } else {                                                //UPDATE MODE
-      this.props.updateFlavor(selectedFlavor._id, { ...selectedFlavor, _user: selectedFlavor._user._id, alertList: alertListQty || alertListExpiration ? true : false })
-      this.props.history.push("/flavors");
-    }
-  }
-
-  deleteFlavor = () => {
-    const selectedFlavor = this.props.flavors.selectedFlavor
-    this.props.deleteFlavor(selectedFlavor._id, selectedFlavor._rev)
-    this.props.history.push("/flavors");
-  }
-
-  handleCancel = () => {
-    if (this.props.mode === 'UPDATE') {
-      this.props.history.push("/flavors");
-      this.props.cleanSelectedFlavor()
-    } else {
-      this.props.handleClose()
-      this.props.cleanSelectedFlavor()
-    }
-  }
-
-  enableSubmit = () => {
-    const selectedFlavor = this.props.flavors.selectedFlavor
-    if (!selectedFlavor.name.length > 0 || !selectedFlavor.brand.length > 0) {
-      return true
-    }
-    return false
-  }
-
   render() {
-    if (this.props.mode === 'UPDATE' && !this.props.flavors.selectedFlavor.name) {
-      return (
-        <CircularProgress size={60} thickness={7} />
-      )
+    const {
+      handleFieldChange,
+      handleExpirationAlertChange,
+      handleMinQtyAlertChange,
+      handleBrandChange,
+      handleQtyChange,
+      handleMinQtyChange,
+      handleExpirationDateChange,
+      handleBaseVgChange,
+      handleBasePgChange,
+      flavorFormAction,
+      deleteFlavor,
+      handleCancel,
+      enableSubmit,
+      selectedFlavor,
+      brands
+    } = this.props;
+
+    if (this.props.mode === "UPDATE" && !selectedFlavor.name) {
+      return <CircularProgress size={60} thickness={7} />;
     }
 
-    const selectedFlavor = this.props.flavors.selectedFlavor
-    const expirationDateCalculated = selectedFlavor.expirationDate !== null ? selectedFlavor.expirationDate : new Date(Date.now() + (365 * 24 * 60 * 60 * 1000))
+    const expirationDateCalculated =
+      selectedFlavor.expirationDate !== null
+        ? selectedFlavor.expirationDate
+        : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
 
     return (
       <form>
@@ -142,10 +58,14 @@ class FlavorForm extends Component {
                   hintText="Enter Brand"
                   floatingLabelText="Select Brand"
                   filter={AutoComplete.fuzzyFilter}
-                  dataSource={this.state.brands}
-                  onUpdateInput={this.handleBrandChange}
+                  dataSource={brands}
+                  onUpdateInput={handleBrandChange}
                   searchText={selectedFlavor.brand}
-                  errorText={!selectedFlavor.brand.length > 0 ? 'This field is required' : ''}
+                  errorText={
+                    !selectedFlavor.brand.length > 0
+                      ? "This field is required"
+                      : ""
+                  }
                 />
               </Col>
               <Col xs={12} sm={6} md={6} lg={6}>
@@ -153,9 +73,13 @@ class FlavorForm extends Component {
                   name="name"
                   hintText="Enter flavor"
                   floatingLabelText="Enter flavor"
-                  onChange={this.handleFieldChange}
+                  onChange={handleFieldChange}
                   value={selectedFlavor.name}
-                  errorText={!selectedFlavor.name.length > 0 ? 'This field is required' : ''}
+                  errorText={
+                    !selectedFlavor.name.length > 0
+                      ? "This field is required"
+                      : ""
+                  }
                 />
               </Col>
             </Row>
@@ -163,7 +87,7 @@ class FlavorForm extends Component {
               <Col xs={12} sm={12} md={6} lg={6}>
                 <FormLiquidQty
                   mlOfLiquid={selectedFlavor.qty}
-                  handleMlOfLiquidChange={this.handleQtyChange}
+                  handleMlOfLiquidChange={handleQtyChange}
                   chartValue={selectedFlavor.qty}
                   chartLabel="ml"
                   title="Quantity Owned"
@@ -175,8 +99,8 @@ class FlavorForm extends Component {
                   chartValue={selectedFlavor.basePg}
                   basePg={selectedFlavor.basePg}
                   baseVg={selectedFlavor.baseVg}
-                  onBasePgChange={this.handleBasePgChange}
-                  onBaseVgChange={this.handleBaseVgChange}
+                  onBasePgChange={handleBasePgChange}
+                  onBaseVgChange={handleBaseVgChange}
                 />
               </Col>
             </Row>
@@ -186,7 +110,7 @@ class FlavorForm extends Component {
                   name="storageLocation"
                   hintText="Enter Storage Location"
                   floatingLabelText="Enter Storage Location"
-                  onChange={this.handleFieldChange}
+                  onChange={handleFieldChange}
                   value={selectedFlavor.storageLocation}
                   fullWidth={true}
                 />
@@ -198,7 +122,7 @@ class FlavorForm extends Component {
                   hintText="Set Expiration Date"
                   floatingLabelText="Set Expiration Date"
                   // mode="landscape"
-                  onChange={this.handleExpirationDateChange}
+                  onChange={handleExpirationDateChange}
                   value={new Date(expirationDateCalculated)}
                   fullWidth={true}
                 />
@@ -207,7 +131,7 @@ class FlavorForm extends Component {
                 <Toggle
                   label="OFF/ON"
                   labelPosition="right"
-                  onToggle={this.handleExpirationAlertChange}
+                  onToggle={handleExpirationAlertChange}
                   toggled={selectedFlavor.expirationDateAlertActive}
                 />
               </Col>
@@ -219,7 +143,7 @@ class FlavorForm extends Component {
                   type="number"
                   hintText="Minimum Quantity (ml) Before Alert"
                   floatingLabelText="Minimum Quantity (ml) Before Alert"
-                  onChange={this.handleMinQtyChange}
+                  onChange={handleMinQtyChange}
                   value={selectedFlavor.minQtyAlert}
                   fullWidth={true}
                 />
@@ -228,48 +152,25 @@ class FlavorForm extends Component {
                 <Toggle
                   label="OFF/ON"
                   labelPosition="right"
-                  onToggle={this.handleMinQtyAlertChange}
+                  onToggle={handleMinQtyAlertChange}
                   toggled={selectedFlavor.minQtyAlertActive}
                 />
               </Col>
             </Row>
             <Row end="xs" style={{ marginTop: "80px", marginBottom: "40px" }}>
-              <FlatButton
-                label="Back"
-                primary={false}
-                onClick={this.handleCancel}
+              <FormButtons
+                formAction={flavorFormAction}
+                handleCancel={handleCancel}
+                mode={this.props.mode}
+                enableSubmit={enableSubmit}
+                deleteItem={deleteFlavor}
               />
-              <FlatButton
-                label={this.props.mode}
-                primary={true}
-                onClick={this.flavorFormAction}
-                disabled={this.enableSubmit()}
-              />
-              {this.props.mode === 'UPDATE' ?
-                <FlatButton
-                  label="Delete"
-                  secondary={true}
-                  disabled={false}
-                  onClick={this.deleteFlavor}
-                /> : <div></div>
-              }
             </Row>
           </Col>
         </Row>
       </form>
-    )
+    );
   }
-};
+}
 
-const mapStateToProps = (state) => { return { flavors: state.flavors, user: state.user } }
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  addFlavor,
-  fetchSingleFlavor,
-  deleteFlavor,
-  updateFlavor,
-  updateFlavorField,
-  cleanSelectedFlavor,
-}, dispatch)
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(FlavorForm)
+export default withFlavorFormLogic(FlavorForm);
