@@ -26,3 +26,6 @@ export const FETCH_REVIEWS = "FETCH_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";
 
 export const TOGGLE_THEME = "TOGGLE_THEME";
+
+export const SEARCH_FLAVOR = "SEARCH_FLAVOR";
+export const SEARCH_RECIPE = "SEARCH_RECIPE";

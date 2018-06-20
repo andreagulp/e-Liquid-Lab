@@ -8,7 +8,6 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-// import { grey800 } from "material-ui/styles/colors";
 import Paper from "material-ui/Paper";
 
 import { fetchUser } from "./actions/user_action";
@@ -23,15 +22,6 @@ import FlavorsAlertPage from "./pages/FlavorsAlertPage";
 import PublicRecipesPage from "./pages/PublicRecipesPage";
 import Landing from "./pages/Landing";
 
-// const muiTheme = getMuiTheme(
-//   this.props.theme ? darkBaseTheme : lightBaseTheme,
-//   {
-//     palette: {
-//       // textColor: pink500,
-//     }
-//   }
-// );
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -44,31 +34,28 @@ class App extends Component {
     this.props.fetchUser();
   };
 
-  handleToggle = () => this.setState({ open: !this.state.open });
-  handleClose = () => this.setState({ open: false });
+  handleNavigationToggle = () => this.setState({ open: !this.state.open });
+  handleNavigationClose = () => this.setState({ open: false });
 
   render() {
     if (!this.props) {
       return <CircularProgress size={60} thickness={7} />;
     }
-    // style={{ backgroundColor: grey800 }}
 
     let themeColor = this.props.theme ? darkBaseTheme : lightBaseTheme;
 
     return (
       <BrowserRouter>
-        {/* <MuiThemeProvider> */}
         <MuiThemeProvider muiTheme={getMuiTheme(themeColor)}>
           <Paper zDepth={1}>
-            {/* <div> */}
             <Header
-              handleToggle={this.handleToggle}
-              handleClose={this.handleClose}
+              handleNavigationToggle={this.handleNavigationToggle}
+              handleNavigationClose={this.handleNavigationClose}
               open={this.state.open}
             />
             <Navigation
-              handleToggle={this.handleToggle}
-              handleClose={this.handleClose}
+              handleNavigationToggle={this.handleNavigationToggle}
+              handleNavigationClose={this.handleNavigationClose}
               open={this.state.open}
             />
             <Switch>
@@ -84,7 +71,6 @@ class App extends Component {
               <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
               <Route path="/" component={Landing} />
             </Switch>
-            {/* </div> */}
           </Paper>
         </MuiThemeProvider>
       </BrowserRouter>

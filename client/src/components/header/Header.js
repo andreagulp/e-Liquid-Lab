@@ -3,6 +3,8 @@ import AppBar from "material-ui/AppBar";
 import { connect } from "react-redux";
 
 import LogIn from "./LogIn";
+import FlavorsSearchContainer from "../flavors_filter/FlavorsSearchContainer";
+import RecipesSearchContainer from "../recipes_filter/RecipesSearchContainer";
 
 class Header extends Component {
   renderTitle = () => {
@@ -27,13 +29,30 @@ class Header extends Component {
     }
   };
 
+  renderIconElementRight = () => {
+    if (
+      window.location.pathname === "/flavors" ||
+      window.location.pathname === "/flavors-alert-page"
+    ) {
+      return <FlavorsSearchContainer />;
+    }
+
+    if (
+      window.location.pathname === "/public-recipes" ||
+      window.location.pathname === "/recipes"
+    ) {
+      return <RecipesSearchContainer />;
+    }
+    return <LogIn user={this.props.user} />;
+  };
+
   render() {
-    const { user, handleToggle } = this.props;
+    const { handleNavigationToggle } = this.props;
     return (
       <AppBar
         title={this.renderTitle()}
-        onLeftIconButtonTouchTap={handleToggle}
-        iconElementRight={<LogIn user={user} />}
+        onLeftIconButtonTouchTap={handleNavigationToggle}
+        iconElementRight={this.renderIconElementRight()}
       />
     );
   }

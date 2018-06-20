@@ -94,6 +94,7 @@ export default function(ComposedComponent) {
         let newFlavor = {
           brand: selectedFlavor.brand,
           name: selectedFlavor.name,
+          nameBrand: `${selectedFlavor.name} - ${selectedFlavor.brand}`,
           iconUrl: selectedFlavor.iconUrl,
           qty: selectedFlavor.qty,
           rating: selectedFlavor.rating,
@@ -113,6 +114,7 @@ export default function(ComposedComponent) {
         //UPDATE MODE
         this.props.updateFlavor(selectedFlavor._id, {
           ...selectedFlavor,
+          nameBrand: `${selectedFlavor.name} - ${selectedFlavor.brand}`,
           _user: selectedFlavor._user._id,
           alertList: alertListQty || alertListExpiration ? true : false
         });

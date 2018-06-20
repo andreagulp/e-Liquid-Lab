@@ -15,28 +15,33 @@ import ToggleTheme from "./ToggleTheme";
 
 class Navigation extends Component {
   render() {
-    const { user } = this.props;
+    const {
+      user,
+      open,
+      handleNavigationToggle,
+      handleNavigationClose
+    } = this.props;
 
     return (
       <div>
         <Drawer
           docked={false}
           width={200}
-          open={this.props.open}
-          onRequestChange={this.props.handleToggle}
+          open={open}
+          onRequestChange={handleNavigationToggle}
         >
           <Link to="/" style={{ textDecoration: "none" }}>
             <MenuItem
               primaryText="Home"
               leftIcon={<ActionHome />}
-              onClick={this.props.handleClose}
+              onClick={handleNavigationClose}
             />
           </Link>
           <Link to="/public-recipes" style={{ textDecoration: "none" }}>
             <MenuItem
               primaryText="Shared Recipes"
               leftIcon={<LibraryBooks />}
-              onClick={this.props.handleClose}
+              onClick={handleNavigationClose}
             />
           </Link>
           {user ? (
@@ -45,21 +50,21 @@ class Navigation extends Component {
                 <MenuItem
                   primaryText="My Recipes"
                   leftIcon={<Book />}
-                  onClick={this.props.handleClose}
+                  onClick={handleNavigationClose}
                 />
               </Link>
               <Link to="/flavors" style={{ textDecoration: "none" }}>
                 <MenuItem
                   primaryText="My Flavors"
                   leftIcon={<CardTravel />}
-                  onClick={this.props.handleClose}
+                  onClick={handleNavigationClose}
                 />
               </Link>
               <Link to="/flavors-alert-page" style={{ textDecoration: "none" }}>
                 <MenuItem
                   primaryText="My Flavors alert"
                   leftIcon={<BatteryAlert />}
-                  onClick={this.props.handleClose}
+                  onClick={handleNavigationClose}
                 />
               </Link>
             </div>
@@ -69,7 +74,7 @@ class Navigation extends Component {
 
           <Divider />
           <LogIn user={user} />
-          <ToggleTheme handleClose={this.props.handleClose} />
+          <ToggleTheme handleClose={handleNavigationClose} />
         </Drawer>
       </div>
     );

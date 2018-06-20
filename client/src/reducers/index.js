@@ -4,13 +4,17 @@ import flavors, * as fromFlavors from "./flavors_reducer";
 import user from "./user_reducer";
 import reviews from "./reviews_reducer";
 import theme from "./theme_reducer";
+import flavorsFilter from "./flavorsFilter_reducer";
+import recipesFilter from "./recipesFilter_reducer";
 
 const rootReducers = combineReducers({
   recipes,
   flavors,
   user,
   reviews,
-  theme
+  theme,
+  flavorsFilter,
+  recipesFilter
 });
 
 export default rootReducers;

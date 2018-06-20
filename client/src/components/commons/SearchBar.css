@@ -1,0 +1,33 @@
+/*CSS代码片段*/
+
+body {
+  background: #aaa;
+}
+
+/* 搜索框CSS */
+
+#search input[type="text"] {
+  background: url("http://www.gbtags.com/gb/networks/uploads/3d911b0e-f018-4776-a878-aa081f3a305c/search.png")
+    no-repeat 15px 9px #444;
+  border: 0 none;
+  font: normal 12px "microsoft yahei", Arial, sans-serif;
+  color: #fff;
+  width: 0px;
+  padding: 10px 15px 10px 35px;
+  border-radius: 20px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  transition: all 0.8s ease 0s;
+  margin: 0 0 0 0;
+}
+
+/* 定义focus下的CSS，这里定义输入框宽度变化 */
+#search input[type="text"]:focus {
+  background: url("http://www.gbtags.com/gb/networks/uploads/3d911b0e-f018-4776-a878-aa081f3a305c/search.png")
+    no-repeat 12px 9px #efefef;
+  color: #6a6f75;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+  width: 150px;
+}
+
+/* 本例没有加上各种浏览器的兼容前缀 */

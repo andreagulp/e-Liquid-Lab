@@ -1,28 +1,32 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import {getFlavorAlertList} from '../selectors';
-import {fetchFlavors} from '../actions/flavors_action';
-
-import FlavorList from '../components/commons/FlavorsList';
+import { getVisibleFlavorsAlert } from "../selectors/flavorsFiltered_selector";
+import { fetchFlavors } from "../actions/flavors_action";
+import FlavorList from "../components/commons/FlavorsList";
 
 class FlavorAlertsPage extends Component {
   componentDidMount = () => {
-    this.props.fetchFlavors()
-  }
+    this.props.fetchFlavors();
+  };
 
-  render () {
-    // console.log('this.props.flavorAlertList', this.props.flavorAlertList)
+  render() {
     return (
       <div>
-        <FlavorList flavors={this.props.flavorAlertList}/>
+        <FlavorList flavors={this.props.flavorAlertList} />
       </div>
-    )
+    );
   }
+}
+
+const mapStateToProps = state => {
+  return { flavorAlertList: getVisibleFlavorsAlert(state) };
 };
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchFlavors }, dispatch);
 
-const mapStateToProps = (state) => {return {flavorAlertList: getFlavorAlertList(state)}}
-const mapDispatchToProps  = (dispatch) => bindActionCreators({fetchFlavors}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(FlavorAlertsPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlavorAlertsPage);
