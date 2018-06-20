@@ -10,7 +10,7 @@ export const getVisibleFlavors = createSelector(
     console.log(keyword);
     if (keyword && keyword.length > 0) {
       return flavors.filter(flavor =>
-        flavor.nameBrand.toUpperCase().includes(keyword.toUpperCase())
+        flavor.nameBrand.toUpperCase().includes(keyword)
       );
     } else {
       return flavors;
