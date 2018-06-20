@@ -8,6 +8,7 @@ import { getVisibleRecipes } from "../../selectors/recipesFiltered_selector";
 
 class RecipesSearchContainer extends Component {
   handleFieldChange = e => {
+    e.preventDefault();
     this.props.searchRecipe(e.target.value);
   };
 

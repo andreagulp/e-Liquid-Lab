@@ -8,6 +8,7 @@ import { getVisibleFlavors } from "../../selectors/flavorsFiltered_selector";
 
 class FlavorsSearchContainer extends Component {
   handleFieldChange = e => {
+    e.preventDefault();
     this.props.searchFlavor(e.target.value);
   };
 
