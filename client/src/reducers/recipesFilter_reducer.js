@@ -1,6 +1,8 @@
 import { SEARCH_RECIPE } from "../actions/types";
 
-const initialState = "";
+const initialState = {
+  keyword: ""
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
