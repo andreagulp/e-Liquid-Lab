@@ -38,7 +38,7 @@ class PublicRecipesPage extends Component {
     const { recipes } = this.props;
     return (
       <div>
-        <Row>
+        <Row style={{ margin: "0 1px 0 1px" }}>
           <Col xs={12} sm={12} md={12} lg={12}>
             <PublicRecipesList recipes={recipes} />
           </Col>

@@ -21,6 +21,7 @@ import RecipeForkPage from "./pages/RecipeForkPage";
 import FlavorsAlertPage from "./pages/FlavorsAlertPage";
 import PublicRecipesPage from "./pages/PublicRecipesPage";
 import Landing from "./pages/Landing";
+import HelpPage from "./pages/HelpPage";
 
 class App extends Component {
   constructor(props) {
@@ -68,6 +69,7 @@ class App extends Component {
               <Route path="/public-recipes" component={PublicRecipesPage} />
               <Route path="/recipes" component={RecipesPage} />
               <Route path="/flavors" component={FlavorsPage} />
+              <Route path="/help-page" component={HelpPage} />
               <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
               <Route path="/" component={Landing} />
             </Switch>

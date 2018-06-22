@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'react-flexbox-grid';
-import { Tabs, Tab } from 'material-ui/Tabs';
-import Build from 'material-ui/svg-icons/action/build';
+import React, { Component } from "react";
+import { Row, Col } from "react-flexbox-grid";
+import { Tabs, Tab } from "material-ui/Tabs";
+import Build from "material-ui/svg-icons/action/build";
 
-import RecipeForm from '../components/recipe_form/RecipeForm';
-import ProductionList from '../components/recipe_detail_page/ProductionList';
-import ProductionListSummary from '../components/recipe_detail_page/ProductionListSummary';
+import RecipeForm from "../components/recipe_form/RecipeForm";
+import ProductionList from "../components/recipe_detail_page/ProductionList";
+import ProductionListSummary from "../components/recipe_detail_page/ProductionListSummary";
 
 class RecipeDetailPage extends Component {
-
-
   render() {
-
     return (
-      <Row>
+      <Row style={{ margin: "0 1px 0 1px" }}>
         <Col xs={12} sm={12} md={12} lg={12}>
           <Tabs style={{ marginTop: "10px" }}>
             <Tab
@@ -47,8 +44,8 @@ class RecipeDetailPage extends Component {
           </Tabs>
         </Col>
       </Row>
-    )
+    );
   }
-};
+}
 
 export default RecipeDetailPage;

@@ -6,6 +6,7 @@ import LibraryBooks from "material-ui/svg-icons/av/library-books";
 import CardTravel from "material-ui/svg-icons/action/card-travel";
 import BatteryAlert from "material-ui/svg-icons/device/battery-alert";
 import ActionHome from "material-ui/svg-icons/action/home";
+import Help from "material-ui/svg-icons/action/help";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Divider from "material-ui/Divider";
@@ -75,6 +76,13 @@ class Navigation extends Component {
           <Divider />
           <LogIn user={user} />
           <ToggleTheme handleClose={handleNavigationClose} />
+          <Link to="/help-page" style={{ textDecoration: "none" }}>
+            <MenuItem
+              primaryText="Help"
+              leftIcon={<Help />}
+              onClick={handleNavigationClose}
+            />
+          </Link>
         </Drawer>
       </div>
     );

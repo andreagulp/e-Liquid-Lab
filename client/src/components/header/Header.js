@@ -19,6 +19,8 @@ class Header extends Component {
         return "My Flavors";
       case "/flavors-alert-page":
         return "Flavors Alert";
+      case "/help-page":
+        return "Help";
       default:
         return (
           this.props.recipes.selectedRecipe.name ||
