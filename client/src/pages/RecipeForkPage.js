@@ -21,7 +21,7 @@ class RecipeForkPage extends Component {
     }
 
     return (
-      <Row style={{ margin: "0 1px 0 1px" }}>
+      <Row>
         <Col xs={12} sm={12} md={12} lg={12}>
           <Tabs style={{ marginTop: "10px" }}>
             <Tab
