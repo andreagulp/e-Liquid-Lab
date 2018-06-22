@@ -38,7 +38,6 @@ class RecipesPage extends Component {
       return <CircularProgress size={80} thickness={5} />;
     }
     const { user, recipes } = this.props;
-    console.log("from recipe page", recipes);
     return (
       <div>
         <Row>

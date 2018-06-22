@@ -9,7 +9,7 @@ import FlavorUsageList from "../components/flavor_detail_page/FlavorUsageList";
 class FlavorDetailPage extends Component {
   render() {
     return (
-      <Row style={{ margin: "0 1px 0 1px" }}>
+      <Row>
         <Col xs={12} sm={12} md={12} lg={12}>
           <Tabs style={{ marginTop: "5px" }}>
             <Tab

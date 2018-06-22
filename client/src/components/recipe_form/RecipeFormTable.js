@@ -97,11 +97,6 @@ class RecipeFormTable extends Component {
       }
     ];
 
-    // console.log('VG', baseTable[0].perc)
-    // console.log('PG', baseTable[1].perc)
-    // console.log('nico', baseTable[2].perc)
-    // console.log('flavorPercTotal', flavorPercTotal)
-
     // let stackBarData = {
     //   vgTot: baseTable[0].perc,
     //   pgTot: baseTable[1].perc,

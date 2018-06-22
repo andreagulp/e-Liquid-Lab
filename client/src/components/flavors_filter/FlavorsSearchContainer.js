@@ -17,8 +17,6 @@ class FlavorsSearchContainer extends Component {
   };
 
   render() {
-    console.log("visibleFlavors:", this.props.visibleFlavors);
-
     return (
       <SearchBar
         handleFieldChange={this.handleFieldChange}

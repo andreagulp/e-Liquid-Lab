@@ -30,12 +30,10 @@ module.exports = app => {
 
     app.get("/api/flavors/:flavorId", (req, res, next) => {
         const id = req.params.flavorId;
-        // console.log(id)
         Flavor.findById(id)
             .populate('_user')
             .exec()
             .then(doc => {
-                // console.log("From database", doc);
                 if (doc) {
                     res.status(200).json(doc);
                 } else {
@@ -45,13 +43,11 @@ module.exports = app => {
                 }
             })
             .catch(err => {
-                // console.log(err);
                 res.status(500).json({ error: err });
             });
     });
 
     app.patch("/api/flavors/update/:flavorId", (req, res, next) => {
-        // console.log('request arrives to express route')
         const id = req.params.flavorId;
         Flavor.update({ _id: id }, {
             $set: {
@@ -60,7 +56,6 @@ module.exports = app => {
         })
             .exec()
             .then(result => {
-                // console.log(result);
                 res.status(200).json(result);
             })
             .catch(err => {

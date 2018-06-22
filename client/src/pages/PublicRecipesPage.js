@@ -30,8 +30,6 @@ class PublicRecipesPage extends Component {
   };
 
   render() {
-    // console.log(this.props)
-
     if (!this.props.recipes) {
       return <CircularProgress size={80} thickness={5} />;
     }

@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import Slider from 'material-ui-slider-label/Slider';
-import { cyan500 } from 'material-ui/styles/colors';
-import { Row, Col } from 'react-flexbox-grid';
-import TextField from 'material-ui/TextField';
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import CircularProgress from 'material-ui/CircularProgress';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import React, { Component } from "react";
+import Slider from "material-ui-slider-label/Slider";
+import { cyan500 } from "material-ui/styles/colors";
+import { Row, Col } from "react-flexbox-grid";
+import TextField from "material-ui/TextField";
+import Subheader from "material-ui/Subheader";
+import Divider from "material-ui/Divider";
+import CircularProgress from "material-ui/CircularProgress";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 
-import RecipeFormChart from '../commons/RecipeFormChart';
+import RecipeFormChart from "../commons/RecipeFormChart";
 
 class RecipeFormBaseNico extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       open: false
-    }
+    };
   }
 
   handleOpen = () => {
@@ -30,35 +30,33 @@ class RecipeFormBaseNico extends Component {
 
   render() {
     if (!this.props) {
-      return (
-        <CircularProgress size={60} thickness={7} />
-      )
+      return <CircularProgress size={60} thickness={7} />;
     }
 
     const styles = {
       subheader: {
-        textTransform: 'capitalize',
-        textAlign: 'start'
+        textTransform: "capitalize",
+        textAlign: "start"
       },
       labelStyleOuter: {
-        width: '30px',
-        height: '30px',
-        borderRadius: '50% 50% 50% 0',
+        width: "30px",
+        height: "30px",
+        borderRadius: "50% 50% 50% 0",
         background: cyan500,
-        position: 'absolute',
-        transform: 'rotate(-45deg)',
-        top: '-40px',
-        left: '-9px',
+        position: "absolute",
+        transform: "rotate(-45deg)",
+        top: "-40px",
+        left: "-9px"
       },
       labelStyleInner: {
-        transform: 'rotate(45deg)',
-        color: 'white',
-        textAlign: 'center',
-        position: 'relative',
-        top: '10px',
-        right: '0px',
-        fontSize: '10px',
-      },
+        transform: "rotate(45deg)",
+        color: "white",
+        textAlign: "center",
+        position: "relative",
+        top: "10px",
+        right: "0px",
+        fontSize: "10px"
+      }
     };
 
     if (!this.state.open) {
@@ -72,7 +70,7 @@ class RecipeFormBaseNico extends Component {
             centralLabelText="mg"
           />
         </div>
-      )
+      );
     }
 
     return (
@@ -80,7 +78,8 @@ class RecipeFormBaseNico extends Component {
         title="Add Nicotine to Recipe"
         modal={false}
         open={this.state.open}
-        contentStyle={{ width: '98%', maxWidth: '98%', }} onRequestClose={this.handleClose}
+        contentStyle={{ width: "90%", maxWidth: "90%" }}
+        onRequestClose={this.handleClose}
         autoScrollBodyContent={true}
       >
         <Row>
@@ -169,7 +168,6 @@ class RecipeFormBaseNico extends Component {
           </Col>
           <Col xs={6} sm={6} md={4} lg={4}>
             <Row>
-
               <Col xs={6} sm={6} md={6} lg={6}>
                 <TextField
                   name="nicoVg"
@@ -190,20 +188,19 @@ class RecipeFormBaseNico extends Component {
                   fullWidth={true}
                 />
               </Col>
-
             </Row>
           </Col>
         </Row>
         <Row end="xs" style={{ marginTop: "80px", marginBottom: "40px" }}>
           <FlatButton
-            label='UPDATE'
+            label="UPDATE"
             primary={true}
             onClick={this.handleClose}
           />
         </Row>
       </Dialog>
-    )
+    );
   }
-};
+}
 
-export default RecipeFormBaseNico
+export default RecipeFormBaseNico;

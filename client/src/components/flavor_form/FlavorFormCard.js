@@ -1,49 +1,72 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Row, Col } from 'react-flexbox-grid';
-import { Rating } from 'material-ui-rating'
-import { Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import Dialog from 'material-ui/Dialog';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import AddAPhoto from 'material-ui/svg-icons/image/add-a-photo';
-import TextField from 'material-ui/TextField';
-import moment from 'moment'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Row, Col } from "react-flexbox-grid";
+import { Rating } from "material-ui-rating";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from "material-ui/Card";
+import Dialog from "material-ui/Dialog";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import AddAPhoto from "material-ui/svg-icons/image/add-a-photo";
+import TextField from "material-ui/TextField";
+import moment from "moment";
 
-import { fetchSingleFlavor, deleteFlavor, updateFlavor, updateFlavorField } from '../../actions/flavors_action';
-import FlavorImage from './FlavorImage';
-
+import {
+  fetchSingleFlavor,
+  deleteFlavor,
+  updateFlavor,
+  updateFlavorField
+} from "../../actions/flavors_action";
+import FlavorImage from "./FlavorImage";
 
 class FlavorFormCard extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       addImgOpen: false
-    }
+    };
   }
 
-  handleFieldChange = (e) => { this.props.updateFlavorField(e.target.value, e.target.name) }
-  handleRatingChange = (value) => { this.props.updateFlavorField(parseInt(value, 10), 'rating') }
+  handleFieldChange = e => {
+    this.props.updateFlavorField(e.target.value, e.target.name);
+  };
+  handleRatingChange = value => {
+    this.props.updateFlavorField(parseInt(value, 10), "rating");
+  };
 
-  openAddImageDialog = () => { this.setState({ addImgOpen: true }) }
-  closeAddImageDialog = () => { this.setState({ addImgOpen: false }) }
+  openAddImageDialog = () => {
+    this.setState({ addImgOpen: true });
+  };
+  closeAddImageDialog = () => {
+    this.setState({ addImgOpen: false });
+  };
 
   render() {
     if (!this.props.user) {
-      return <div>...loading</div>
+      return <div>...loading</div>;
     }
 
-    const { selectedFlavor, user } = this.props
-    const addImg = 'https://extension.ucsd.edu/UCSDExtension/media/UCSDExtensionsMedia/placeholder.png'
+    const { selectedFlavor, user } = this.props;
+    const addImg =
+      "https://extension.ucsd.edu/UCSDExtension/media/UCSDExtensionsMedia/placeholder.png";
 
     return (
-      <Row style={{ marginTop: "20px" }}>
+      <Row style={{ marginTop: "10px" }}>
         <Col xs={12} sm={12} md={12} lg={12}>
           <Card>
             <CardHeader
               title={user.name || selectedFlavor._user.userName}
-              subtitle={`created on ${moment(selectedFlavor.creationDate).format('DD MMM YYYY')}` || `Today`}
+              subtitle={
+                `created on ${moment(selectedFlavor.creationDate).format(
+                  "DD MMM YYYY"
+                )}` || `Today`
+              }
               avatar={user.photo || selectedFlavor._user.userPhoto}
             />
 
@@ -55,12 +78,19 @@ class FlavorFormCard extends Component {
                 />
               }
             >
-              {
-                selectedFlavor.iconUrl ?
-                  <img src={selectedFlavor.iconUrl} alt={selectedFlavor.name} onClick={this.openAddImageDialog} /> :
-                  <img src={addImg} alt="CLICK TO ADD IMG" onClick={this.openAddImageDialog} />
-              }
-
+              {selectedFlavor.iconUrl ? (
+                <img
+                  src={selectedFlavor.iconUrl}
+                  alt={selectedFlavor.name}
+                  onClick={this.openAddImageDialog}
+                />
+              ) : (
+                <img
+                  src={addImg}
+                  alt="CLICK TO ADD IMG"
+                  onClick={this.openAddImageDialog}
+                />
+              )}
             </CardMedia>
             <FloatingActionButton
               style={{ margin: "-25px 10px 0 0", float: "right" }}
@@ -70,7 +100,7 @@ class FlavorFormCard extends Component {
               <AddAPhoto />
             </FloatingActionButton>
             <CardText>
-              <span style={{ fontFamily: 'Roboto' }}>Rating:</span>
+              <span style={{ fontFamily: "Roboto" }}>Rating:</span>
               <Rating
                 max={5}
                 readOnly={false}
@@ -99,7 +129,7 @@ class FlavorFormCard extends Component {
           title="Add Image to Flavor"
           modal={true}
           open={this.state.addImgOpen}
-          contentStyle={{ width: '98%', maxWidth: '98%', }}
+          contentStyle={{ width: "98%", maxWidth: "98%" }}
           autoScrollBodyContent={true}
         >
           <FlavorImage
@@ -108,11 +138,20 @@ class FlavorFormCard extends Component {
           />
         </Dialog>
       </Row>
-    )
+    );
   }
+}
+
+const mapStateToProps = state => {
+  return { flavors: state.flavors, user: state.user };
 };
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { fetchSingleFlavor, deleteFlavor, updateFlavor, updateFlavorField },
+    dispatch
+  );
 
-const mapStateToProps = (state) => { return { flavors: state.flavors, user: state.user } }
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchSingleFlavor, deleteFlavor, updateFlavor, updateFlavorField }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(FlavorFormCard)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlavorFormCard);

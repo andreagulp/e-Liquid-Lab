@@ -119,7 +119,7 @@ class RecipeForm extends Component {
             </div>
           </Col>
           <Col xs={12} sm={12} md={5} lg={5}>
-            <Row style={{ margin: "30px 0 30px 0" }}>
+            <Row style={{ margin: "30px -15px 30px -15px" }}>
               <RecipeFormTable />
             </Row>
 

@@ -6,7 +6,6 @@ class RecipeProductionChart extends Component {
 
   render () {
     const recipeProductionByMonth = this.props.recipeProductionByMonth
-    // console.log('recipeProductionByMonth', recipeProductionByMonth)
 
     return (
       <div>

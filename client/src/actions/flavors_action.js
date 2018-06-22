@@ -59,12 +59,10 @@ export const addFlavor = flavor => {
 };
 
 export const updateFlavor = (flavorId, newFlavor) => {
-  // console.log('action start')
   return dispatch => {
     const request = axios
       .patch(`/api/flavors/update/${flavorId}`, newFlavor)
       .then(response => {
-        // console.log('action result', response)
         return response;
       });
 

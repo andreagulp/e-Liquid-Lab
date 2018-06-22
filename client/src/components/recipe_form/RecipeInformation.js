@@ -57,7 +57,6 @@ class RecipeInformation extends Component {
       user,
       mode
     } = this.props;
-    // console.log('selectedRecipe', selectedRecipe)
 
     return (
       <Card style={{ boxShadow: "white", width: "100%" }}>

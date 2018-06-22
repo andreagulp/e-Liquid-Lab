@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
-import {BarChart, ResponsiveContainer, Bar, XAxis, YAxis} from 'recharts';
+import React, { Component } from "react";
+import { BarChart, ResponsiveContainer, Bar, XAxis, YAxis } from "recharts";
 
 class RecipeStackChart extends Component {
-
-  render () {
-    const stackBarData = this.props.stackBarData
-    // console.log(stackBarData)
+  render() {
+    const stackBarData = this.props.stackBarData;
     const data = [stackBarData];
 
     return (
-      <ResponsiveContainer width='100%' height='100%' aspect={4.0/1.5}>
+      <ResponsiveContainer width="100%" height="100%" aspect={4.0 / 1.5}>
         <BarChart
           // height={'10px'}
           maxBarSize={30}
           data={data}
-          margin={{top: 0, right: 20, left: 20, bottom: 0}}
+          margin={{ top: 0, right: 20, left: 20, bottom: 0 }}
           layout="vertical"
           label
         >
@@ -27,8 +25,8 @@ class RecipeStackChart extends Component {
           <Bar dataKey="flavorsTot" stackId="a" fill="#AA7F39" />
         </BarChart>
       </ResponsiveContainer>
-    )
+    );
   }
-};
+}
 
-export default RecipeStackChart
+export default RecipeStackChart;

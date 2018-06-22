@@ -16,10 +16,6 @@ class PublicRecipeReview extends Component {
   }
 
   componentDidMount = () => {
-    console.log(
-      "from componentDidMount public recipe review this.props.recipeId",
-      this.props.recipeId
-    );
     this.props.fetchRecipeReview(this.props.recipeId);
   };
 

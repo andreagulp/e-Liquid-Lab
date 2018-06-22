@@ -19,11 +19,9 @@ export const fetchRecipeReview = (recipeId) => {
 }
 
 export const addReview = (review, recipeId) => {
-    // console.log('action addReview is triggered', review, recipeId)
     return dispatch => {
         const request = axios.post('/api/newReview', review)
             .then(response => {
-                // console.log('response addReview arrives', response)
                 return response;
             });
 
@@ -33,6 +31,3 @@ export const addReview = (review, recipeId) => {
         }).then(() => dispatch(fetchRecipeReview(recipeId)));
     };
 };
-
-  //     app.post('/api/newReview', (req, res) => {
-//     app.get("/api/reviews/:recipeId", (req, res, next) => {

@@ -11,7 +11,6 @@ class PublicRecipesList extends Component {
     }
 
     let recipes = this.props.recipes;
-    console.log("recipes from publi recipe list", recipes);
     return (
       <Row>
         {recipes.map(recipe => {

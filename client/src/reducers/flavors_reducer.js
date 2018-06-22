@@ -31,7 +31,6 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  // console.log('f;avpr_reducer', state, action)
   switch (action.type) {
     case FETCH_FLAVORS:
       return { ...state, inventoryFlavors: action.payload };

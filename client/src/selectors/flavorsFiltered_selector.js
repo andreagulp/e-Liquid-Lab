@@ -7,7 +7,6 @@ const getKeyword = state => state.flavorsFilter.keyword;
 export const getVisibleFlavors = createSelector(
   [getFlavors, getKeyword],
   (flavors, keyword) => {
-    console.log(keyword);
     if (keyword && keyword.length > 0) {
       return flavors.filter(flavor =>
         flavor.nameBrand.toUpperCase().includes(keyword.toUpperCase())
@@ -21,7 +20,6 @@ export const getVisibleFlavors = createSelector(
 export const getVisibleFlavorsAlert = createSelector(
   [getFlavorAlertList, getKeyword],
   (flavors, keyword) => {
-    console.log(keyword);
     if (keyword && keyword.length > 0) {
       return flavors.filter(flavor =>
         flavor.nameBrand.toUpperCase().includes(keyword.toUpperCase())

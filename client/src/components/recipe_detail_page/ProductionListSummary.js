@@ -16,8 +16,6 @@ class ProductionListSummary extends Component {
     const recipeMetrics = this.props.recipeProductionMetrics
     const recipeProductionByMonth = this.props.recipeProductionByMonth
 
-    // console.log('recipeProductionByMonth', recipeProductionByMonth)
-
     return (
       <Paper zDepth={1} style={{marginTop: "10px"}}>
         <Row>

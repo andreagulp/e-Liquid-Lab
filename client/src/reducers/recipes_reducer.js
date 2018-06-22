@@ -159,8 +159,5 @@ export const recipeProductionByMonth = state => {
     ]);
   });
 
-  // console.log('monthArray from reducers: ', monthArray);
-  // console.log('monthNumList from reducers: ', monthNumList);
-  // console.log('byMonthMetrics from reducers: ', byMonthMetrics);
   return _.sortBy(byMonthMetrics, 'productionDate');
 };

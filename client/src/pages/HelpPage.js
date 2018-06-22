@@ -7,6 +7,7 @@ class HelpPage extends Component {
         <a
           href="https://github.com/andreagulp/e-Liquid-Lab/issues/new"
           target="_blank"
+          rel="noopener noreferrer"
         >
           {" "}
           <h4>Click here to Report a bug</h4>

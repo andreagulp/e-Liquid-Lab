@@ -17,7 +17,6 @@ class RecipesSearchContainer extends Component {
   };
 
   render() {
-    console.log("visibleRecipes:", this.props.visibleRecipes);
 
     return (
       <SearchBar

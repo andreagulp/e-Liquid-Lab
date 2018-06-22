@@ -11,7 +11,6 @@ import { flavorUsageMetrics } from "../../selectors/flavors_selector";
 class FlavorUsageSummary extends Component {
   render() {
     const flavorMetrics = this.props.flavorMetrics;
-    // console.log('metrics', this.props.flavorMetrics)
     return (
       <Paper zDepth={1} style={{ marginTop: "10px" }}>
         <Row>
