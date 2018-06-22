@@ -9,25 +9,14 @@ export const getVisibleFlavors = createSelector(
   (flavors, keyword) => {
     console.log(keyword);
     if (keyword && keyword.length > 0) {
-      return flavors.filter(flavor => flavor.nameBrand.includes(keyword));
+      return flavors.filter(flavor =>
+        flavor.nameBrand.toUpperCase().includes(keyword.toUpperCase())
+      );
     } else {
       return flavors;
     }
   }
 );
-// export const getVisibleFlavors = createSelector(
-//   [getFlavors, getKeyword],
-//   (flavors, keyword) => {
-//     console.log(keyword);
-//     if (keyword && keyword.length > 0) {
-//       return flavors.filter(flavor =>
-//         flavor.nameBrand.toUpperCase().includes(keyword.toUpperCase())
-//       );
-//     } else {
-//       return flavors;
-//     }
-//   }
-// );
 
 export const getVisibleFlavorsAlert = createSelector(
   [getFlavorAlertList, getKeyword],
