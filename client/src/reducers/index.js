@@ -6,6 +6,7 @@ import reviews from "./reviews_reducer";
 import theme from "./theme_reducer";
 import flavorsFilter from "./flavorsFilter_reducer";
 import recipesFilter from "./recipesFilter_reducer";
+import timers from "./timers_reducer";
 
 const rootReducers = combineReducers({
   recipes,
@@ -14,7 +15,8 @@ const rootReducers = combineReducers({
   reviews,
   theme,
   flavorsFilter,
-  recipesFilter
+  recipesFilter,
+  timers
 });
 
 export default rootReducers;

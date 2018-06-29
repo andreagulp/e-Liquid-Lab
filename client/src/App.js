@@ -8,7 +8,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-import Paper from "material-ui/Paper";
+// import Paper from "material-ui/Paper";
 
 import { fetchUser } from "./actions/user_action";
 import Header from "./components/header/Header";
@@ -48,7 +48,8 @@ class App extends Component {
     return (
       <BrowserRouter>
         <MuiThemeProvider muiTheme={getMuiTheme(themeColor)}>
-          <Paper zDepth={1}>
+          {/* <Paper zDepth={1}> */}
+          <div>
             <Header
               handleNavigationToggle={this.handleNavigationToggle}
               handleNavigationClose={this.handleNavigationClose}
@@ -73,7 +74,8 @@ class App extends Component {
               <Route path="/flavors-alert-page" component={FlavorsAlertPage} />
               <Route path="/" component={Landing} />
             </Switch>
-          </Paper>
+            {/* </Paper> */}
+          </div>
         </MuiThemeProvider>
       </BrowserRouter>
     );

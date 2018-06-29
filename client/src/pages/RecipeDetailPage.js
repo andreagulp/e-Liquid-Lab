@@ -6,6 +6,7 @@ import Build from "material-ui/svg-icons/action/build";
 import RecipeForm from "../components/recipe_form/RecipeForm";
 import ProductionList from "../components/recipe_detail_page/ProductionList";
 import ProductionListSummary from "../components/recipe_detail_page/ProductionListSummary";
+import TimerContainer from "../components/recipe_timer/TimerContainer";
 
 class RecipeDetailPage extends Component {
   render() {
@@ -39,7 +40,7 @@ class RecipeDetailPage extends Component {
               style={{ backgroundColor: "#673AB7" }}
               icon={<i className="fa fa-flask" aria-hidden="true" />}
             >
-              Coming soon...
+              <TimerContainer recipeid={this.props.match.params.recipeid} />
             </Tab>
           </Tabs>
         </Col>

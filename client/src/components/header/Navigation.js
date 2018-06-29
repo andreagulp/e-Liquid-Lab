@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import Divider from "material-ui/Divider";
 
 import LogIn from "./LogIn";
-import ToggleTheme from "./ToggleTheme";
+// import ToggleTheme from "./ToggleTheme";
 
 class Navigation extends Component {
   render() {
@@ -75,7 +75,7 @@ class Navigation extends Component {
 
           <Divider />
           <LogIn user={user} />
-          <ToggleTheme handleClose={handleNavigationClose} />
+          {/* <ToggleTheme handleClose={handleNavigationClose} /> */}
           <Link to="/help-page" style={{ textDecoration: "none" }}>
             <MenuItem
               primaryText="Help"

@@ -11,9 +11,9 @@ import {
   EDIT_FLAVOR_TO_RECIPE,
   DELETE_FLAVOR_TO_RECIPE,
   UPDATE_RECIPE_WITH_PRODUCTION
-} from '../actions/types';
-import moment from 'moment';
-import _ from 'lodash';
+} from "../actions/types";
+import moment from "moment";
+import _ from "lodash";
 
 const initialState = {
   recipes: [],
@@ -27,20 +27,20 @@ const initialState = {
     nicoStrength: 20,
     desiredNicoStrength: 3,
     rating: 0,
-    name: '',
-    comment: '',
+    name: "",
+    comment: "",
     recipeFlavors: [],
     production: [],
     _user: {
-      googleId: '',
-      name: '',
-      photo: ''
+      googleId: "",
+      name: "",
+      photo: ""
     },
     isPublic: false
   }
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case FETCH_RECIPES:
       return { ...state, recipes: action.payload };
@@ -159,5 +159,5 @@ export const recipeProductionByMonth = state => {
     ]);
   });
 
-  return _.sortBy(byMonthMetrics, 'productionDate');
+  return _.sortBy(byMonthMetrics, "productionDate");
 };

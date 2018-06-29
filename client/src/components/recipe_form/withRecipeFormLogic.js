@@ -20,7 +20,8 @@ export default function(ComposedComponent) {
       this.state = {
         openFlavorToRecipeForm: false,
         openProduction: false,
-        errorMsg: []
+        errorMsg: [],
+        openTimerForm: false
       };
     }
     componentDidMount = () => {
@@ -201,6 +202,13 @@ export default function(ComposedComponent) {
       return this.setState({ errorMsg: missingFlavors });
     };
 
+    handleOpenTimer = () => {
+      this.setState({ openTimerForm: true });
+    };
+    handleCloseTimer = () => {
+      this.setState({ openTimerForm: false });
+    };
+
     componentWillUnmount = () => {
       this.props.cleanSelectedRecipe();
     };
@@ -231,6 +239,9 @@ export default function(ComposedComponent) {
           handleCloseProduction={this.handleCloseProduction}
           selectedRecipe={this.props.recipes.selectedRecipe}
           openProduction={this.state.openProduction}
+          handleOpenTimer={this.handleOpenTimer}
+          handleCloseTimer={this.handleCloseTimer}
+          openTimerForm={this.state.openTimerForm}
         />
       );
     }

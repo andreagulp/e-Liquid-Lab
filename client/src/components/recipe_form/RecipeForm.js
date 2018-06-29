@@ -16,6 +16,7 @@ import FlavorToRecipeList from "../recipe_form/FlavorToRecipeList";
 import RecipeProduction from "./RecipeProduction";
 import RecipeInformation from "./RecipeInformation";
 import RecipeFormButtons from "./RecipeFormButtons";
+import TimerForm from "../recipe_timer/TimerForm";
 
 class RecipeForm extends Component {
   render() {
@@ -43,7 +44,10 @@ class RecipeForm extends Component {
       user,
       open,
       errorMsg,
-      openProduction
+      openProduction,
+      handleOpenTimer,
+      handleCloseTimer,
+      openTimerForm
     } = this.props;
 
     if (mode !== "CREATE" && !selectedRecipe.recipeFlavors) {
@@ -145,6 +149,7 @@ class RecipeForm extends Component {
             deleteRecipe={deleteRecipe}
             handleOpenProduction={handleOpenProduction}
             user={user}
+            handleOpenTimer={handleOpenTimer}
           />
         </Row>
         <Dialog
@@ -164,6 +169,21 @@ class RecipeForm extends Component {
             user={user}
             errorMsg={errorMsg}
           />
+        </Dialog>
+
+        <Dialog
+          title="Add Timer"
+          modal={true}
+          open={openTimerForm}
+          contentStyle={{
+            height: "98%",
+            maxHeight: "98%",
+            width: "90%",
+            maxWidth: "98%"
+          }}
+          autoScrollBodyContent={true}
+        >
+          <TimerForm handleCloseTimer={handleCloseTimer} />
         </Dialog>
       </form>
     );

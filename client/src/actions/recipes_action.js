@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   FETCH_RECIPES,
   FETCH_PUBLIC_RECIPES,
@@ -12,19 +12,20 @@ import {
   EDIT_FLAVOR_TO_RECIPE,
   DELETE_FLAVOR_TO_RECIPE,
   UPDATE_RECIPE_WITH_PRODUCTION
-} from './types';
+} from "./types";
 
-import { fetchFlavors } from './flavors_action';
+import { fetchFlavors } from "./flavors_action";
 
 export const fetchPublicRecipes = () => {
-  const request = axios.get(`/api/public-recipes`)
+  const request = axios
+    .get(`/api/public-recipes`)
     .then(response => {
-      return response.data
+      return response.data;
     })
     .catch(error => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return {
     type: FETCH_PUBLIC_RECIPES,
@@ -33,14 +34,15 @@ export const fetchPublicRecipes = () => {
 };
 
 export const fetchRecipes = () => {
-  const request = axios.get(`/api/recipes`)
+  const request = axios
+    .get(`/api/recipes`)
     .then(response => {
-      return response.data
+      return response.data;
     })
     .catch(error => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return {
     type: FETCH_RECIPES,
@@ -50,14 +52,15 @@ export const fetchRecipes = () => {
 
 export const fetchSingleRecipe = recipeId => {
   return dispatch => {
-    const request = axios.get(`/api/recipes/${recipeId}`)
+    const request = axios
+      .get(`/api/recipes/${recipeId}`)
       .then(response => {
         return response.data;
       })
       .catch(error => {
-        console.log(error)
-        return error
-      })
+        console.log(error);
+        return error;
+      });
 
     return dispatch({
       type: FETCH_SINGLE_RECIPE,
@@ -68,10 +71,9 @@ export const fetchSingleRecipe = recipeId => {
 
 export const addRecipe = recipe => {
   return dispatch => {
-    const request = axios.post('/api/newRecipe', recipe)
-      .then(response => {
-        return response;
-      });
+    const request = axios.post("/api/newRecipe", recipe).then(response => {
+      return response;
+    });
 
     return dispatch({
       type: ADD_RECIPE,
@@ -95,7 +97,7 @@ export const updateRecipe = (recipeId, newRecipe) => {
   };
 };
 
-export const deleteRecipe = (recipeId) => {
+export const deleteRecipe = recipeId => {
   return dispatch => {
     const request = axios
       .delete(`/api/recipes/delete/${recipeId}`)
@@ -131,7 +133,6 @@ export const addFlavorToRecipe = flavor => {
     payload: flavor
   };
 };
-
 
 export const updateRecipeWithProduction = (recipeId, newRecipe) => {
   return dispatch => {

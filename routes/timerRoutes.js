@@ -1,39 +1,44 @@
 const mongoose = require("mongoose");
-
-const Recipe = mongoose.model("recipes");
+const Timer = mongoose.model("timers");
 
 module.exports = app => {
-  // add new recipe
-  app.post("/api/newRecipe", (req, res) => {
-    const recipe = new Recipe({
+  // add timer
+  app.post("/api/newTimer", (req, res) => {
+    const timer = new Timer({
       ...req.body,
       _user: req.user.id,
       creationDate: Date.now()
     });
-    recipe.save();
-    res.send("post req done");
+    timer.save();
+    res.send("Timer post req done");
   });
 
-  // fetch all pubblic recipes
-  app.get("/api/public-recipes", (req, res, next) => {
-    Recipe.find({ isPublic: true })
+  // fetch all timers for 1 recipe
+  app.get("/api/timers/:recipeId", (req, res, next) => {
+    const id = req.params.recipeId;
+
+    Timer.find({ recipeId: id })
       .populate("_user")
+      .sort("-creationDate")
       .exec()
-      .then(docs => {
-        res.status(200).json(docs);
+      .then(doc => {
+        // console.log("From database", doc);
+        if (doc) {
+          res.status(200).json(doc);
+        } else {
+          res
+            .status(404)
+            .json({ message: "No valid entry found for provided ID" });
+        }
       })
       .catch(err => {
-        console.log(err);
-        res.status(500).json({
-          error: err
-        });
+        res.status(500).json({ error: err });
       });
   });
 
-  // fetch all recipes that the logged user can see
-  app.get("/api/recipes", (req, res, next) => {
+  app.get("/api/timers", (req, res, next) => {
     if (req.user) {
-      Recipe.find({ _user: req.user.id })
+      Timer.find({ _user: req.user.id })
         .populate("_user")
         .exec()
         .then(docs => {
@@ -50,11 +55,11 @@ module.exports = app => {
     }
   });
 
-  // fetch single recipe
-  app.get("/api/recipes/:recipeId", (req, res, next) => {
-    const id = req.params.recipeId;
+  // fetch single timer
+  app.get("/api/timers/:timerId", (req, res, next) => {
+    const id = req.params.timerId;
     // console.log(id)
-    Recipe.findById(id)
+    Timer.findById(id)
       .populate("_user")
       .exec()
       .then(doc => {
@@ -73,9 +78,10 @@ module.exports = app => {
       });
   });
 
-  app.patch("/api/recipes/update/:recipeId", (req, res, next) => {
-    const id = req.params.recipeId;
-    Recipe.update(
+  // update single timer
+  app.patch("/api/timers/update/:timerId", (req, res, next) => {
+    const id = req.params.timerId;
+    Timer.update(
       { _id: id },
       {
         $set: {
@@ -96,9 +102,10 @@ module.exports = app => {
       });
   });
 
-  app.delete("/api/recipes/delete/:recipeId", (req, res, next) => {
-    const id = req.params.recipeId;
-    Recipe.remove({ _id: id })
+  // Delete single Timer
+  app.delete("/api/timers/delete/:timerId", (req, res, next) => {
+    const id = req.params.timerId;
+    Timer.remove({ _id: id })
       .exec()
       .then(result => {
         res.status(200).json(result);
