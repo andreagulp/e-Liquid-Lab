@@ -11,7 +11,9 @@ import { bindActionCreators } from "redux";
 import {
   updateTimerField,
   cleanSelectedTimer,
-  addTimer
+  addTimer,
+  editSingleRecipeTimer,
+  updateTimer
 } from "../../actions/timers_action";
 import AddStepForm from "./AddStepForm";
 import StepsList from "./StepsList";
@@ -19,6 +21,19 @@ import StepsList from "./StepsList";
 class TimerForm extends Component {
   state = {
     stepDialogOpen: false
+  };
+
+  componentDidMount = () => {
+    // console.log(
+    //   "this.props.recipes.selectedRecipe._id",
+    //   this.props.recipes.selectedRecipe._id
+    // );
+    if (this.props.mode === "UPDATE" && this.props.recipes.selectedRecipe) {
+      this.props.editSingleRecipeTimer(
+        this.props.recipes.selectedRecipe._id,
+        this.props.timerid
+      );
+    }
   };
 
   handleFieldChange = e => {
@@ -40,10 +55,22 @@ class TimerForm extends Component {
       ...this.props.timers.selectedTimer,
       recipeId: selectedRecipe._id,
       timerStart: timerStart,
-      timerEnd: timerEnd
+      timerEnd: timerEnd,
+      recipeTimerName: `${selectedRecipe.name} - ${selectedTimer.name}`
     };
     this.props.addTimer(newTimer, selectedRecipe._id);
     this.props.handleCloseTimer();
+  };
+
+  updateTimer = () => {
+    const { selectedRecipe } = this.props.recipes;
+    const { selectedTimer } = this.props.timers;
+
+    const newTimer = {
+      ...this.props.timers.selectedTimer
+    };
+    this.props.updateTimer(selectedTimer._id, newTimer, selectedRecipe._id);
+    this.props.history.goBack();
   };
 
   enableSubmit = () => {
@@ -66,7 +93,7 @@ class TimerForm extends Component {
   };
 
   render() {
-    const { handleCloseTimer } = this.props;
+    const { handleCloseTimer, mode } = this.props;
     const { selectedTimer } = this.props.timers;
 
     // console.log(selectedTimer);
@@ -133,10 +160,10 @@ class TimerForm extends Component {
         <Row end="xs" style={{ margin: "10px 0 10px 0" }}>
           <FlatButton label="Back" onClick={handleCloseTimer} />
           <FlatButton
-            label="Submit"
+            label={mode}
             primary={true}
             disabled={this.enableSubmit()}
-            onClick={this.addTimer}
+            onClick={mode === "CREATE" ? this.addTimer : this.updateTimer}
           />
         </Row>
       </form>
@@ -149,7 +176,13 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { updateTimerField, cleanSelectedTimer, addTimer },
+    {
+      updateTimerField,
+      cleanSelectedTimer,
+      addTimer,
+      editSingleRecipeTimer,
+      updateTimer
+    },
     dispatch
   );
 

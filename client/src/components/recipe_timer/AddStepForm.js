@@ -16,13 +16,6 @@ import {
 } from "../../actions/timers_action";
 
 class AddStepForm extends Component {
-  // state = {
-  //   name: "",
-  //   startDate: null,
-  //   endDate: null,
-  //   notificationActive: true
-  // };
-
   handleFieldChange = e => {
     this.props.updateStepField(e.target.value, e.target.name);
   };

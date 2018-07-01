@@ -183,7 +183,7 @@ class RecipeForm extends Component {
           }}
           autoScrollBodyContent={true}
         >
-          <TimerForm handleCloseTimer={handleCloseTimer} />
+          <TimerForm handleCloseTimer={handleCloseTimer} mode="CREATE" />
         </Dialog>
       </form>
     );

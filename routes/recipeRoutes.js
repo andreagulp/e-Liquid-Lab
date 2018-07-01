@@ -18,6 +18,7 @@ module.exports = app => {
   app.get("/api/public-recipes", (req, res, next) => {
     Recipe.find({ isPublic: true })
       .populate("_user")
+      .sort("-creationDate")
       .exec()
       .then(docs => {
         res.status(200).json(docs);
@@ -35,6 +36,7 @@ module.exports = app => {
     if (req.user) {
       Recipe.find({ _user: req.user.id })
         .populate("_user")
+        .sort("-creationDate")
         .exec()
         .then(docs => {
           res.status(200).json(docs);

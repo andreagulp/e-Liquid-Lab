@@ -22,6 +22,7 @@ import FlavorsAlertPage from "./pages/FlavorsAlertPage";
 import PublicRecipesPage from "./pages/PublicRecipesPage";
 import Landing from "./pages/Landing";
 import HelpPage from "./pages/HelpPage";
+import EditTimerPage from "./pages/EditTimerPage";
 
 class App extends Component {
   constructor(props) {
@@ -67,6 +68,7 @@ class App extends Component {
               />
               <Route path="/flavors/:flavorid" component={FlavorDetailPage} />
               <Route path="/recipes/:recipeid" component={RecipeDetailPage} />
+              <Route path="/timers/:timerid" component={EditTimerPage} />
               <Route path="/public-recipes" component={PublicRecipesPage} />
               <Route path="/recipes" component={RecipesPage} />
               <Route path="/flavors" component={FlavorsPage} />

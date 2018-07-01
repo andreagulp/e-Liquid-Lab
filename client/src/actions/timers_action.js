@@ -7,7 +7,9 @@ import {
   CLEAN_SELECTED_STEP,
   ADD_TIMER,
   FETCH_SINGLE_RECIPE_TIMER,
-  FETCH_TIMERS
+  FETCH_TIMERS,
+  EDIT_SINGLE_RECIPE_TIMER,
+  UPDATE_TIMER
 } from "./types";
 
 // Timer
@@ -81,7 +83,37 @@ export const fetchSingleRecipeTimer = recipeId => {
   };
 };
 
-// creaate editSingleRecipeTimer
+export const editSingleRecipeTimer = (recipeId, timerId) => {
+  console.log("action recipeId:", recipeId);
+  console.log("action timerId:", timerId);
+  return dispatch => {
+    const request = axios
+      .get(`/api/timers/${recipeId}`)
+      .then(response => {
+        console.log(
+          "action response editSingleRecipeTimer response:",
+          response
+        );
+        return response.data;
+      })
+      .then(filteredResult => {
+        console.log(
+          "action response editSingleRecipeTimer filteredResult:",
+          filteredResult
+        );
+        return filteredResult.filter(x => x._id === timerId)[0];
+      })
+      .catch(error => {
+        console.log(error);
+        return error;
+      });
+
+    return dispatch({
+      type: EDIT_SINGLE_RECIPE_TIMER,
+      payload: request
+    });
+  };
+};
 
 export const fetchTimers = () => {
   const request = axios
@@ -97,5 +129,20 @@ export const fetchTimers = () => {
   return {
     type: FETCH_TIMERS,
     payload: request
+  };
+};
+
+export const updateTimer = (timerId, newTimer, recipeId) => {
+  return dispatch => {
+    const request = axios
+      .patch(`/api/timers/update/${timerId}`, newTimer)
+      .then(response => {
+        return response;
+      });
+
+    return dispatch({
+      type: UPDATE_TIMER,
+      payload: request
+    }).then(() => dispatch(fetchSingleRecipeTimer(recipeId)));
   };
 };

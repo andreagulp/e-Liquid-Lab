@@ -6,7 +6,9 @@ import {
   CLEAN_SELECTED_STEP,
   ADD_TIMER,
   FETCH_SINGLE_RECIPE_TIMER,
-  FETCH_TIMERS
+  FETCH_TIMERS,
+  EDIT_SINGLE_RECIPE_TIMER,
+  UPDATE_TIMER
 } from "../actions/types";
 
 const initialState = {
@@ -16,6 +18,7 @@ const initialState = {
     timerEnd: "",
     recipeId: "",
     name: "",
+    recipeTimerName: "", //use for search function
     description: "",
     creationDate: "",
     user: {
@@ -72,8 +75,12 @@ export default function(state = initialState, action) {
       return state;
     case FETCH_SINGLE_RECIPE_TIMER:
       return { ...state, timersList: action.payload };
+    case EDIT_SINGLE_RECIPE_TIMER:
+      return { ...state, selectedTimer: action.payload };
     case FETCH_TIMERS:
       return { ...state, timersList: action.payload };
+    case UPDATE_TIMER:
+      return { ...state, selectedTimer: initialState.selectedTimer };
     default:
       return state;
   }

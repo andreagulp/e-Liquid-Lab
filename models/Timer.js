@@ -9,6 +9,7 @@ const timerSchema = new Schema({
   timerEnd: Date,
   creationDate: Date,
   name: String,
+  recipeTimerName: String,
   description: String,
   _user: { type: Schema.Types.ObjectId, ref: "users" },
   steps: [timerStepSchema],
