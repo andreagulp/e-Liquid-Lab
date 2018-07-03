@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 
 import RecipesList from "../components/commons/RecipesList";
 import RecipeForm from "../components/recipe_form/RecipeForm";
-import { fetchRecipes } from "../actions/recipes_action";
+import { fetchRecipes, cleanSelectedRecipe } from "../actions/recipes_action";
 import { fetchUser } from "../actions/user_action";
 import { getVisibleRecipes } from "../selectors/recipesFiltered_selector";
 
@@ -27,7 +27,9 @@ class RecipesPage extends Component {
   };
 
   handleOpenRecipeForm = () => {
-    this.setState({ openRecipeForm: true });
+    this.setState({ openRecipeForm: true }, () =>
+      this.props.cleanSelectedRecipe()
+    );
   };
   handleCloseRecipeForm = () => {
     this.setState({ openRecipeForm: false });
@@ -77,7 +79,10 @@ const mapStateToProps = state => {
   return { recipes: getVisibleRecipes(state), user: state.user };
 };
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchRecipes, fetchUser }, dispatch);
+  bindActionCreators(
+    { fetchRecipes, fetchUser, cleanSelectedRecipe },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

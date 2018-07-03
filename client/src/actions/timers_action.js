@@ -9,7 +9,11 @@ import {
   FETCH_SINGLE_RECIPE_TIMER,
   FETCH_TIMERS,
   EDIT_SINGLE_RECIPE_TIMER,
-  UPDATE_TIMER
+  UPDATE_TIMER,
+  GET_STEPID,
+  EDIT_STEP,
+  UPDATE_STEP,
+  REFRESH_STEPS
 } from "./types";
 
 // Timer
@@ -68,7 +72,6 @@ export const fetchSingleRecipeTimer = recipeId => {
     const request = axios
       .get(`/api/timers/${recipeId}`)
       .then(response => {
-        console.log("action response fetchSingleRecipeTimer:", response);
         return response.data;
       })
       .catch(error => {
@@ -84,23 +87,13 @@ export const fetchSingleRecipeTimer = recipeId => {
 };
 
 export const editSingleRecipeTimer = (recipeId, timerId) => {
-  console.log("action recipeId:", recipeId);
-  console.log("action timerId:", timerId);
   return dispatch => {
     const request = axios
       .get(`/api/timers/${recipeId}`)
       .then(response => {
-        console.log(
-          "action response editSingleRecipeTimer response:",
-          response
-        );
         return response.data;
       })
       .then(filteredResult => {
-        console.log(
-          "action response editSingleRecipeTimer filteredResult:",
-          filteredResult
-        );
         return filteredResult.filter(x => x._id === timerId)[0];
       })
       .catch(error => {
@@ -144,5 +137,34 @@ export const updateTimer = (timerId, newTimer, recipeId) => {
       type: UPDATE_TIMER,
       payload: request
     }).then(() => dispatch(fetchSingleRecipeTimer(recipeId)));
+  };
+};
+
+export const getStepId = stepId => {
+  return {
+    type: GET_STEPID,
+    payload: stepId
+  };
+};
+
+export const editStep = stepId => {
+  return {
+    type: EDIT_STEP,
+    payload: stepId
+  };
+};
+export const updateStep = (newStep, stepId) => {
+  return {
+    type: UPDATE_STEP,
+    newStep,
+    stepId
+  };
+};
+
+export const refreshSteps = newSteps => {
+  console.log("here refreshSteps action with new Steps", newSteps);
+  return {
+    type: REFRESH_STEPS,
+    payload: newSteps
   };
 };

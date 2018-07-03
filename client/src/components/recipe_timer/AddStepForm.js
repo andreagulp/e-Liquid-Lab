@@ -12,12 +12,24 @@ import moment from "moment";
 import {
   updateStepField,
   addStepToTimer,
-  cleanSelectedStep
+  cleanSelectedStep,
+  editStep,
+  updateStep,
+  refreshSteps
 } from "../../actions/timers_action";
 
 class AddStepForm extends Component {
+  componentDidMount = () => {
+    if (this.props.mode === "UPDATE") {
+      this.props.editStep(this.props.stepid);
+    }
+  };
+
   handleFieldChange = e => {
     this.props.updateStepField(e.target.value, e.target.name);
+  };
+  handleFieldNumberChange = e => {
+    this.props.updateStepField(parseInt(e.target.value, 10), e.target.name);
   };
 
   handleNotificationActiveChange = () => {
@@ -25,13 +37,18 @@ class AddStepForm extends Component {
     this.props.updateStepField(value, "notificationActive");
   };
 
+  // addStepToTimer needs to trigger recalculation of all steps in the selectedTimer
   addStepToTimer = () => {
     const { selectedStep, selectedTimer } = this.props.timers;
 
     const newStartDate =
       selectedTimer.steps.length === 0
         ? moment(Date.now())
-        : new Date(selectedTimer.steps[selectedTimer.steps.length - 1].endDate);
+        : moment(
+            new Date(
+              selectedTimer.steps[selectedTimer.steps.length - 1].endDate
+            )
+          );
 
     const newEndDate =
       selectedTimer.steps.length === 0
@@ -45,8 +62,8 @@ class AddStepForm extends Component {
     const newStep = {
       ...this.props.timers.selectedStep,
       order: selectedTimer.steps.length + 1,
-      startDate: newStartDate,
-      endDate: newEndDate,
+      startDate: moment(newStartDate).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+      endDate: moment(newEndDate).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
       days: parseInt(this.props.timers.selectedStep.days, 10),
       hours: parseInt(this.props.timers.selectedStep.hours, 10),
       duration: newEndDate.diff(newStartDate, "days", true).toFixed(1)
@@ -55,6 +72,101 @@ class AddStepForm extends Component {
     this.props.addStepToTimer(newStep);
     this.props.handleCloseStep();
   };
+
+  updateStepToTimer = () => {
+    const { selectedStep, selectedTimer } = this.props.timers;
+
+    const newStartDate =
+      selectedStep.order === 1
+        ? moment(selectedStep.startDate)
+        : new Date(
+            selectedTimer.steps.filter(
+              step => step.order === selectedStep.order - 1
+            )[0].endDate
+          );
+
+    const newEndDate =
+      selectedStep.order === 1
+        ? moment(selectedStep.startDate)
+            .add(selectedStep.days, "days")
+            .add(selectedStep.hours, "hours")
+        : moment(
+            new Date(
+              selectedTimer.steps.filter(
+                step => step.order === selectedStep.order - 1
+              )[0].endDate
+            )
+          )
+            .add(selectedStep.days, "days")
+            .add(selectedStep.hours, "hours");
+
+    const newStep = {
+      ...selectedStep,
+      days: parseInt(selectedStep.days, 10),
+      hours: parseInt(selectedStep.hours, 10),
+      startDate: moment(newStartDate).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+      endDate: moment(newEndDate).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+      duration: parseInt(
+        newEndDate.diff(newStartDate, "days", true),
+        10
+      ).toFixed(1)
+    };
+
+    this.props.updateStep(newStep, selectedStep._id);
+    // this.refreshAllSteps();
+    this.props.handleCloseStep();
+  };
+
+  // refreshAllSteps = () => {
+  //   const { selectedTimer, selectedStep } = this.props.timers;
+
+  //   let newStep = [];
+
+  //   const newStartDate = (selectedStep, selectedTimer) =>
+  //     selectedStep.order === 1
+  //       ? moment(selectedStep.startDate)
+  //       : moment(
+  //           new Date(
+  //             selectedTimer.steps.filter(
+  //               step => step.order === selectedStep.order - 1
+  //             )[0].endDate
+  //           )
+  //         );
+
+  //   const newEndDate = (selectedStep, selectedTimer) =>
+  //     selectedStep.order === 1
+  //       ? moment(selectedStep.endDate)
+  //       : moment(
+  //           selectedTimer.steps.filter(
+  //             step => step.order === selectedStep.order - 1
+  //           )[0].endDate
+  //         )
+  //           .add(selectedStep.days, "days")
+  //           .add(selectedStep.hours, "hours");
+
+  //   selectedTimer.steps.forEach(step => {
+  //     newStep = {
+  //       ...step,
+  //       startDate: moment(newStartDate(step, selectedTimer)).format(
+  //         "YYYY-MM-DDTHH:mm:ss.SSSSZ"
+  //       ),
+  //       endDate: moment(newEndDate(step, selectedTimer)).format(
+  //         "YYYY-MM-DDTHH:mm:ss.SSSSZ"
+  //       ),
+  //       days: parseInt(step.days, 10),
+  //       hours: parseInt(step.hours, 10),
+  //       duration: parseInt(
+  //         newEndDate(step, selectedTimer)
+  //           .diff(newStartDate(step, selectedTimer), "days", true)
+  //           .toFixed(1),
+  //         10
+  //       )
+  //     };
+  //     this.props.updateStep(newStep, step._id);
+  //   });
+
+  //   console.log("newStep", newStep);
+  // };
 
   enableSubmit = () => {
     const selectedStep = this.props.timers.selectedStep;
@@ -69,11 +181,12 @@ class AddStepForm extends Component {
   };
 
   render() {
-    const { handleCloseStep } = this.props;
+    const { handleCloseStep, mode } = this.props;
     const { selectedStep } = this.props.timers;
     return (
       <form>
         <Row>
+          <FlatButton label="test" onClick={this.refreshAllSteps} />
           <Col xs={12} sm={12} md={12} lg={12}>
             <TextField
               name="name"
@@ -93,7 +206,7 @@ class AddStepForm extends Component {
               type="number"
               hintText="Enter days"
               floatingLabelText="Enter days"
-              onChange={this.handleFieldChange}
+              onChange={this.handleFieldNumberChange}
               value={selectedStep.days}
               fullWidth={true}
             />
@@ -104,7 +217,7 @@ class AddStepForm extends Component {
               type="number"
               hintText="Enter hours"
               floatingLabelText="Enter hours"
-              onChange={this.handleFieldChange}
+              onChange={this.handleFieldNumberChange}
               value={selectedStep.hours}
               fullWidth={true}
             />
@@ -127,10 +240,12 @@ class AddStepForm extends Component {
         <Row end="xs" style={{ margin: "10px 0 10px 0" }}>
           <FlatButton label="Back" onClick={handleCloseStep} />
           <FlatButton
-            label="Add"
+            label={mode}
             primary={true}
             disabled={this.enableSubmit()}
-            onClick={this.addStepToTimer}
+            onClick={
+              mode === "UPDATE" ? this.updateStepToTimer : this.addStepToTimer
+            }
           />
         </Row>
       </form>
@@ -143,7 +258,14 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { updateStepField, addStepToTimer, cleanSelectedStep },
+    {
+      updateStepField,
+      addStepToTimer,
+      cleanSelectedStep,
+      editStep,
+      updateStep,
+      refreshSteps
+    },
     dispatch
   );
 

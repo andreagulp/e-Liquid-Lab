@@ -11,6 +11,7 @@ import {
   fetchRecipes
 } from "../../actions/recipes_action";
 import { fetchFlavors } from "../../actions/flavors_action";
+import { cleanSelectedTimer } from "../../actions/timers_action";
 
 export default function(ComposedComponent) {
   class withRecipeFormLogic extends Component {
@@ -206,11 +207,15 @@ export default function(ComposedComponent) {
       this.setState({ openTimerForm: true });
     };
     handleCloseTimer = () => {
-      this.setState({ openTimerForm: false });
+      this.setState({ openTimerForm: false }, () =>
+        this.props.cleanSelectedTimer()
+      );
     };
 
     componentWillUnmount = () => {
-      this.props.cleanSelectedRecipe();
+      if (this.props.mode === "CREATE") {
+        this.props.cleanSelectedRecipe();
+      }
     };
 
     render() {
@@ -260,7 +265,8 @@ export default function(ComposedComponent) {
         updateRecipeField,
         cleanSelectedRecipe,
         fetchRecipes,
-        fetchFlavors
+        fetchFlavors,
+        cleanSelectedTimer
       },
       dispatch
     );

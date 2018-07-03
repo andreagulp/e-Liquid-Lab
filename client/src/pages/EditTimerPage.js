@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import TimerForm from "../components/recipe_timer/TimerForm";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { cleanSelectedTimer } from "../actions/timers_action";
 
 class EditTimerPage extends Component {
   handleCloseTimer = () => {
     this.props.history.goBack();
+    this.props.cleanSelectedTimer();
   };
   render() {
-    console.log(
-      "this.props.match.params.timerid",
-      this.props.match.params.timerid
-    );
     return (
       <div>
         <TimerForm
@@ -23,4 +24,13 @@ class EditTimerPage extends Component {
   }
 }
 
-export default EditTimerPage;
+const mapStateToProps = state => {
+  return { timers: state.timers };
+};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ cleanSelectedTimer }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditTimerPage);

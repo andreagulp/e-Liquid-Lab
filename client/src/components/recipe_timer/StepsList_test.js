@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Stepper, Step, StepButton } from "material-ui/Stepper";
-import Remove from "material-ui/svg-icons/content/remove";
-// import ArrowForwardIcon from "material-ui/svg-icons/navigation/arrow-forward";
-// import ArrowDownwardIcon from "material-ui/svg-icons/navigation/arrow-downward";
+import { Stepper, Step, StepButton, StepContent } from "material-ui/Stepper";
+import ArrowForwardIcon from "material-ui/svg-icons/navigation/arrow-forward";
+import ArrowDownwardIcon from "material-ui/svg-icons/navigation/arrow-downward";
+// import StepCard from "./StepCard";
 import Dialog from "material-ui/Dialog";
+import Paper from "material-ui/Paper";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import moment from "moment";
 
 import { getStepId } from "../../actions/timers_action";
 import AddStepForm from "./AddStepForm";
@@ -21,6 +21,12 @@ class StepsList extends Component {
     this.setState({ stepIndex: index });
     this.handleOpenStep();
     this.props.getStepId(stepId);
+
+    //new approach to try:
+    // dispatch an action from here with the recipeid
+    //move dialog out of stepper
+    // addStepForm component this.props.editStep(here will take the state.stepId) to populate the step field
+    // maybe we nbeed to do a Promise to make sure the store is updated before the dialog is open
   };
 
   handleOpenStep = () => {
@@ -38,35 +44,22 @@ class StepsList extends Component {
 
     return (
       <div>
-        <Stepper
-          linear={false}
-          activeStep={stepIndex}
-          orientation={width > 500 ? "horizontal" : "vertical"}
-          connector={width > 500 ? <Remove /> : ""}
-        >
-          {steps.map((step, index) => {
-            const renderDurationFormat = step.duration <= 1 ? "hours" : "days";
-            const renderStepDuration =
-              step.duration <= 1
-                ? moment(step.endDate)
-                    .diff(moment(step.startDate), "hours", true)
-                    .toFixed(0)
-                : step.duration;
+        {steps.map((step, index) => {
+          const renderDurationFormat = step.duration < 1 ? "hours" : "days";
+          const renderStep = ` ${step.name} (${
+            step.duration < 1 ? parseInt(step.duration * 24, 10) : step.duration
+          } ${renderDurationFormat} ) `;
+          return (
+            <Paper
+              zDepth={1}
+              key={index}
+              onClick={() => this.handleStepClick(index, step._id)}
+            >
+              {renderStep}
+            </Paper>
+          );
+        })}
 
-            const renderStep = ` ${
-              step.name
-            } (${renderStepDuration} ${renderDurationFormat} ) `;
-            return (
-              <Step key={index}>
-                <StepButton
-                  onClick={() => this.handleStepClick(index, step._id)}
-                >
-                  {renderStep}
-                </StepButton>
-              </Step>
-            );
-          })}
-        </Stepper>
         <Dialog
           title="Add Step"
           modal={true}

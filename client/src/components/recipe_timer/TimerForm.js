@@ -7,27 +7,27 @@ import ContentAdd from "material-ui/svg-icons/content/add";
 import Dialog from "material-ui/Dialog";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 
 import {
   updateTimerField,
   cleanSelectedTimer,
   addTimer,
   editSingleRecipeTimer,
-  updateTimer
+  updateTimer,
+  updateStep,
+  refreshSteps
 } from "../../actions/timers_action";
 import AddStepForm from "./AddStepForm";
 import StepsList from "./StepsList";
 
 class TimerForm extends Component {
   state = {
-    stepDialogOpen: false
+    stepDialogOpen: false,
+    confirmDialogOpen: false
   };
 
   componentDidMount = () => {
-    // console.log(
-    //   "this.props.recipes.selectedRecipe._id",
-    //   this.props.recipes.selectedRecipe._id
-    // );
     if (this.props.mode === "UPDATE" && this.props.recipes.selectedRecipe) {
       this.props.editSingleRecipeTimer(
         this.props.recipes.selectedRecipe._id,
@@ -45,7 +45,10 @@ class TimerForm extends Component {
     const { selectedTimer } = this.props.timers;
 
     const timerStart = selectedTimer.steps.reduce(
-      (a, b) => (a.startDate < b.startDate ? a.startDate : b.startDate)
+      (a, b) =>
+        moment(a.startDate).isBefore(moment(b.startDate))
+          ? a.startDate
+          : b.startDate
     );
     const timerEnd = selectedTimer.steps.reduce(
       (a, b) => (a.endDate > b.endDate ? a.endDate : b.endDate)
@@ -54,23 +57,79 @@ class TimerForm extends Component {
     const newTimer = {
       ...this.props.timers.selectedTimer,
       recipeId: selectedRecipe._id,
-      timerStart: timerStart,
-      timerEnd: timerEnd,
+      timerStart: moment(timerStart).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+      timerEnd: moment(timerEnd).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
       recipeTimerName: `${selectedRecipe.name} - ${selectedTimer.name}`
     };
     this.props.addTimer(newTimer, selectedRecipe._id);
     this.props.handleCloseTimer();
+    this.props.cleanSelectedTimer();
   };
 
   updateTimer = () => {
     const { selectedRecipe } = this.props.recipes;
     const { selectedTimer } = this.props.timers;
 
+    const timerStart = selectedTimer.steps.reduce(
+      // (a, b) =>
+      //   moment(a.startDate).isBefore(moment(b.startDate))
+      //     ? a.startDate
+      //     : b.startDate
+      (a, b) => (a.startDate < b.startDate ? a.startDate : b.startDate)
+    );
+    const timerEnd = selectedTimer.steps.reduce(
+      (a, b) => (a.endDate > b.endDate ? a.endDate : b.endDate)
+    );
+
     const newTimer = {
-      ...this.props.timers.selectedTimer
+      ...this.props.timers.selectedTimer,
+      timerStart: timerStart,
+      timerEnd: timerEnd,
+      recipeTimerName: `${selectedRecipe.name} - ${selectedTimer.name}`
     };
+
     this.props.updateTimer(selectedTimer._id, newTimer, selectedRecipe._id);
     this.props.history.goBack();
+  };
+
+  refreshAllSteps = () => {
+    const { selectedTimer } = this.props.timers;
+    console.log("refreshAllSteps selectedTimer", selectedTimer);
+
+    let newSteps = [];
+
+    const newStartDate = (step, newSteps) =>
+      step.order === 1
+        ? step.startDate
+        : newSteps.filter(newStep => newStep.order === step.order - 1)[0]
+            .endDate;
+
+    const newEndDate = (step, newSteps) =>
+      step.order === 1
+        ? step.endDate
+        : moment(
+            newSteps.filter(newStep => newStep.order === step.order - 1)[0]
+              .endDate
+          )
+            .add(step.days, "days")
+            .add(step.hours, "hours");
+
+    selectedTimer.steps.forEach(step => {
+      newSteps = [
+        ...newSteps,
+        {
+          ...step,
+          startDate: moment(newStartDate(step, newSteps)).format(
+            "YYYY-MM-DDTHH:mm:ss.SSSSZ"
+          ),
+          endDate: moment(newEndDate(step, newSteps)).format(
+            "YYYY-MM-DDTHH:mm:ss.SSSSZ"
+          )
+        }
+      ];
+    });
+    console.log("refreshAllSteps newSteps", newSteps);
+    this.props.refreshSteps(newSteps);
   };
 
   enableSubmit = () => {
@@ -88,15 +147,21 @@ class TimerForm extends Component {
     this.setState({ stepDialogOpen: false });
   };
 
-  componentWillUnmount = () => {
-    this.props.cleanSelectedTimer();
+  handleConfirmDialogOpen = () => {
+    this.setState({ confirmDialogOpen: true }, () => this.refreshAllSteps());
   };
+  handleConfirmDialogClose = () => {
+    this.setState({ confirmDialogOpen: false });
+  };
+
+  // componentWillUnmount = () => {
+  //   this.props.cleanSelectedTimer();
+  // };
 
   render() {
     const { handleCloseTimer, mode } = this.props;
     const { selectedTimer } = this.props.timers;
 
-    // console.log(selectedTimer);
     return (
       <form>
         <Row>
@@ -149,7 +214,10 @@ class TimerForm extends Component {
               }}
               autoScrollBodyContent={true}
             >
-              <AddStepForm handleCloseStep={this.handleCloseStep} />
+              <AddStepForm
+                handleCloseStep={this.handleCloseStep}
+                mode="CREATE"
+              />
             </Dialog>
           </Col>
         </Row>
@@ -159,12 +227,36 @@ class TimerForm extends Component {
 
         <Row end="xs" style={{ margin: "10px 0 10px 0" }}>
           <FlatButton label="Back" onClick={handleCloseTimer} />
+          {/* <FlatButton label="test refresh" onClick={this.refreshAllSteps} /> */}
           <FlatButton
             label={mode}
             primary={true}
             disabled={this.enableSubmit()}
-            onClick={mode === "CREATE" ? this.addTimer : this.updateTimer}
+            onClick={this.handleConfirmDialogOpen}
           />
+
+          <Dialog
+            title={`CONFIRM ${mode}`}
+            modal={false}
+            open={this.state.confirmDialogOpen}
+            onRequestClose={this.handleConfirmDialogClose}
+            contentStyle={{
+              height: "100%",
+              maxHeight: "100%",
+              width: "85%",
+              maxWidth: "98%"
+            }}
+            autoScrollBodyContent={true}
+          >
+            <Row end="xs" style={{ margin: "10px 0 10px 0" }}>
+              <FlatButton
+                label={mode}
+                primary={true}
+                disabled={this.enableSubmit()}
+                onClick={mode === "CREATE" ? this.addTimer : this.updateTimer}
+              />
+            </Row>
+          </Dialog>
         </Row>
       </form>
     );
@@ -181,7 +273,9 @@ const mapDispatchToProps = dispatch =>
       cleanSelectedTimer,
       addTimer,
       editSingleRecipeTimer,
-      updateTimer
+      updateTimer,
+      updateStep,
+      refreshSteps
     },
     dispatch
   );

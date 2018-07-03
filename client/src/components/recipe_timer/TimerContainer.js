@@ -4,11 +4,9 @@ import { bindActionCreators } from "redux";
 import { Row, Col } from "react-flexbox-grid";
 import Toggle from "material-ui/Toggle";
 // import moment from "moment";
-import Dialog from "material-ui/Dialog";
 
 import { fetchSingleRecipeTimer } from "../../actions/timers_action";
 import RecipeTimersList from "./RecipeTimersList";
-import TimerForm from "./TimerForm";
 
 class TimerContainer extends Component {
   state = {
@@ -32,7 +30,6 @@ class TimerContainer extends Component {
   };
 
   render() {
-    // const { recipeid } = this.props;
     const { timersList } = this.props.timers;
 
     const visibleTimerList = timersList.filter(

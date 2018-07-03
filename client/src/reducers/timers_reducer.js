@@ -8,7 +8,11 @@ import {
   FETCH_SINGLE_RECIPE_TIMER,
   FETCH_TIMERS,
   EDIT_SINGLE_RECIPE_TIMER,
-  UPDATE_TIMER
+  UPDATE_TIMER,
+  GET_STEPID,
+  EDIT_STEP,
+  UPDATE_STEP,
+  REFRESH_STEPS
 } from "../actions/types";
 
 const initialState = {
@@ -26,7 +30,19 @@ const initialState = {
       name: "",
       photo: ""
     },
-    steps: [],
+    steps: [
+      // {
+      //   days: 0,
+      //   duration: 0,
+      //   endDate: null,
+      //   hours: 0,
+      //   name: "",
+      //   notificationActive: true,
+      //   order: 0,
+      //   startDate: null,
+      //   _id: ""
+      // }
+    ],
     comments: []
   },
   selectedStep: {
@@ -38,7 +54,8 @@ const initialState = {
     endDate: "",
     duration: "",
     notificationActive: true
-  }
+  },
+  selectedStepId: ""
 };
 
 export default function(state = initialState, action) {
@@ -81,6 +98,35 @@ export default function(state = initialState, action) {
       return { ...state, timersList: action.payload };
     case UPDATE_TIMER:
       return { ...state, selectedTimer: initialState.selectedTimer };
+    case GET_STEPID:
+      return { ...state, selectedStepId: action.payload };
+    case EDIT_STEP:
+      return {
+        ...state,
+        selectedStep: state.selectedTimer.steps.filter(
+          step => step._id === action.payload
+        )[0]
+      };
+    case UPDATE_STEP:
+      return {
+        ...state,
+        selectedTimer: {
+          ...state.selectedTimer,
+          steps: [
+            ...state.selectedTimer.steps.map(step => {
+              return step._id === action.stepId ? action.newStep : step;
+            })
+          ]
+        }
+      };
+    case REFRESH_STEPS:
+      return {
+        ...state,
+        selectedTimer: {
+          ...state.selectedTimer,
+          steps: action.payload
+        }
+      };
     default:
       return state;
   }

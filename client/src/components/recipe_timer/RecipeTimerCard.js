@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 class RecipeTimerCard extends Component {
   render() {
-    const { timer, handleOpenEditTimer } = this.props;
+    const { timer } = this.props;
 
     const timeLeft = moment(timer.timerEnd).fromNow();
 
