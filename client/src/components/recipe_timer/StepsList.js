@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Stepper, Step, StepButton } from "material-ui/Stepper";
-import Remove from "material-ui/svg-icons/content/remove";
+// import Remove from "material-ui/svg-icons/content/remove";
 // import ArrowForwardIcon from "material-ui/svg-icons/navigation/arrow-forward";
 // import ArrowDownwardIcon from "material-ui/svg-icons/navigation/arrow-downward";
 import Dialog from "material-ui/Dialog";
@@ -36,15 +36,15 @@ class StepsList extends Component {
     const { steps } = this.props;
     const { stepIndex } = this.state;
 
-    let width = window.innerWidth;
+    // let width = window.innerWidth;
 
     return (
       <div>
         <Stepper
           linear={false}
           activeStep={stepIndex}
-          orientation={width > 500 ? "horizontal" : "vertical"}
-          connector={width > 500 ? <Remove /> : ""}
+          orientation="vertical"
+          // connector={width > 500 ? <Remove /> : ""}
         >
           {steps.map((step, index) => {
             const renderDurationFormat = step.duration <= 1 ? "hours" : "days";

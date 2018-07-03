@@ -117,57 +117,6 @@ class AddStepForm extends Component {
     this.props.handleCloseStep();
   };
 
-  // refreshAllSteps = () => {
-  //   const { selectedTimer, selectedStep } = this.props.timers;
-
-  //   let newStep = [];
-
-  //   const newStartDate = (selectedStep, selectedTimer) =>
-  //     selectedStep.order === 1
-  //       ? moment(selectedStep.startDate)
-  //       : moment(
-  //           new Date(
-  //             selectedTimer.steps.filter(
-  //               step => step.order === selectedStep.order - 1
-  //             )[0].endDate
-  //           )
-  //         );
-
-  //   const newEndDate = (selectedStep, selectedTimer) =>
-  //     selectedStep.order === 1
-  //       ? moment(selectedStep.endDate)
-  //       : moment(
-  //           selectedTimer.steps.filter(
-  //             step => step.order === selectedStep.order - 1
-  //           )[0].endDate
-  //         )
-  //           .add(selectedStep.days, "days")
-  //           .add(selectedStep.hours, "hours");
-
-  //   selectedTimer.steps.forEach(step => {
-  //     newStep = {
-  //       ...step,
-  //       startDate: moment(newStartDate(step, selectedTimer)).format(
-  //         "YYYY-MM-DDTHH:mm:ss.SSSSZ"
-  //       ),
-  //       endDate: moment(newEndDate(step, selectedTimer)).format(
-  //         "YYYY-MM-DDTHH:mm:ss.SSSSZ"
-  //       ),
-  //       days: parseInt(step.days, 10),
-  //       hours: parseInt(step.hours, 10),
-  //       duration: parseInt(
-  //         newEndDate(step, selectedTimer)
-  //           .diff(newStartDate(step, selectedTimer), "days", true)
-  //           .toFixed(1),
-  //         10
-  //       )
-  //     };
-  //     this.props.updateStep(newStep, step._id);
-  //   });
-
-  //   console.log("newStep", newStep);
-  // };
-
   enableSubmit = () => {
     const selectedStep = this.props.timers.selectedStep;
     if (selectedStep.name.length > 0) {

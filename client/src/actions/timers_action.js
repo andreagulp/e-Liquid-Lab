@@ -13,7 +13,12 @@ import {
   GET_STEPID,
   EDIT_STEP,
   UPDATE_STEP,
-  REFRESH_STEPS
+  REFRESH_STEPS,
+  DELETE_TIMER,
+  DELETE_STEP,
+  UPDATE_COMMENT_FIELD,
+  ADD_COMMENT,
+  CLEAN_SELECTED_COMMENT
 } from "./types";
 
 // Timer
@@ -126,6 +131,7 @@ export const fetchTimers = () => {
 };
 
 export const updateTimer = (timerId, newTimer, recipeId) => {
+  console.log("timers_action updateTimer newTimer", newTimer);
   return dispatch => {
     const request = axios
       .patch(`/api/timers/update/${timerId}`, newTimer)
@@ -166,5 +172,49 @@ export const refreshSteps = newSteps => {
   return {
     type: REFRESH_STEPS,
     payload: newSteps
+  };
+};
+
+export const deleteTimer = (timerId, recipeId) => {
+  return dispatch => {
+    const request = axios
+      .delete(`/api/timers/delete/${timerId}`)
+      .then(response => {
+        return response;
+      });
+
+    return dispatch({
+      type: DELETE_TIMER,
+      payload: request
+    }).then(() => dispatch(fetchSingleRecipeTimer(recipeId)));
+  };
+};
+
+export const deleteStep = stepId => {
+  return {
+    type: DELETE_STEP,
+    payload: stepId
+  };
+};
+
+export const updateCommentField = (value, fieldName) => {
+  return {
+    type: UPDATE_COMMENT_FIELD,
+    value,
+    fieldName
+  };
+};
+
+export const addComment = comment => {
+  return {
+    type: ADD_COMMENT,
+    payload: comment
+  };
+};
+
+export const cleanSelectedComment = () => {
+  return {
+    type: CLEAN_SELECTED_COMMENT,
+    payload: {}
   };
 };

@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const timerCommentSchema = new Schema({
   creationDate: Date,
-  text: String
+  text: String,
+  daysSince: Number
 });
 
 module.exports = timerCommentSchema;

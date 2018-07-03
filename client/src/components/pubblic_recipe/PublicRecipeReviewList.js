@@ -4,7 +4,7 @@ import PublicRecipeReviewCard from "./PublicRecipeReviewCard";
 
 class PublicRecipeReviewList extends Component {
   render() {
-    if (!this.props.reviews.text) {
+    if (!this.props.reviews) {
       return <div>...no comments yet</div>;
     }
     const { reviews } = this.props;

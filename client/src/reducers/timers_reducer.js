@@ -12,7 +12,12 @@ import {
   GET_STEPID,
   EDIT_STEP,
   UPDATE_STEP,
-  REFRESH_STEPS
+  REFRESH_STEPS,
+  DELETE_TIMER,
+  DELETE_STEP,
+  UPDATE_COMMENT_FIELD,
+  ADD_COMMENT,
+  CLEAN_SELECTED_COMMENT
 } from "../actions/types";
 
 const initialState = {
@@ -30,19 +35,7 @@ const initialState = {
       name: "",
       photo: ""
     },
-    steps: [
-      // {
-      //   days: 0,
-      //   duration: 0,
-      //   endDate: null,
-      //   hours: 0,
-      //   name: "",
-      //   notificationActive: true,
-      //   order: 0,
-      //   startDate: null,
-      //   _id: ""
-      // }
-    ],
+    steps: [],
     comments: []
   },
   selectedStep: {
@@ -54,6 +47,10 @@ const initialState = {
     endDate: "",
     duration: "",
     notificationActive: true
+  },
+  selectedComment: {
+    text: "",
+    daysSince: 0
   },
   selectedStepId: ""
 };
@@ -127,6 +124,38 @@ export default function(state = initialState, action) {
           steps: action.payload
         }
       };
+    case DELETE_TIMER:
+      return { ...state, selectedTimer: initialState.selectedTimer };
+    case DELETE_STEP:
+      return {
+        ...state,
+        selectedTimer: {
+          ...state.selectedTimer,
+          steps: [
+            ...state.selectedTimer.steps.filter(
+              step => step._id !== action.payload
+            )
+          ]
+        }
+      };
+    case UPDATE_COMMENT_FIELD:
+      return {
+        ...state,
+        selectedComment: {
+          ...state.selectedComment,
+          [action.fieldName]: action.value
+        }
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        selectedTimer: {
+          ...state.selectedTimer,
+          comments: [...state.selectedTimer.comments, action.payload]
+        }
+      };
+    case CLEAN_SELECTED_COMMENT:
+      return { ...state, selectedComment: initialState.selectedComment };
     default:
       return state;
   }

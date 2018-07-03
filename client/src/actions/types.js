@@ -52,3 +52,9 @@ export const GET_STEPID = "GET_STEPID";
 export const EDIT_STEP = "EDIT_STEP";
 export const UPDATE_STEP = "UPDATE_STEP";
 export const REFRESH_STEPS = "REFRESH_STEPS";
+export const DELETE_TIMER = "DELETE_TIMER";
+export const DELETE_STEP = "DELETE_STEP";
+
+export const UPDATE_COMMENT_FIELD = "UPDATE_COMMENT_FIELD";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const CLEAN_SELECTED_COMMENT = "CLEAN_SELECTED_COMMENT";

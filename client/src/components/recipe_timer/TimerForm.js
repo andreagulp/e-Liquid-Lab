@@ -8,6 +8,7 @@ import Dialog from "material-ui/Dialog";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
+import DeleteForever from "material-ui/svg-icons/action/delete-forever";
 
 import {
   updateTimerField,
@@ -16,7 +17,8 @@ import {
   editSingleRecipeTimer,
   updateTimer,
   updateStep,
-  refreshSteps
+  refreshSteps,
+  deleteTimer
 } from "../../actions/timers_action";
 import AddStepForm from "./AddStepForm";
 import StepsList from "./StepsList";
@@ -154,6 +156,13 @@ class TimerForm extends Component {
     this.setState({ confirmDialogOpen: false });
   };
 
+  deleteRecipe = () => {
+    const { selectedTimer } = this.props.timers;
+    const { selectedRecipe } = this.props.recipes;
+    this.props.deleteTimer(selectedTimer._id, selectedRecipe._id);
+    this.props.history.goBack();
+  };
+
   // componentWillUnmount = () => {
   //   this.props.cleanSelectedTimer();
   // };
@@ -237,6 +246,17 @@ class TimerForm extends Component {
             disabled={this.enableSubmit()}
             onClick={this.handleConfirmDialogOpen}
           />
+          {mode === "UPDATE" ? (
+            <FlatButton
+              label="Delete"
+              secondary={true}
+              icon={<DeleteForever />}
+              disabled={false}
+              onClick={this.deleteRecipe}
+            />
+          ) : (
+            ""
+          )}
 
           <Dialog
             title={`CONFIRM ${mode}`}
@@ -278,7 +298,8 @@ const mapDispatchToProps = dispatch =>
       editSingleRecipeTimer,
       updateTimer,
       updateStep,
-      refreshSteps
+      refreshSteps,
+      deleteTimer
     },
     dispatch
   );
