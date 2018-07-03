@@ -222,7 +222,10 @@ class TimerForm extends Component {
           </Col>
         </Row>
         <Row style={{ marginTop: "20px" }}>
-          <StepsList steps={this.props.timers.selectedTimer.steps} />
+          <StepsList
+            steps={this.props.timers.selectedTimer.steps}
+            mode={mode}
+          />
         </Row>
 
         <Row end="xs" style={{ margin: "10px 0 10px 0" }}>

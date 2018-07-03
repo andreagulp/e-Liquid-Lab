@@ -19,7 +19,9 @@ class StepsList extends Component {
 
   handleStepClick = (index, stepId) => {
     this.setState({ stepIndex: index });
-    this.handleOpenStep();
+    if (this.props.mode === "UPDATE") {
+      this.handleOpenStep();
+    }
     this.props.getStepId(stepId);
   };
 
