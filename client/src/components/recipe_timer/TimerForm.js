@@ -10,6 +10,8 @@ import { bindActionCreators } from "redux";
 import moment from "moment";
 import DeleteForever from "material-ui/svg-icons/action/delete-forever";
 
+import "../commons/dialog.css";
+
 import {
   updateTimerField,
   cleanSelectedTimer,
@@ -215,18 +217,19 @@ class TimerForm extends Component {
               title="Add Step"
               modal={true}
               open={this.state.stepDialogOpen}
-              contentStyle={{
-                height: "100%",
-                maxHeight: "100%",
-                width: "85%",
-                maxWidth: "98%"
-              }}
-              autoScrollBodyContent={true}
+              repositionOnUpdate={false}
+              autoDetectWindowHeight={false}
+              autoScrollBodyContent={false}
+              className="dialog-root"
+              contentClassName="dialog-content"
+              bodyClassName="dialog-body"
             >
-              <AddStepForm
-                handleCloseStep={this.handleCloseStep}
-                mode="CREATE"
-              />
+              <div className="dialog-scroll">
+                <AddStepForm
+                  handleCloseStep={this.handleCloseStep}
+                  mode="CREATE"
+                />
+              </div>
             </Dialog>
           </Col>
         </Row>

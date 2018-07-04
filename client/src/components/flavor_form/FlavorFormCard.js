@@ -16,6 +16,8 @@ import AddAPhoto from "material-ui/svg-icons/image/add-a-photo";
 import TextField from "material-ui/TextField";
 import moment from "moment";
 
+import "../commons/dialog.css";
+
 import {
   fetchSingleFlavor,
   deleteFlavor,
@@ -129,13 +131,19 @@ class FlavorFormCard extends Component {
           title="Add Image to Flavor"
           modal={true}
           open={this.state.addImgOpen}
-          contentStyle={{ width: "98%", maxWidth: "98%" }}
-          autoScrollBodyContent={true}
+          repositionOnUpdate={false}
+          autoDetectWindowHeight={false}
+          autoScrollBodyContent={false}
+          className="dialog-root"
+          contentClassName="dialog-content"
+          bodyClassName="dialog-body"
         >
-          <FlavorImage
-            selectedFlavor={selectedFlavor}
-            closeAddImageDialog={this.closeAddImageDialog}
-          />
+          <div className="dialog-scroll">
+            <FlavorImage
+              selectedFlavor={selectedFlavor}
+              closeAddImageDialog={this.closeAddImageDialog}
+            />
+          </div>
         </Dialog>
       </Row>
     );

@@ -6,6 +6,8 @@ import Dialog from "material-ui/Dialog";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import "../components/commons/dialog.css";
+
 import { fetchFlavors, deleteFlavor } from "../actions/flavors_action";
 import { getVisibleFlavors } from "../selectors/flavorsFiltered_selector";
 import { fetchUser } from "../actions/user_action";
@@ -50,15 +52,20 @@ class FlavorsPage extends Component {
           title="Add Flavor to Inventory"
           modal={true}
           open={this.state.open}
-          contentStyle={{ width: "98%", maxWidth: "98%" }}
-          // contentStyle={{ height: '98%', maxHeight: '98%', width: '80%', maxWidth: '98%' }}
-          autoScrollBodyContent={true}
+          repositionOnUpdate={false}
+          autoDetectWindowHeight={false}
+          autoScrollBodyContent={false}
+          className="dialog-root"
+          contentClassName="dialog-content"
+          bodyClassName="dialog-body"
         >
-          <FlavorForm
-            mode="CREATE"
-            handleClose={this.handleClose}
-            flavorid={this.props.match.params.flavorid}
-          />
+          <div className="dialog-scroll">
+            <FlavorForm
+              mode="CREATE"
+              handleClose={this.handleClose}
+              flavorid={this.props.match.params.flavorid}
+            />
+          </div>
         </Dialog>
       </Row>
     );

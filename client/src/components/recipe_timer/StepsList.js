@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
 
+import "../commons/dialog.css";
 import { getStepId } from "../../actions/timers_action";
 import AddStepForm from "./AddStepForm";
 
@@ -106,19 +107,20 @@ class StepsList extends Component {
           title="Add Step"
           modal={true}
           open={this.state.stepDialogOpen}
-          contentStyle={{
-            height: "100%",
-            maxHeight: "100%",
-            width: "85%",
-            maxWidth: "98%"
-          }}
-          autoScrollBodyContent={true}
+          repositionOnUpdate={false}
+          autoDetectWindowHeight={false}
+          autoScrollBodyContent={false}
+          className="dialog-root"
+          contentClassName="dialog-content"
+          bodyClassName="dialog-body"
         >
-          <AddStepForm
-            handleCloseStep={this.handleCloseStep}
-            mode="UPDATE"
-            stepid={this.props.timers.selectedStepId}
-          />
+          <div className="dialog-scroll">
+            <AddStepForm
+              handleCloseStep={this.handleCloseStep}
+              mode="UPDATE"
+              stepid={this.props.timers.selectedStepId}
+            />
+          </div>
         </Dialog>
       </div>
     );

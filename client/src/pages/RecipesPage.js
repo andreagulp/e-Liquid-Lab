@@ -13,6 +13,8 @@ import { fetchRecipes, cleanSelectedRecipe } from "../actions/recipes_action";
 import { fetchUser } from "../actions/user_action";
 import { getVisibleRecipes } from "../selectors/recipesFiltered_selector";
 
+import "../components/commons/dialog.css";
+
 class RecipesPage extends Component {
   constructor(props) {
     super(props);
@@ -60,14 +62,20 @@ class RecipesPage extends Component {
             title="Add Recipe to Book"
             modal={true}
             open={this.state.openRecipeForm}
-            contentStyle={{ width: "98%", maxWidth: "98%" }}
-            autoScrollBodyContent={true}
+            repositionOnUpdate={false}
+            autoDetectWindowHeight={false}
+            autoScrollBodyContent={false}
+            className="dialog-root"
+            contentClassName="dialog-content"
+            bodyClassName="dialog-body"
           >
-            <RecipeForm
-              recipeid={this.props.match.params.recipeid}
-              mode="CREATE"
-              handleCloseRecipeForm={this.handleCloseRecipeForm}
-            />
+            <div className="dialog-scroll">
+              <RecipeForm
+                recipeid={this.props.match.params.recipeid}
+                mode="CREATE"
+                handleCloseRecipeForm={this.handleCloseRecipeForm}
+              />
+            </div>
           </Dialog>
         </Row>
       </div>

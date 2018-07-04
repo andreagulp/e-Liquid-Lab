@@ -108,12 +108,11 @@ class RecipeForm extends Component {
                 />
                 <Dialog
                   title="Add Flavor To Recipe"
+                  modal={true}
+                  open={open}
                   repositionOnUpdate={false}
                   autoDetectWindowHeight={false}
                   autoScrollBodyContent={false}
-                  modal={true}
-                  open={open}
-                  // contentStyle={{ width: "70%", maxWidth: "100%" }}
                   className="dialog-root"
                   contentClassName="dialog-content"
                   bodyClassName="dialog-body"
