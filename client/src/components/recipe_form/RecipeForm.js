@@ -166,34 +166,36 @@ class RecipeForm extends Component {
           title="Mix Recipe"
           modal={true}
           open={openProduction}
-          contentStyle={{
-            height: "98%",
-            maxHeight: "98%",
-            width: "90%",
-            maxWidth: "98%"
-          }}
-          autoScrollBodyContent={true}
+          repositionOnUpdate={false}
+          autoDetectWindowHeight={false}
+          autoScrollBodyContent={false}
+          className="dialog-root"
+          contentClassName="dialog-content"
+          bodyClassName="dialog-body"
         >
-          <RecipeProduction
-            handleCloseProduction={handleCloseProduction}
-            user={user}
-            errorMsg={errorMsg}
-          />
+          <div className="dialog-scroll">
+            <RecipeProduction
+              handleCloseProduction={handleCloseProduction}
+              user={user}
+              errorMsg={errorMsg}
+            />
+          </div>
         </Dialog>
 
         <Dialog
           title="Add Timer"
           modal={true}
           open={openTimerForm}
-          contentStyle={{
-            height: "98%",
-            maxHeight: "98%",
-            width: "90%",
-            maxWidth: "98%"
-          }}
-          autoScrollBodyContent={true}
+          repositionOnUpdate={false}
+          autoDetectWindowHeight={false}
+          autoScrollBodyContent={false}
+          className="dialog-root"
+          contentClassName="dialog-content"
+          bodyClassName="dialog-body"
         >
-          <TimerForm handleCloseTimer={handleCloseTimer} mode="CREATE" />
+          <div className="dialog-scroll">
+            <TimerForm handleCloseTimer={handleCloseTimer} mode="CREATE" />
+          </div>
         </Dialog>
       </form>
     );
