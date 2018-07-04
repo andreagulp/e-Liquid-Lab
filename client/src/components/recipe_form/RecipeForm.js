@@ -54,6 +54,8 @@ class RecipeForm extends Component {
       return <CircularProgress size={60} thickness={7} />;
     }
 
+    // let width = window.innerWidth;
+
     return (
       <form>
         <Row>
@@ -104,10 +106,27 @@ class RecipeForm extends Component {
                 />
                 <Dialog
                   title="Add Flavor To Recipe"
+                  repositionOnUpdate={false}
+                  autoDetectWindowHeight={false}
+                  autoScrollBodyContent={false}
                   modal={true}
                   open={open}
-                  contentStyle={{ width: "70%", maxWidth: "100%" }}
-                  autoScrollBodyContent={true}
+                  // contentStyle={{ width: "70%", maxWidth: "100%" }}
+                  contentStyle={{
+                    width: "100%",
+                    maxWidth: "450px",
+                    maxHeight: "100% !important"
+                  }}
+                  bodyStyle={{
+                    maxHeight: "100% !important"
+                  }}
+                  style={{
+                    paddingTop: "0 !important",
+                    marginTop: "-65px !important",
+                    bottom: "0 !important",
+                    overflow: "scroll !important",
+                    height: "auto !important"
+                  }}
                 >
                   <FlavorToRecipeForm
                     handleCloseFlavorToRecipeForm={
