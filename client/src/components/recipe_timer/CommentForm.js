@@ -29,6 +29,7 @@ class CommentForm extends Component {
   addComment = () => {
     const { selectedComment, selectedTimer } = this.props.timers;
     const newComment = {
+      creationDate: moment(Date.now()).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
       text: selectedComment.text,
       daysSince: parseInt(
         moment(Date.now()).diff(selectedTimer.creationDate, "days"),

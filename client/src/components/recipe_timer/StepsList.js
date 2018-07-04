@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Stepper, Step, StepButton } from "material-ui/Stepper";
+import { Stepper, Step, StepButton, StepContent } from "material-ui/Stepper";
 // import Remove from "material-ui/svg-icons/content/remove";
 // import ArrowForwardIcon from "material-ui/svg-icons/navigation/arrow-forward";
 // import ArrowDownwardIcon from "material-ui/svg-icons/navigation/arrow-downward";
@@ -55,9 +55,34 @@ class StepsList extends Component {
                     .toFixed(0)
                 : step.duration;
 
+            const stepTimeLeft = moment(step.endDate).fromNow();
+            console.log("step.startDate", step.startDate);
+            console.log("Date.now()", Date.now());
+            // const stepStatus =
+            //   moment(step.startDate) <= Date.now() &&
+            //   moment(step.endDate) > Date.now()
+            //     ? "In Progress"
+            //     : "Not Started";
+
+            const stepStatus = () => {
+              if (
+                moment(step.startDate) <= Date.now() &&
+                moment(step.endDate) > Date.now()
+              ) {
+                return "In Progress";
+              } else if (
+                moment(step.startDate) <= Date.now() &&
+                moment(step.endDate) < Date.now()
+              ) {
+                return "Completed";
+              } else {
+                return "Not Started";
+              }
+            };
+
             const renderStep = ` ${
               step.name
-            } (${renderStepDuration} ${renderDurationFormat} ) `;
+            } (${renderStepDuration} ${renderDurationFormat}) `;
             return (
               <Step key={index}>
                 <StepButton
@@ -65,6 +90,14 @@ class StepsList extends Component {
                 >
                   {renderStep}
                 </StepButton>
+                <StepContent>
+                  <p>
+                    {" "}
+                    {`${stepStatus()}, ready ${stepTimeLeft} on ${moment(
+                      step.endDate
+                    ).format("DD MMM YYYY")} `}
+                  </p>
+                </StepContent>
               </Step>
             );
           })}
@@ -102,21 +135,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(StepsList);
-
-// <Dialog
-//   title="Add Step"
-//   modal={true}
-//   open={this.state.stepDialogOpen}
-//   contentStyle={{
-//     height: "100%",
-//     maxHeight: "100%",
-//     width: "85%",
-//     maxWidth: "98%"
-//   }}
-//   autoScrollBodyContent={true}
-// >
-//   <AddStepForm
-//     handleCloseStep={this.handleCloseStep}
-//     mode="UPDATE"
-//   />
-// </Dialog>
