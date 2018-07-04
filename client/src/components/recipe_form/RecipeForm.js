@@ -6,6 +6,8 @@ import Dialog from "material-ui/Dialog";
 import Divider from "material-ui/Divider";
 import CircularProgress from "material-ui/CircularProgress";
 
+import "../commons/dialog.css";
+
 import withRecipeFormLogic from "./withRecipeFormLogic";
 import FormLiquidQty from "../commons/FormLiquidQty";
 import FormBaseVgPg from "../commons/FormBaseVgPg";
@@ -112,28 +114,18 @@ class RecipeForm extends Component {
                   modal={true}
                   open={open}
                   // contentStyle={{ width: "70%", maxWidth: "100%" }}
-                  contentStyle={{
-                    width: "100%",
-                    maxWidth: "450px",
-                    maxHeight: "100% !important"
-                  }}
-                  bodyStyle={{
-                    maxHeight: "100% !important"
-                  }}
-                  style={{
-                    paddingTop: "0 !important",
-                    marginTop: "-65px !important",
-                    bottom: "0 !important",
-                    overflow: "scroll !important",
-                    height: "auto !important"
-                  }}
+                  className="dialog-root"
+                  contentClassName="dialog-content"
+                  bodyClassName="dialog-body"
                 >
-                  <FlavorToRecipeForm
-                    handleCloseFlavorToRecipeForm={
-                      handleCloseFlavorToRecipeForm
-                    }
-                    mode={mode}
-                  />
+                  <div className="dialog-scroll">
+                    <FlavorToRecipeForm
+                      handleCloseFlavorToRecipeForm={
+                        handleCloseFlavorToRecipeForm
+                      }
+                      mode={mode}
+                    />
+                  </div>
                 </Dialog>
               </Col>
             </Row>
