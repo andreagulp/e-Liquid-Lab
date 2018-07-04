@@ -135,7 +135,6 @@ class AddStepForm extends Component {
     return (
       <form>
         <Row>
-          <FlatButton label="test" onClick={this.refreshAllSteps} />
           <Col xs={12} sm={12} md={12} lg={12}>
             <TextField
               name="name"
