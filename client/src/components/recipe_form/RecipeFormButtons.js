@@ -19,14 +19,19 @@ class RecipeFormButtons extends Component {
     } = this.props;
 
     return (
-      <div>
-        <FlatButton label="Back" onClick={handleCancel} />
+      <div style={{ zIndex: 2 }}>
+        <FlatButton
+          label="Back"
+          onClick={handleCancel}
+          style={{ marginBottom: "10px" }}
+        />
         {user ? (
           <FlatButton
             label={mode}
             primary={true}
             onClick={recipeFormAction}
             disabled={enableSubmit()}
+            style={{ marginBottom: "10px" }}
           />
         ) : (
           <div />
@@ -41,6 +46,7 @@ class RecipeFormButtons extends Component {
               disabled={false}
               onClick={handleOpenProduction}
               icon={<Toys />}
+              style={{ marginTop: "10px" }}
             />
             <FlatButton
               label="Steep"
@@ -48,6 +54,7 @@ class RecipeFormButtons extends Component {
               disabled={false}
               onClick={handleOpenTimer}
               icon={<AddAlarm />}
+              style={{ marginTop: "10px" }}
             />
             <FlatButton
               label="Delete"
@@ -55,6 +62,7 @@ class RecipeFormButtons extends Component {
               icon={<DeleteForever />}
               disabled={false}
               onClick={deleteRecipe}
+              style={{ marginTop: "10px" }}
             />
           </div>
         ) : (

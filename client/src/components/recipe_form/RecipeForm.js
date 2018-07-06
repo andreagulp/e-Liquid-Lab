@@ -150,7 +150,7 @@ class RecipeForm extends Component {
             </Row>
           </Col>
         </Row>
-        <Row end="xs" style={{ margin: "10px 0 30px 0" }}>
+        <Row end="xs" style={{ margin: "10px 0 80px 0", zIndex: 2 }}>
           <RecipeFormButtons
             handleCancel={handleCancel}
             mode={mode}

@@ -50,7 +50,7 @@ class RecipesPage extends Component {
           </Col>
           {user ? (
             <FloatingActionButton
-              style={{ position: "fixed", bottom: 20, right: 20 }}
+              style={{ position: "fixed", bottom: 20, right: 20, zIndex: 3 }}
               onClick={this.handleOpenRecipeForm}
             >
               <ContentAdd />
