@@ -13,12 +13,21 @@ class EditTimerPage extends Component {
     this.props.cleanSelectedTimer();
   };
   render() {
+    console.log(
+      "this.props.match.params.timerid",
+      this.props.match.params.timerid
+    );
+    console.log(
+      "this.props.match.params.recipeid",
+      this.props.match.params.recipeid
+    );
     return (
       <Row>
         <Col xs={12} sm={6} md={6} lg={6}>
           <TimerForm
             mode="UPDATE"
             history={this.props.history}
+            recipeid={this.props.match.params.recipeid}
             timerid={this.props.match.params.timerid}
             handleCloseTimer={this.handleCloseTimer}
           />

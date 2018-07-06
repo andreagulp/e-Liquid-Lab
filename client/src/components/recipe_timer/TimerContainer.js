@@ -9,6 +9,8 @@ import RecipeTimersList from "./RecipeTimersList";
 import TimerNotificationList from "./TimerNotificationList";
 import StepNotificationList from "./StepNotificationList";
 
+//recipeid={this.props.match.params.recipeid}
+
 class TimerContainer extends Component {
   state = {
     showCompleted: false,
@@ -103,6 +105,7 @@ class TimerContainer extends Component {
               this.state.showCompleted ? timersList : visibleTimerList
             }
             handleOpenEditTimer={this.handleOpenEditTimer}
+            recipeid={this.props.recipeid}
           />
         </Col>
         <Col xs={12} sm={12} md={4} lg={4}>

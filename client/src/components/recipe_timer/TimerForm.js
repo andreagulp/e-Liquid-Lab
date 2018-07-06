@@ -32,11 +32,15 @@ class TimerForm extends Component {
   };
 
   componentDidMount = () => {
-    if (this.props.mode === "UPDATE" && this.props.recipes.selectedRecipe) {
-      this.props.editSingleRecipeTimer(
-        this.props.recipes.selectedRecipe._id,
-        this.props.timerid
-      );
+    // if (this.props.mode === "UPDATE" && this.props.recipes.selectedRecipe) {
+    //   this.props.editSingleRecipeTimer(
+    //     this.props.recipes.selectedRecipe._id,
+    //     this.props.timerid
+    //   );
+    // }
+    const { recipeid, timerid } = this.props;
+    if (this.props.mode === "UPDATE") {
+      this.props.editSingleRecipeTimer(recipeid, timerid);
     }
   };
 

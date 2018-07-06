@@ -3,11 +3,19 @@ import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 import FlatButton from "material-ui/FlatButton";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { fetchSingleRecipe } from "../../actions/recipes_action";
 
 class RecipeTimerCard extends Component {
+  componentDidMount = () => {
+    this.props.fetchSingleRecipe(this.props.recipeid);
+  };
+
   render() {
     const { timer } = this.props;
-
+    const { selectedRecipe } = this.props.recipes;
     const timeLeft = moment(timer.timerEnd).fromNow();
 
     return (
@@ -37,7 +45,10 @@ class RecipeTimerCard extends Component {
         </CardText>
 
         <CardActions style={{ textAlign: "right" }}>
-          <Link to={`/timers/${timer._id}`} style={{ textDecoration: "none" }}>
+          <Link
+            to={`/timers/${selectedRecipe._id}/${timer._id}`}
+            style={{ textDecoration: "none" }}
+          >
             <FlatButton label="open" primary={true} />
           </Link>
         </CardActions>
@@ -46,4 +57,13 @@ class RecipeTimerCard extends Component {
   }
 }
 
-export default RecipeTimerCard;
+const mapStateToProps = state => {
+  return { recipes: state.recipes };
+};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchSingleRecipe }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RecipeTimerCard);

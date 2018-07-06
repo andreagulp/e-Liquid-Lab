@@ -18,7 +18,8 @@ import {
   DELETE_STEP,
   UPDATE_COMMENT_FIELD,
   ADD_COMMENT,
-  CLEAN_SELECTED_COMMENT
+  CLEAN_SELECTED_COMMENT,
+  UPDATE_TIMER_WITH_COMMENT
 } from "./types";
 
 // Timer
@@ -216,5 +217,18 @@ export const cleanSelectedComment = () => {
   return {
     type: CLEAN_SELECTED_COMMENT,
     payload: {}
+  };
+};
+
+export const updateTimerWithComment = (timerId, newComment) => {
+  const request = axios
+    .patch(`/api/timers/update/${timerId}`, newComment)
+    .then(response => {
+      return response;
+    });
+
+  return {
+    type: UPDATE_TIMER_WITH_COMMENT,
+    payload: request
   };
 };

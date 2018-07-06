@@ -17,7 +17,8 @@ import {
   DELETE_STEP,
   UPDATE_COMMENT_FIELD,
   ADD_COMMENT,
-  CLEAN_SELECTED_COMMENT
+  CLEAN_SELECTED_COMMENT,
+  UPDATE_TIMER_WITH_COMMENT
 } from "../actions/types";
 
 const initialState = {
@@ -156,6 +157,8 @@ export default function(state = initialState, action) {
       };
     case CLEAN_SELECTED_COMMENT:
       return { ...state, selectedComment: initialState.selectedComment };
+    case UPDATE_TIMER_WITH_COMMENT:
+      return state;
     default:
       return state;
   }

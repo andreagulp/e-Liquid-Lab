@@ -63,12 +63,15 @@ class App extends Component {
             />
             <Switch>
               <Route
+                path="/timers/:recipeid/:timerid"
+                component={EditTimerPage}
+              />
+              <Route
                 path="/recipes/fork/:recipeid"
                 component={RecipeForkPage}
               />
               <Route path="/flavors/:flavorid" component={FlavorDetailPage} />
               <Route path="/recipes/:recipeid" component={RecipeDetailPage} />
-              <Route path="/timers/:timerid" component={EditTimerPage} />
               <Route path="/public-recipes" component={PublicRecipesPage} />
               <Route path="/recipes" component={RecipesPage} />
               <Route path="/flavors" component={FlavorsPage} />

@@ -28,5 +28,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(CommentsContainer);
-
-// _.sortBy(this.props.timers.selectedTimer.comments, "creationDate");

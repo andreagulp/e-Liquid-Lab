@@ -10,7 +10,8 @@ import moment from "moment";
 import {
   updateCommentField,
   addComment,
-  cleanSelectedComment
+  cleanSelectedComment,
+  updateTimerWithComment
 } from "../../actions/timers_action";
 
 class CommentForm extends Component {
@@ -36,8 +37,8 @@ class CommentForm extends Component {
         10
       ).toFixed(0)
     };
-    console.log("newComment", newComment);
-    this.props.addComment(newComment);
+    // this.props.updateTimerWithComment(newComment);
+    this.props.addComment(selectedTimer._id, newComment);
     this.props.cleanSelectedComment();
   };
 
@@ -82,7 +83,12 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { updateCommentField, addComment, cleanSelectedComment },
+    {
+      updateCommentField,
+      addComment,
+      cleanSelectedComment,
+      updateTimerWithComment
+    },
     dispatch
   );
 
