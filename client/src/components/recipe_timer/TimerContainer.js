@@ -47,6 +47,7 @@ class TimerContainer extends Component {
 
   render() {
     const { timersList } = this.props.timers;
+    const recipeId = this.props.recipes.selectedRecipe._id;
 
     const visibleTimerList = timersList.filter(
       timer => new Date(timer.timerEnd) >= new Date(Date.now())
@@ -123,6 +124,7 @@ class TimerContainer extends Component {
                 showMoreTimerNotifications={
                   this.state.showMoreTimerNotifications
                 }
+                recipeId={recipeId}
               />
               <StepNotificationList
                 stepsNotifications={
@@ -134,6 +136,7 @@ class TimerContainer extends Component {
                 handleShowMoreStepNotifications={
                   this.handleShowMoreStepNotifications
                 }
+                recipeId={recipeId}
               />
             </Col>
             {/* <Col xs={12} sm={12} md={12} lg={12}>
@@ -147,7 +150,7 @@ class TimerContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  return { timers: state.timers };
+  return { timers: state.timers, recipes: state.recipes };
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchSingleRecipeTimer }, dispatch);

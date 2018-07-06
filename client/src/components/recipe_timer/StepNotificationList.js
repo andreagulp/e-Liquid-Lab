@@ -12,7 +12,8 @@ class StepNotificationList extends Component {
     let {
       stepsNotifications,
       showMoreStepNotifications,
-      handleShowMoreStepNotifications
+      handleShowMoreStepNotifications,
+      recipeId
     } = this.props;
     stepsNotifications = _.sortBy(stepsNotifications, "endDate").reverse();
     return (
@@ -31,7 +32,7 @@ class StepNotificationList extends Component {
           return (
             <div key={i}>
               <Link
-                to={`/timers/${step.timerId}`}
+                to={`/timers/${recipeId}/${step.timerId}`}
                 style={{ textDecoration: "none" }}
               >
                 <ListItem

@@ -12,7 +12,8 @@ class TimerNotificationList extends Component {
     let {
       timerNotifications,
       handleShowMoreTimerNotifications,
-      showMoreTimerNotifications
+      showMoreTimerNotifications,
+      recipeId
     } = this.props;
 
     timerNotifications = _.sortBy(timerNotifications, "timerEnd").reverse();
@@ -33,7 +34,7 @@ class TimerNotificationList extends Component {
           return (
             <div key={i}>
               <Link
-                to={`/timers/${timer._id}`}
+                to={`/timers/${recipeId}/${timer._id}`}
                 style={{ textDecoration: "none" }}
               >
                 <ListItem
