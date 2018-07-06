@@ -37,8 +37,14 @@ class CommentForm extends Component {
         10
       ).toFixed(0)
     };
-    // this.props.updateTimerWithComment(newComment);
-    this.props.addComment(selectedTimer._id, newComment);
+
+    const newTimer = {
+      ...selectedTimer,
+      comments: [...selectedTimer.comments, newComment]
+    };
+
+    this.props.updateTimerWithComment(selectedTimer._id, newTimer);
+    this.props.addComment(newComment);
     this.props.cleanSelectedComment();
   };
 
