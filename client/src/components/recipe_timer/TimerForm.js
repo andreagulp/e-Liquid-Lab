@@ -58,15 +58,22 @@ class TimerForm extends Component {
           ? a.startDate
           : b.startDate
     );
+
+    console.log("timerStart", timerStart);
+
     const timerEnd = selectedTimer.steps.reduce(
       (a, b) => (a.endDate > b.endDate ? a.endDate : b.endDate)
     );
 
+    console.log("timerEnd", timerEnd);
+
     const newTimer = {
       ...this.props.timers.selectedTimer,
       recipeId: selectedRecipe._id,
-      timerStart: moment(timerStart).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
-      timerEnd: moment(timerEnd).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+      timerStart: moment(timerStart.startDate).format(
+        "YYYY-MM-DDTHH:mm:ss.SSSSZ"
+      ),
+      timerEnd: moment(timerEnd.endDate).format("YYYY-MM-DDTHH:mm:ss.SSSSZ"),
       recipeTimerName: `${selectedRecipe.name} - ${selectedTimer.name}`
     };
     this.props.addTimer(newTimer, selectedRecipe._id);
@@ -85,9 +92,14 @@ class TimerForm extends Component {
       //     : b.startDate
       (a, b) => (a.startDate < b.startDate ? a.startDate : b.startDate)
     );
+
+    console.log("timerStart", timerStart);
+
     const timerEnd = selectedTimer.steps.reduce(
       (a, b) => (a.endDate > b.endDate ? a.endDate : b.endDate)
     );
+
+    console.log("timerEnd", timerEnd);
 
     const newTimer = {
       ...this.props.timers.selectedTimer,
