@@ -7,7 +7,7 @@ body {
 /* 搜索框CSS */
 
 #search input[type="text"] {
-  background: url("http://www.gbtags.com/gb/networks/uploads/3d911b0e-f018-4776-a878-aa081f3a305c/search.png")
+  background: url("https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-128.png")
     no-repeat 15px 9px #444;
   border: 0 none;
   font: normal 12px "microsoft yahei", Arial, sans-serif;
@@ -23,7 +23,7 @@ body {
 
 /* 定义focus下的CSS，这里定义输入框宽度变化 */
 #search input[type="text"]:focus {
-  background: url("http://www.gbtags.com/gb/networks/uploads/3d911b0e-f018-4776-a878-aa081f3a305c/search.png")
+  background: url("https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-128.png")
     no-repeat 12px 9px #efefef;
   color: #6a6f75;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
