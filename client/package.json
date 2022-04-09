@@ -16,7 +16,7 @@
     "material-ui": "^0.19.4",
     "material-ui-rating": "^1.4.0",
     "material-ui-slider-label": "git+https://github.com/tariqwest/material-ui-slider-label.git",
-    "moment": "^2.20.1",
+    "moment": "^2.29.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.1",
     "react-flexbox-grid": "^2.0.0",
