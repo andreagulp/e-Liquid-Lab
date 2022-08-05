@@ -22,7 +22,7 @@
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.2",
     "material-ui-slider-label": "git+https://github.com/tariqwest/material-ui-slider-label.git",
-    "mongoose": "^5.0.7",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.17.2",
     "npm": "^5.8.0",
     "passport": "^0.4.0",
